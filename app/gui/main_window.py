@@ -105,11 +105,10 @@ class ScreenshotPreviewDialog(QDialog):
 # --- SERVER LOKAL & THREAD WORKERS ---
 class BridgeHandler(BaseHTTPRequestHandler):
     def log_message(self, format, *args):
-        pass # Mematikan log terminal agar rapi
+        pass
 
     def do_GET(self):
         if self.path == '/get-task':
-            # LONG POLLING: Menahan Chrome agar merespons instan
             for _ in range(40): 
                 if current_task.get("url"):
                     break
@@ -137,7 +136,6 @@ class BridgeHandler(BaseHTTPRequestHandler):
 class BridgeServer(QThread):
     cookies_ready_signal = pyqtSignal()
     def run(self):
-        # Gunakan ThreadingHTTPServer dan 127.0.0.1 (Bukan localhost)
         server_address = ('127.0.0.1', 65432)
         httpd = ThreadingHTTPServer(server_address, BridgeHandler)
         httpd.gui_signal = self.cookies_ready_signal
@@ -181,7 +179,6 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("Kawaragi Downloader"); self.resize(850, 850)
         
-        # Penanganan Ikon Universal
         logo_ico = get_asset_path("logo.ico")
         logo_png = get_asset_path("logo.png")
         self.final_logo = logo_ico if os.path.exists(logo_ico) else logo_png
@@ -236,13 +233,23 @@ class MainWindow(QMainWindow):
         received_cookies_cache["current"] = ""; current_task["url"] = url; self.info_btn.setEnabled(False); self.loading_timer.start(100)
 
     def on_cookies_received(self):
-        self.loading_timer.stop(); self.status.setText("Status: Kunci diterima!")
+        self.loading_timer.stop()
+        self.status.setText("Status: Kunci diterima!")
         cookies_text = received_cookies_cache["current"]
-        self.cookie_file = "temp_cookies.txt" if cookies_text else "Tanpa Login"
+        
+        # PERBAIKAN: Menyimpan cookie langsung ke AppData
+        app_data_dir = os.path.join(os.getenv('LOCALAPPDATA'), 'KawaragiDownloader')
+        os.makedirs(app_data_dir, exist_ok=True)
+        self.cookie_file = os.path.join(app_data_dir, "temp_cookies.txt") if cookies_text else "Tanpa Login"
+        
         if cookies_text:
-            with open(self.cookie_file, "w", encoding="utf-8") as f: f.write(cookies_text)
+            with open(self.cookie_file, "w", encoding="utf-8") as f: 
+                f.write(cookies_text)
+                
         self.info_worker = InfoWorker(self.url_input.text(), self.cookie_file)
-        self.info_worker.finished.connect(self.on_info_ok); self.info_worker.error.connect(self.on_error); self.info_worker.start()
+        self.info_worker.finished.connect(self.on_info_ok)
+        self.info_worker.error.connect(self.on_error)
+        self.info_worker.start()
 
     def on_info_ok(self, info):
         self.info_btn.setEnabled(True)
@@ -343,5 +350,11 @@ class MainWindow(QMainWindow):
         """)
 
     def closeEvent(self, event):
-        if os.path.exists("temp_cookies.txt"): os.remove("temp_cookies.txt")
+        # PERBAIKAN: Hapus cookie dari AppData saat aplikasi ditutup
+        cookie_path = os.path.join(os.getenv('LOCALAPPDATA'), 'KawaragiDownloader', 'temp_cookies.txt')
+        if os.path.exists(cookie_path): 
+            try:
+                os.remove(cookie_path)
+            except:
+                pass
         event.accept()
