@@ -44,6 +44,15 @@ Kawaragi Downloader bukan sekadar GUI biasa untuk `yt-dlp`. Aplikasi ini diranca
 3. Jalankan installer dan ikuti petunjuk di layar (Tinggal *Next -> Next -> Finish*).
 4. Aplikasi sudah siap digunakan lengkap dengan Shortcut di Desktop!
 
+## 🧩 Instalasi Ekstensi (Wajib)
+Karena kebijakan keamanan Google Chrome, ekstensi pendamping tidak dapat terpasang secara otomatis. Ikuti langkah mudah ini:
+
+1. Buka Chrome dan pergi ke alamat `chrome://extensions/`.
+2. Di pojok kanan atas, aktifkan **Developer mode** (Mode pengembang).
+3. Klik tombol **Load unpacked** (Muat yang belum dikemas) di pojok kiri atas.
+4. Cari dan pilih folder `Kawaragi-Trigger` yang berada di dalam folder instalasi aplikasi Anda (biasanya di `C:\Program Files (x86)\Kawaragi Downloader\Kawaragi-Trigger`).
+5. Selesai! Ekstensi sekarang akan muncul sebagai jembatan antara Chrome dan aplikasi Desktop.
+
 ### Opsi 2: Menjalankan dari Source Code (Untuk Developer)
 Pastikan Anda sudah menginstal **Python 3.8+** dan memiliki **FFmpeg** di variabel sistem (atau letakkan `ffmpeg.exe` di dalam folder root aplikasi).
 
