@@ -32,8 +32,7 @@ Kawaragi Downloader bukan sekadar GUI biasa untuk `yt-dlp`. Aplikasi ini diranca
 
 | Tampilan Utama | Fitur Smart Screenshot |
 |:---:|:---:|
-| <img src="https://via.placeholder.com/400x300.png?text=Screenshot+UI+Utama" width="100%"> | <img src="https://via.placeholder.com/400x300.png?text=Screenshot+Preview+UI" width="100%"> |
-
+| ![UI Utama](assets/ui_utama.png) | ![Preview SS](assets/preview_ss.png) |
 ---
 
 ## 🚀 Cara Instalasi

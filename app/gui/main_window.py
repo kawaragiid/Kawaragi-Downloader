@@ -1,5 +1,5 @@
-import json, os, shutil, sys
-from http.server import BaseHTTPRequestHandler, HTTPServer
+import json, os, shutil, sys, time
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QPixmap, QCursor, QIcon, QImage
 from PyQt5.QtCore import QThread, pyqtSignal, Qt, QTimer, QSize
@@ -13,17 +13,15 @@ logger = setup_logger("main_window", "app.log")
 current_task = {"url": None}
 received_cookies_cache = {"current": ""}
 
-# --- FUNGSI AJAIB PENUNJUK JALAN (ASSETS RESOLVER) ---
+# --- FUNGSI AJAIB PENUNJUK JALAN LOGO ---
 def get_asset_path(filename):
-    """Fungsi ini memastikan .exe selalu tahu letak folder assets"""
     try:
-        # Jika dijalankan sebagai .exe (PyInstaller)
         base_path = sys._MEIPASS
     except Exception:
-        # Jika dijalankan sebagai script Python biasa
         base_path = os.path.abspath(".")
     return os.path.join(base_path, "assets", filename)
 
+# --- UI PREVIEW SCREENSHOT ---
 class ScreenshotPreviewDialog(QDialog):
     def __init__(self, image_paths, parent=None):
         super().__init__(parent)
@@ -104,27 +102,46 @@ class ScreenshotPreviewDialog(QDialog):
             QCheckBox::indicator { width: 18px; height: 18px; }
         """)
 
+# --- SERVER LOKAL & THREAD WORKERS ---
 class BridgeHandler(BaseHTTPRequestHandler):
+    def log_message(self, format, *args):
+        pass # Mematikan log terminal agar rapi
+
     def do_GET(self):
         if self.path == '/get-task':
-            self.send_response(200); self.send_header('Content-type', 'application/json')
-            self.send_header('Access-Control-Allow-Origin', '*'); self.end_headers()
-            self.wfile.write(json.dumps(current_task).encode()); current_task["url"] = None
+            # LONG POLLING: Menahan Chrome agar merespons instan
+            for _ in range(40): 
+                if current_task.get("url"):
+                    break
+                time.sleep(0.5)
+                
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
+            self.wfile.write(json.dumps(current_task).encode())
+            current_task["url"] = None
+
     def do_POST(self):
         if self.path == '/submit-cookies':
             data = json.loads(self.rfile.read(int(self.headers['Content-Length'])))
             received_cookies_cache["current"] = data.get('cookies', "")
-            self.send_response(200); self.send_header('Access-Control-Allow-Origin', '*'); self.end_headers()
+            self.send_response(200)
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
             self.server.gui_signal.emit()
+
     def do_OPTIONS(self):
         self.send_response(200); self.send_header('Access-Control-Allow-Origin', '*'); self.end_headers()
 
 class BridgeServer(QThread):
     cookies_ready_signal = pyqtSignal()
     def run(self):
-        server_address = ('localhost', 65432)
-        httpd = HTTPServer(server_address, BridgeHandler)
-        httpd.gui_signal = self.cookies_ready_signal; httpd.serve_forever()
+        # Gunakan ThreadingHTTPServer dan 127.0.0.1 (Bukan localhost)
+        server_address = ('127.0.0.1', 65432)
+        httpd = ThreadingHTTPServer(server_address, BridgeHandler)
+        httpd.gui_signal = self.cookies_ready_signal
+        httpd.serve_forever()
 
 class InfoWorker(QThread):
     finished = pyqtSignal(dict); error = pyqtSignal(str)
@@ -158,16 +175,16 @@ class ProcessingWorker(QThread):
                 self.finished.emit(res)
         except Exception as e: self.error.emit(str(e))
 
+# --- KELAS JENDELA UTAMA ---
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Kawaragi Downloader"); self.resize(850, 850)
         
-        # --- PERBAIKAN LOGO: Otomatis mencari .ico atau .png ---
+        # Penanganan Ikon Universal
         logo_ico = get_asset_path("logo.ico")
         logo_png = get_asset_path("logo.png")
         self.final_logo = logo_ico if os.path.exists(logo_ico) else logo_png
-        
         self.setWindowIcon(QIcon(self.final_logo))
         
         self.apply_modern_theme()
@@ -182,31 +199,26 @@ class MainWindow(QMainWindow):
         self.central_widget = QWidget(); self.setCentralWidget(self.central_widget)
         self.main_layout = QVBoxLayout(self.central_widget); self.main_layout.setContentsMargins(30, 20, 30, 20); self.main_layout.setSpacing(12)
         
-        # Header (Menggunakan Logo yang sudah di-resolve)
         header = QHBoxLayout(); logo = QLabel()
         pix = QPixmap(self.final_logo)
         if not pix.isNull(): logo.setPixmap(pix); logo.setFixedSize(50, 50); logo.setScaledContents(True)
         header.addWidget(logo); title = QLabel("Kawaragi Downloader"); title.setObjectName("app_title"); header.addWidget(title); header.addStretch(); self.main_layout.addLayout(header)
 
-        # URL
         self.main_layout.addWidget(QLabel("Tempel Link Video (YouTube, TikTok, dll):"))
         self.url_input = QLineEdit(); self.url_input.setPlaceholderText("https://..."); self.main_layout.addWidget(self.url_input)
         self.info_btn = QPushButton("CEK LINK & TRIGGER EKSTENSI"); self.info_btn.setCursor(QCursor(Qt.PointingHandCursor)); self.info_btn.clicked.connect(self.start_trigger); self.main_layout.addWidget(self.info_btn)
         self.info_box = QLabel("Menunggu input link..."); self.info_box.setObjectName("info_box"); self.info_box.setWordWrap(True); self.main_layout.addWidget(self.info_box)
 
-        # Opsi Format & Screenshot
         row1 = QHBoxLayout()
         f_v = QVBoxLayout(); f_v.addWidget(QLabel("Format Tujuan Rendering:")); self.fmt_drop = QComboBox(); self.fmt_drop.addItems(["Otomatis", "mp4", "webm", "mp3", "aac"]); f_v.addWidget(self.fmt_drop); row1.addLayout(f_v)
         s_v = QVBoxLayout(); self.ss_cb = QCheckBox("Ambil Screenshot Acak"); s_v.addWidget(self.ss_cb); hbox_ss = QHBoxLayout(); hbox_ss.addWidget(QLabel("Jumlah:")); self.ss_count = QSpinBox(); self.ss_count.setRange(1, 30); self.ss_count.setValue(6); hbox_ss.addWidget(self.ss_count); hbox_ss.addStretch(); s_v.addLayout(hbox_ss); row1.addLayout(s_v)
         self.main_layout.addLayout(row1)
 
-        # Subtitle & Thumbnail
         row2 = QHBoxLayout()
         sub_v = QVBoxLayout(); self.sub_cb = QCheckBox("Unduh Subtitle"); sub_v.addWidget(self.sub_cb); self.sub_lang = QComboBox(); self.sub_lang.setPlaceholderText("Bahasa"); sub_v.addWidget(self.sub_lang); self.sub_fmt = QComboBox(); self.sub_fmt.addItems(["srt", "vtt", "ass"]); sub_v.addWidget(self.sub_fmt); row2.addLayout(sub_v)
         thm_v = QVBoxLayout(); self.thm_cb = QCheckBox("Unduh Thumbnail"); thm_v.addWidget(self.thm_cb); self.thm_fmt = QComboBox(); self.thm_fmt.addItems(["jpg", "png", "webp"]); thm_v.addWidget(self.thm_fmt); thm_v.addStretch(); row2.addLayout(thm_v)
         self.main_layout.addLayout(row2)
 
-        # Directory
         self.main_layout.addWidget(QLabel("Simpan ke:")); dir_h = QHBoxLayout(); self.dir_in = QLineEdit(); self.dir_in.setText(Config.load_last_directory()); dir_h.addWidget(self.dir_in); btn_b = QPushButton("Ganti Folder"); btn_b.setCursor(QCursor(Qt.PointingHandCursor)); btn_b.clicked.connect(self.browse); dir_h.addWidget(btn_b); self.main_layout.addLayout(dir_h)
 
         self.main_layout.addStretch()
@@ -305,9 +317,6 @@ class MainWindow(QMainWindow):
 
     def final_step(self, path):
         self.dl_btn.setEnabled(True); self.status.setText("Status: Selesai!"); self.p_bar.setValue(100)
-        if self.thm_cb.isChecked():
-            t_h = ThumbnailHandler()
-            t_h.download_thumbnail(self.url_input.text(), self.dir_in.text(), self.thm_fmt.currentText())
         QMessageBox.information(self, "Berhasil", f"Proses Selesai!<br>File: {path}")
 
     def on_error(self, msg):

@@ -1,17 +1,23 @@
-const SERVER_URL = "http://localhost:65432";
+// PENTING: Gunakan 127.0.0.1 agar merespons secepat kilat
+const SERVER_URL = "http://127.0.0.1:65432";
 
-async function checkTask() {
-    try {
-        const response = await fetch(`${SERVER_URL}/get-task`);
-        if (response.ok) {
-            const task = await response.json();
-            if (task.url) {
-                console.log("Menerima tugas untuk:", task.url);
-                await processTask(task.url);
+// Teknik LONG POLLING (Terus menyala, respons instan)
+async function connectToApp() {
+    while (true) {
+        try {
+            // fetch ini akan "menunggu" sampai Python memberikan URL (tanpa lag)
+            const response = await fetch(`${SERVER_URL}/get-task`);
+            if (response.ok) {
+                const task = await response.json();
+                if (task && task.url) {
+                    console.log("Tugas masuk secepat kilat:", task.url);
+                    await processTask(task.url);
+                }
             }
+        } catch (e) {
+            // Jika aplikasi Desktop belum dibuka, tunggu 2 detik lalu coba lagi
+            await new Promise(resolve => setTimeout(resolve, 2000));
         }
-    } catch (e) {
-        // Server aplikasi belum menyala, abaikan secara diam-diam
     }
 }
 
@@ -21,13 +27,12 @@ async function processTask(targetUrl) {
         const urlObj = new URL(targetUrl);
         let domain = urlObj.hostname.replace("www.", "");
         
-        // Atasi masalah link pendek youtube (youtu.be)
+        // Atasi masalah link pendek youtube
         if (domain === "youtu.be") domain = "youtube.com";
 
         const cookies = await chrome.cookies.getAll({ domain: domain });
-        
-        // FORMAT NETSCAPE HTTP COOKIE FILE (Wajib untuk yt-dlp)
         let netscapeCookies = "# Netscape HTTP Cookie File\n";
+        
         for (let c of cookies) {
             let domainStr = c.domain;
             let flag = domainStr.startsWith('.') ? "TRUE" : "FALSE";
@@ -41,7 +46,6 @@ async function processTask(targetUrl) {
         console.error("Gagal ekstrak cookies:", e);
     }
 
-    // Kirim kunci login ke Aplikasi Kawaragi di Desktop
     try {
         await fetch(`${SERVER_URL}/submit-cookies`, {
             method: "POST",
@@ -49,13 +53,13 @@ async function processTask(targetUrl) {
             body: JSON.stringify({ cookies: cookieString })
         });
     } catch (e) {
-        console.error("Gagal mengirim data ke aplikasi desktop", e);
+        console.error("Gagal mengirim ke Desktop:", e);
     }
 }
 
-// Cek tugas dari aplikasi setiap 1.5 detik
-setInterval(checkTask, 1500);
+// Mulai koneksi abadi
+connectToApp();
 
-// Mencegah Google Chrome menidurkan ekstensi ini (Aturan Manifest V3)
+// Aturan Manifest V3 agar Chrome tidak menidurkan ekstensi
 chrome.alarms.create("keepAlive", { periodInMinutes: 1 });
-chrome.alarms.onAlarm.addListener(() => { console.log("Kawaragi Bridge tetap aktif"); });
+chrome.alarms.onAlarm.addListener(() => { console.log("Bridge tetap aktif"); });
