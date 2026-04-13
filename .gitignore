@@ -1,0 +1,10 @@
+# Mengabaikan folder hasil build
+dist/
+build/
+Output/
+__pycache__/
+
+# Mengabaikan file raksasa dan log
+*.exe
+*.log
+temp_cookies.txt
