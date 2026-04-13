@@ -1,0 +1,169 @@
+kawaragi_downloader/
+│
+├── app/
+│   ├── __init__.py             # Inisialisasi package Python
+│   ├── core/
+│   │   ├── __init__.py
+│   │   ├── downloader.py       # Abstraksi yt-dlp (unduh video/audio)
+│   │   ├── ffmpeg_utils.py     # Fungsi berbasis FFmpeg (konversi, trimming)
+│   │   ├── config.py           # Konfigurasi global aplikasi
+│   ├── gui/
+│   │   ├── __init__.py
+│   │   ├── main_window.py      # GUI utama dengan PyQt5
+│   │   ├── logic.py            # Logika dan interaksi untuk GUI
+│   ├── utils/
+│   │   ├── __init__.py
+│   │   ├── validation.py       # Validasi input URL dan parameter
+│   │   ├── log_utils.py        # Logging aktivitas aplikasi
+│   │   ├── file_utils.py       # Utility untuk file/direktori
+│   ├── features/
+│   │   ├── __init__.py
+│   │   ├── subtitles.py        # Fitur subtitle (unduh & konversi)
+│   │   ├── thumbnails.py       # Fitur thumbnail (unduh & modifikasi)
+│   │   ├── metadata.py         # Fitur metadata (info video/audio)
+│   └── workflows/
+│       ├── __init__.py
+│       ├── download_workflow.py # Workflow unduhan video/audio
+│       ├── process_workflow.py  # Workflow untuk post-processing (FFmpeg)
+│
+├── assets/                     # Resource statis (ikon, logo, dll.)
+│   ├── logo.png
+│
+├── tests/                      # Tes unit dan integrasi
+│   ├── test_core.py
+│   ├── test_gui.py
+│   ├── test_features.py
+│
+├── docs/                       # Dokumentasi pengembangan
+│   ├── api_docs.md             # Dokumentasi API internal (yt-dlp/FFmpeg)
+│   ├── user_manual.md          # Panduan pengguna aplikasi
+│
+├── requirements.txt            # Dependensi aplikasi
+├── README.md                   # Dokumentasi proyek
+├── main.py                     # Entry point aplikasi
+└── setup.py                    # Setup script untuk distribusi aplikasi
+
+Berikut adalah daftar fitur dan fungsi yang harus dimiliki oleh aplikasi *Kawaragi Downloader* berdasarkan struktur folder yang telah disediakan:
+
+### 1. Fungsi Utama Aplikasi
+Aplikasi *Kawaragi Downloader* adalah aplikasi berbasis GUI yang memungkinkan pengguna untuk mengunduh video atau audio dari berbagai platform, dengan kemampuan untuk melakukan proses lebih lanjut menggunakan FFmpeg. Beberapa fitur utama aplikasi ini mencakup unduhan video, audio, subtitle, modifikasi metadata, dan pengelolaan file. Berikut ini adalah penjelasan lebih sederhana dari setiap komponen dan fitur yang perlu dimiliki:
+
+### 2. Fitur dan Fungsi Berdasarkan Struktur Folder
+
+#### a. Folder `core/`
+- **downloader.py**: Fitur utama untuk mengunduh video dan audio.
+  - Mengunduh video dan audio dari URL.
+  - Mendukung pengaturan kualitas, format, dan subtitle yang diinginkan.
+  - Dapat menangani unduhan batch (banyak file sekaligus).
+
+- **ffmpeg_utils.py**: Fungsi untuk pengolahan video/audio menggunakan FFmpeg.
+  - Mengonversi format video/audio.
+  - Memotong bagian tertentu dari video/audio.
+  - Menggabungkan subtitle dengan video.
+
+- **config.py**: Mengelola konfigurasi global aplikasi.
+  - Menyimpan pengaturan seperti direktori penyimpanan default, kualitas unduhan, dan opsi format.
+
+#### b. Folder `gui/`
+- **main_window.py**: Antarmuka pengguna menggunakan PyQt5.
+  - Antarmuka yang sederhana dan mudah digunakan.
+  - Pengguna bisa memasukkan URL, memilih format, dan kualitas unduhan.
+  - Menampilkan status unduhan dengan progress bar.
+
+- **logic.py**: Menghubungkan logika antara GUI dan *backend* aplikasi.
+  - Mengelola interaksi pengguna, memvalidasi input, dan menampilkan pesan kesalahan jika ada input yang tidak valid.
+  - Menjalankan workflow unduhan sesuai dengan pilihan pengguna.
+
+#### c. Folder `utils/`
+- **validation.py**: Validasi input pengguna.
+  - Memastikan URL yang dimasukkan valid.
+  - Memvalidasi parameter seperti format video/audio yang didukung.
+
+- **log_utils.py**: Logging aktivitas aplikasi.
+  - Mencatat aktivitas unduhan, kesalahan, dan aktivitas lainnya.
+  - Membantu dalam debugging ketika terjadi masalah.
+
+- **file_utils.py**: Mengelola file dan direktori.
+  - Membuat direktori penyimpanan jika belum ada.
+  - Mengelola file seperti menimpa file yang ada atau memberi nama baru.
+
+#### d. Folder `features/`
+- **subtitles.py**: Fitur terkait subtitle video.
+  - Mengunduh subtitle yang tersedia dari video.
+  - Mengonversi subtitle ke format lain (misalnya `.vtt` ke `.srt`).
+  - Pengguna dapat memilih untuk meng-embed subtitle ke dalam video yang diunduh.
+
+- **thumbnails.py**: Fitur untuk mengunduh dan mengelola thumbnail video.
+  - Mengunduh thumbnail video.
+  - Mengubah ukuran atau format thumbnail jika diperlukan.
+  - Pengguna dapat memilih untuk meng-embed thumbnail ke dalam video yang diunduh.
+
+- **metadata.py**: Menampilkan informasi terkait video atau audio.
+  - Membaca metadata seperti judul, deskripsi, dan informasi teknis video/audio.
+  - Pengguna dapat melihat informasi ini sebelum mengunduh.
+
+#### e. Folder `workflows/`
+- **download_workflow.py**: Mengelola proses unduhan video/audio.
+  - Workflow ini mencakup seluruh tahapan unduhan, mulai dari validasi URL hingga unduhan menggunakan `downloader.py`.
+
+- **process_workflow.py**: Workflow untuk proses lanjutan (*post-processing*).
+  - Menjalankan fitur seperti konversi format dan trimming menggunakan `ffmpeg_utils.py`.
+
+#### f. Folder `tests/`
+- **test_core.py, test_gui.py, test_features.py**: Unit dan integrasi tes.
+  - Menguji fungsi unduhan, GUI, dan fitur tambahan.
+  - Pengujian untuk validasi input, pengelolaan file, dan error handling.
+
+#### g. Folder `docs/`
+- **api_docs.md**: Dokumentasi API internal untuk yt-dlp dan FFmpeg.
+  - Menjelaskan fungsi-fungsi API yang digunakan dalam aplikasi.
+
+- **user_manual.md**: Panduan pengguna.
+  - Memberikan petunjuk cara menginstal, menggunakan aplikasi, dan fitur yang tersedia.
+
+#### h. File Tambahan
+- **main.py**: Entry point aplikasi.
+  - Menginisialisasi GUI dan memulai aplikasi.
+
+- **setup.py**: Skrip untuk distribusi aplikasi.
+  - Mengemas aplikasi agar mudah diinstal oleh pengguna lain.
+
+### 3. Fitur Utama yang Harus Dimiliki Aplikasi
+1. **Pengunduhan Video/Audio**: Mengunduh video/audio dari berbagai platform dengan kualitas dan format yang beragam.
+2. **Proses Post-Processing**: Menggunakan FFmpeg untuk konversi format, trimming, dan penggabungan subtitle.
+3. **GUI yang Intuitif**: Antarmuka yang mudah dipahami dan digunakan oleh pengguna pemula.
+4. **Manajemen File dan Konfigurasi**: Mengelola penyimpanan file yang diunduh dan pengaturan aplikasi.
+5. **Subtitle dan Metadata**: Mengunduh subtitle dan menampilkan informasi video.
+6. **Logging dan Validasi Input**: Logging aktivitas aplikasi dan validasi input untuk mencegah kesalahan pengguna.
+7. **Unduhan Thumbnail**: Mengunduh thumbnail dari video dan memberikan opsi untuk meng-embed thumbnail ke dalam file video yang diunduh.
+8. **Embed Subtitle**: Pengguna dapat mengunduh subtitle dan memilih untuk meng-embed subtitle tersebut pada video yang diunduh.
+
+### 4. Opsi Pengunduhan yang Fleksibel
+- **Pilihan Format**: Pengguna dapat memilih untuk mengunduh dalam berbagai format seperti MP4, MP3, AVI, dll.
+- **Kualitas Video/Audio**: Tersedia opsi kualitas (contoh: 1080p, 720p, 480p) sehingga pengguna bisa menyesuaikan dengan kebutuhan mereka.
+- **Unduhan Subtitle**: Pengguna dapat memilih untuk mengunduh subtitle dalam berbagai bahasa jika tersedia.
+- **Pengaturan Output**: Pengguna dapat mengatur lokasi penyimpanan file unduhan sesuai keinginan.
+- **Batch Download**: Mendukung pengunduhan beberapa file sekaligus dengan sekali klik.
+- **Trim dan Konversi Otomatis**: Pengguna dapat mengatur apakah ingin langsung melakukan trimming atau konversi setelah unduhan selesai.
+- **Unduhan Thumbnail dan Embed**: Pengguna dapat mengunduh thumbnail dan memilih apakah ingin menempelkan thumbnail tersebut pada video yang diunduh.
+- **Embed Subtitle**: Pengguna dapat memilih untuk meng-embed subtitle langsung ke dalam video yang diunduh.
+
+### 5. Gambar Tampilan Aplikasi
+Tampilan Aplikasi Kawaragi Downloader
+Main Window (Jendela Utama):
+
+Bagian Input URL: Pada bagian ini terdapat kotak teks tempat pengguna dapat memasukkan URL video atau audio yang ingin diunduh.
+Pilihan Format dan Kualitas: Terdapat dropdown yang memudahkan pengguna untuk memilih format file (MP4, MP3, AVI, dll) serta kualitas video/audio (contoh: 1080p, 720p).
+Tombol Pengaturan Lainnya: Ada beberapa tombol tambahan untuk mengatur opsi seperti unduhan subtitle, download thumbnail, dan embed thumbnail.
+Progress Bar: Pengguna dapat melihat progress unduhan secara real-time.
+Tombol Mulai: Setelah memilih semua opsi, pengguna dapat memulai unduhan dengan menekan tombol "Mulai Unduh".
+Opsi Lanjutan:
+
+Pengaturan Trimming: Menu pengaturan untuk memotong bagian tertentu dari video/audio.
+Output Directory: Bagian untuk menentukan lokasi penyimpanan file yang diunduh.
+Opsi Embed Thumbnail: Pengguna dapat memilih apakah thumbnail yang diunduh akan di-embed ke dalam video.
+User Experience (UX):
+
+Sederhana dan Mudah Digunakan: Semua fitur penting tersedia di halaman utama, memudahkan pengguna pemula untuk memahami fungsionalitas tanpa perlu banyak instruksi.
+Notifikasi Selesai: Setelah proses unduhan selesai, pengguna akan mendapat notifikasi yang memberitahukan bahwa file sudah siap digunakan.
+
