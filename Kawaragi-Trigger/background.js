@@ -25,10 +25,18 @@ async function processTask(targetUrl) {
     let cookieString = "";
     try {
         const urlObj = new URL(targetUrl);
-        let domain = urlObj.hostname.replace("www.", "");
+        let domain = urlObj.hostname.replace(/^www\./, "");
         
-        // Atasi masalah link pendek youtube
-        if (domain === "youtu.be") domain = "youtube.com";
+        // Normalisasi domain populer
+        if (domain.includes("youtube.com") || domain === "youtu.be") {
+            domain = "youtube.com";
+        } else if (domain.includes("tiktok.com")) {
+            domain = "tiktok.com";
+        } else if (domain.includes("instagram.com")) {
+            domain = "instagram.com";
+        } else if (domain.includes("twitter.com") || domain.includes("x.com")) {
+            domain = "x.com";
+        }
 
         const cookies = await chrome.cookies.getAll({ domain: domain });
         let netscapeCookies = "# Netscape HTTP Cookie File\n";

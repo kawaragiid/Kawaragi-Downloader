@@ -4,7 +4,8 @@ import traceback
 
 # --- SISTEM PENGINTAI CRASH FATAL ---
 # Menyimpan log crash di AppData agar terhindar dari Permission Error
-log_dir = os.path.join(os.getenv('LOCALAPPDATA', 'C:\\'), 'KawaragiDownloader', 'logs')
+local_appdata = os.getenv('LOCALAPPDATA') or os.path.join(os.path.expanduser('~'), 'AppData', 'Local')
+log_dir = os.path.join(local_appdata, 'KawaragiDownloader', 'logs')
 os.makedirs(log_dir, exist_ok=True)
 crash_log_path = os.path.join(log_dir, 'crash_report.txt')
 
@@ -19,8 +20,10 @@ def global_exception_handler(exc_type, exc_value, exc_traceback):
 sys.excepthook = global_exception_handler
 
 try:
-    # Tambahkan root folder proyek ke sys.path
-    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+    # Pastikan direktori root aplikasi ada di sys.path
+    project_root = os.path.abspath(os.path.dirname(__file__))
+    if project_root not in sys.path:
+        sys.path.insert(0, project_root)
 
     from app.gui.main_window import MainWindow
     from PyQt5.QtWidgets import QApplication
@@ -36,3 +39,4 @@ except Exception as e:
     with open(crash_log_path, 'w', encoding='utf-8') as f:
         f.write("=== STARTUP CRASH (GAGAL LOADING) ===\n")
         traceback.print_exc(file=f)
+    print(f"Error starting application: {e}")
