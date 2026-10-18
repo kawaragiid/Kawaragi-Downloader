@@ -41,49 +41,66 @@ class BridgeHandler(BaseHTTPRequestHandler):
     def log_message(self, format, *args):
         pass
 
+    def handle(self):
+        """Tangkap pemutusan koneksi sepihak oleh klien browser agar tidak membuang traceback ke terminal."""
+        try:
+            super().handle()
+        except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
+            pass
+
     def do_GET(self):
-        if self.path == '/get-task':
-            for _ in range(40): 
-                if current_task.get("url"):
-                    break
-                time.sleep(0.5)
-                
-            self.send_response(200)
-            self.send_header('Content-type', 'application/json')
-            self.send_header('Access-Control-Allow-Origin', '*')
-            self.end_headers()
-            self.wfile.write(json.dumps(current_task).encode())
-            current_task["url"] = None
-        else:
-            self.send_response(404)
-            self.end_headers()
+        try:
+            if self.path == '/get-task':
+                # Long polling tunggu hingga 10 detik jika belum ada link yang diproses
+                for _ in range(20): 
+                    if current_task.get("url"):
+                        break
+                    time.sleep(0.5)
+                    
+                self.send_response(200)
+                self.send_header('Content-type', 'application/json')
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                self.wfile.write(json.dumps(current_task).encode())
+                current_task["url"] = None
+            else:
+                self.send_response(404)
+                self.end_headers()
+        except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
+            pass
 
     def do_POST(self):
-        if self.path == '/submit-cookies':
-            content_len = int(self.headers.get('Content-Length', 0))
-            post_data = self.rfile.read(content_len)
-            try:
-                data = json.loads(post_data.decode('utf-8'))
-                received_cookies_cache["current"] = data.get('cookies', "")
-            except Exception as e:
-                logger.error(f"Error parsing cookies POST: {e}")
-                
-            self.send_response(200)
-            self.send_header('Access-Control-Allow-Origin', '*')
-            self.send_header('Access-Control-Allow-Headers', 'Content-Type')
-            self.end_headers()
-            if hasattr(self.server, 'gui_signal'):
-                self.server.gui_signal.emit()
-        else:
-            self.send_response(404)
-            self.end_headers()
+        try:
+            if self.path == '/submit-cookies':
+                content_len = int(self.headers.get('Content-Length', 0))
+                post_data = self.rfile.read(content_len)
+                try:
+                    data = json.loads(post_data.decode('utf-8'))
+                    received_cookies_cache["current"] = data.get('cookies', "")
+                except Exception as e:
+                    logger.error(f"Error parsing cookies POST: {e}")
+                    
+                self.send_response(200)
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+                self.end_headers()
+                if hasattr(self.server, 'gui_signal'):
+                    self.server.gui_signal.emit()
+            else:
+                self.send_response(404)
+                self.end_headers()
+        except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
+            pass
 
     def do_OPTIONS(self):
-        self.send_response(200)
-        self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
-        self.end_headers()
+        try:
+            self.send_response(200)
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+            self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+            self.end_headers()
+        except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
+            pass
 
 class BridgeServer(QThread):
     cookies_ready_signal = pyqtSignal()
@@ -97,6 +114,12 @@ class BridgeServer(QThread):
         try:
             class ReusableServer(ThreadingHTTPServer):
                 allow_reuse_address = True
+
+                def handle_error(self, request, client_address):
+                    exc_type, _, _ = sys.exc_info()
+                    if exc_type in (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
+                        return
+                    super().handle_error(request, client_address)
             
             self.httpd = ReusableServer(server_address, BridgeHandler)
             self.httpd.gui_signal = self.cookies_ready_signal
