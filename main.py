@@ -2,6 +2,18 @@ import sys
 import os
 import traceback
 
+# Pastikan encoding stdout/stderr menggunakan UTF-8 agar judul non-Latin (Jepang/Mandarin/Emoji) tidak memicu UnicodeEncodeError di Windows
+if hasattr(sys.stdout, "reconfigure") and sys.stdout is not None:
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+if hasattr(sys.stderr, "reconfigure") and sys.stderr is not None:
+    try:
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
 # --- SISTEM PENGINTAI CRASH FATAL ---
 # Menyimpan log crash di AppData agar terhindar dari Permission Error
 local_appdata = os.getenv('LOCALAPPDATA') or os.path.join(os.path.expanduser('~'), 'AppData', 'Local')

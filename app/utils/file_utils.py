@@ -2,19 +2,34 @@ import os
 import sys
 import shutil
 
-def get_base_dir():
+def get_base_dir() -> str:
     """Mendapatkan direktori dasar aplikasi baik saat running script maupun binary/frozen."""
     if getattr(sys, 'frozen', False):
         return os.path.dirname(sys.executable)
     return os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 
+def get_extension_dir() -> str:
+    """Mendapatkan path absolut ke folder ekstensi Kawaragi-Trigger."""
+    candidates = []
+    if getattr(sys, 'frozen', False):
+        exe_dir = os.path.dirname(sys.executable)
+        candidates.append(os.path.join(exe_dir, "Kawaragi-Trigger"))
+        candidates.append(os.path.join(exe_dir, "_internal", "Kawaragi-Trigger"))
+    meipass = getattr(sys, '_MEIPASS', None)
+    if meipass:
+        candidates.append(os.path.join(meipass, "Kawaragi-Trigger"))
+    candidates.append(os.path.join(get_base_dir(), "Kawaragi-Trigger"))
+    candidates.append(os.path.abspath("Kawaragi-Trigger"))
+
+    for path in candidates:
+        if os.path.isdir(path) and os.path.isfile(os.path.join(path, "manifest.json")):
+            return os.path.abspath(path)
+    return os.path.join(get_base_dir(), "Kawaragi-Trigger")
+
 def get_ffmpeg_path() -> str:
     """
-    Mendeteksi path ffmpeg secara otomatis dengan urutan prioritas:
-    1. Folder aplikasi/executable (sys.executable)
-    2. Folder PyInstaller extraction (_MEIPASS)
-    3. Root folder proyek
-    4. System PATH
+    Mendeteksi path ffmpeg secara otomatis dan mendaftarkan direktorinya ke PATH
+    agar yt-dlp dapat menemukan baik ffmpeg maupun ffprobe.
     """
     candidates = []
     
@@ -30,22 +45,67 @@ def get_ffmpeg_path() -> str:
         candidates.append(os.path.join(meipass, "ffmpeg.exe"))
         candidates.append(os.path.join(meipass, "assets", "ffmpeg.exe"))
         
-    # 3. Root folder proyek
+    # 3. Root folder proyek & C:\ffmpeg\bin
     root_dir = get_base_dir()
     candidates.append(os.path.join(root_dir, "ffmpeg.exe"))
     candidates.append(os.path.join(root_dir, "ffmpeg"))
+    candidates.append(r"C:\ffmpeg\bin\ffmpeg.exe")
     
+    detected_ffmpeg = None
     for path in candidates:
         if os.path.isfile(path) and os.access(path, os.X_OK if os.name != 'nt' else os.R_OK):
-            return os.path.abspath(path)
+            detected_ffmpeg = os.path.abspath(path)
+            break
             
-    # 4. Cari di System PATH
-    system_ffmpeg = shutil.which("ffmpeg")
-    if system_ffmpeg:
-        return system_ffmpeg
-        
-    # Fallback default
-    return "ffmpeg"
+    if not detected_ffmpeg:
+        system_ffmpeg = shutil.which("ffmpeg")
+        if system_ffmpeg:
+            detected_ffmpeg = os.path.abspath(system_ffmpeg)
+
+    # Tambahkan direktori ffmpeg dan C:\ffmpeg\bin ke os.environ["PATH"] agar ffprobe juga ditemukan
+    extra_Dirs = []
+    if detected_ffmpeg and os.path.isfile(detected_ffmpeg):
+        extra_Dirs.append(os.path.dirname(detected_ffmpeg))
+    if os.path.isdir(r"C:\ffmpeg\bin"):
+        extra_Dirs.append(r"C:\ffmpeg\bin")
+
+    current_path = os.environ.get("PATH", "")
+    for d in extra_Dirs:
+        if d.lower() not in current_path.lower():
+            current_path = f"{d}{os.pathsep}{current_path}"
+    os.environ["PATH"] = current_path
+
+    return detected_ffmpeg or "ffmpeg"
+
+def find_browser_executable(browser: str = "chrome") -> str:
+    """Mencari path executable browser (chrome, edge, brave) di Windows."""
+    local_app = os.getenv("LOCALAPPDATA", "")
+    prog_files = os.getenv("PROGRAMFILES", r"C:\Program Files")
+    prog_x86 = os.getenv("PROGRAMFILES(X86)", r"C:\Program Files (x86)")
+
+    paths = {
+        "chrome": [
+            os.path.join(prog_files, "Google", "Chrome", "Application", "chrome.exe"),
+            os.path.join(prog_x86, "Google", "Chrome", "Application", "chrome.exe"),
+            os.path.join(local_app, "Google", "Chrome", "Application", "chrome.exe"),
+            shutil.which("chrome") or ""
+        ],
+        "edge": [
+            os.path.join(prog_x86, "Microsoft", "Edge", "Application", "msedge.exe"),
+            os.path.join(prog_files, "Microsoft", "Edge", "Application", "msedge.exe"),
+            shutil.which("msedge") or ""
+        ],
+        "brave": [
+            os.path.join(prog_files, "BraveSoftware", "Brave-Browser", "Application", "brave.exe"),
+            os.path.join(prog_x86, "BraveSoftware", "Brave-Browser", "Application", "brave.exe"),
+            os.path.join(local_app, "BraveSoftware", "Brave-Browser", "Application", "brave.exe"),
+            shutil.which("brave") or ""
+        ]
+    }
+    for p in paths.get(browser.lower(), []):
+        if p and os.path.isfile(p):
+            return p
+    return ""
 
 def ensure_directory_exists(directory: str):
     """Memastikan direktori ada, jika belum maka dibuat."""

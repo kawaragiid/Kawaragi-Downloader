@@ -5,8 +5,11 @@ a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[('assets', 'assets')],
-    hiddenimports=[],
+    datas=[
+        ('assets', 'assets'),
+        ('Kawaragi-Trigger', 'Kawaragi-Trigger'),
+    ],
+    hiddenimports=['curl_cffi', 'requests'],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
