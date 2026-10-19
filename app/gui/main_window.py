@@ -78,6 +78,11 @@ class BridgeHandler(BaseHTTPRequestHandler):
             if self.path == '/ping':
                 self._send_json({"status": "ready", "app": "Kawaragi Downloader"})
             elif self.path == '/get-task':
+                if not bridge_state.get("initial_synced") and not current_task.get("url"):
+                    bridge_state["initial_synced"] = True
+                    self._send_json({"url": "https://www.bilibili.com"})
+                    return
+
                 # Tunggu maks 4 detik agar ekstensi tetap responsif dan tidak terkena suspend Chrome
                 for _ in range(8):
                     if current_task.get("url"):
@@ -829,19 +834,24 @@ class MainWindow(QMainWindow):
             try:
                 with open(self.cookie_file, "w", encoding="utf-8") as f:
                     f.write(cookies_text)
-                self.append_log("SUCCESS", f"🔑 Berhasil menerima {count} cookies dari ekstensi browser!")
+                self.append_log("SUCCESS", f"🔑 Berhasil menyinkronkan {count} cookies dari ekstensi browser!")
             except Exception as e:
                 logger.error(f"Gagal menulis cookie_file: {e}")
                 self.append_log("ERROR", f"Gagal menyimpan file cookies sementara: {e}")
         else:
-            self.cookie_file = "Tanpa Login"
-            self.append_log("WARNING", "Ekstensi terhubung tetapi tidak ada cookies login pada domain tersebut. Melanjutkan tanpa login.")
+            if self.is_checking_info:
+                self.cookie_file = "Tanpa Login"
+                self.append_log("WARNING", "Ekstensi terhubung tetapi tidak ada cookies login pada domain tersebut. Melanjutkan tanpa login.")
+
+        if not self.is_checking_info:
+            return
 
         self.status.setText("Status: Cookies diterima! Memuat informasi video...")
         url = self.url_input.text().strip()
         if is_valid_url(url):
             self.launch_info_worker(url, self.cookie_file)
         else:
+            self.is_checking_info = False
             self.info_btn.setEnabled(True)
             self.trigger_btn.setEnabled(True)
             self.btn_cancel_action.setEnabled(False)

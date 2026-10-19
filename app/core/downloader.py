@@ -3,7 +3,7 @@ import re
 import glob
 import traceback
 
-# Aktifkan kompatibilitas curl_cffi 0.15+ sebelum yt_dlp di-import agar TLS Impersonation aktif
+# Aktifkan kompatibilitas curl_cffi 0.15+ sebelum yt_dlp di-import agar TLS Impersonation siap digunakan saat diperlukan
 try:
     import curl_cffi
     if hasattr(curl_cffi, "__version__") and not curl_cffi.__version__.startswith(("0.5.10", "0.10", "0.11", "0.12", "0.13", "0.14")):
@@ -17,29 +17,32 @@ from app.utils.log_utils import setup_logger
 
 logger = setup_logger("downloader", "downloader.log")
 
-# Patch Bilibili extractor agar otomatis fallback jika terkena HTTP Error 412 pada endpoint WBI
+# Patch Bilibili extractor:
+# 1. Hapus parameter 'try_look=1' jika tidak login agar Bilibili TIDAK memberikan stream preview 30 detik
+#    yang terputus di tengah jalan (Got error: ... bytes read, ... more expected).
+# 2. Otomatis fallback ke endpoint '/x/player/playurl' jika endpoint WBI terkena HTTP Error 412.
 try:
     from yt_dlp.extractor.bilibili import BilibiliBaseIE
     if not getattr(BilibiliBaseIE, "_kawaragi_patched", False):
         _orig_bilibili_playinfo = BilibiliBaseIE._download_playinfo
 
         def _patched_bilibili_playinfo(self, bvid, cid, headers=None, query=None):
+            clean_query = dict(query or {})
+            # PENTING: Jangan gunakan try_look=1 karena stream 1080p try_look akan diputus paksa oleh CDN Bilibili setelah ~1.5 MB!
+            clean_query.pop('try_look', None)
             try:
-                return _orig_bilibili_playinfo(self, bvid, cid, headers=headers, query=query)
+                return _orig_bilibili_playinfo(self, bvid, cid, headers=headers, query=clean_query)
             except Exception as e:
                 logger.warning(f"Bilibili WBI playurl gagal ({e}), beralih ke fallback endpoint playurl...")
-                params = {'bvid': bvid, 'cid': cid, 'fnval': 4048, 'fourk': 1, **(query or {})}
-                if self.is_logged_in:
-                    params.pop('try_look', None)
-                else:
-                    params.setdefault('try_look', 1)
+                params = {'bvid': bvid, 'cid': cid, 'fnval': 4048, 'fourk': 1, **clean_query}
+                params.pop('try_look', None)
                 req_headers = dict(self._HEADERS)
                 if headers:
                     req_headers.update(headers)
                 return self._download_json(
                     'https://api.bilibili.com/x/player/playurl', bvid,
                     query=params, headers=req_headers,
-                    note=f'Downloading video formats (fallback) for cid {cid}'
+                    note=f'Downloading video formats (full stream) for cid {cid}'
                 )['data']
 
         BilibiliBaseIE._download_playinfo = _patched_bilibili_playinfo
@@ -69,7 +72,6 @@ class YtdlpGuiLogger:
 
     def debug(self, msg):
         clean = clean_error_message(msg)
-        # Filter baris progres mentah agar tidak membanjiri log
         if clean.startswith("[download]") and ("ETA" in clean or "%" in clean):
             return
         logger.info(clean)
@@ -125,34 +127,35 @@ class Downloader:
         if browser_cookie.lower().endswith('.txt'):
             if os.path.isfile(browser_cookie) and os.path.getsize(browser_cookie) > 0:
                 ydl_opts['cookiefile'] = browser_cookie
-                self._emit_log("INFO", f"Menggunakan file cookies: {browser_cookie}")
+                self._emit_log("INFO", f"🔑 Menggunakan file cookies aktif: {browser_cookie}")
             else:
-                self._emit_log("WARNING", f"File cookies tidak ditemukan atau kosong ({browser_cookie}), melanjutkan tanpa cookies.")
+                self._emit_log("WARNING", f"File cookies belum tersedia ({browser_cookie}), melanjutkan tanpa cookies.")
         elif browser_cookie.lower() in VALID_BROWSERS:
             ydl_opts['cookiesfrombrowser'] = (browser_cookie.lower(),)
-            self._emit_log("INFO", f"Mengambil cookies langsung dari browser: {browser_cookie}")
+            self._emit_log("INFO", f"🔑 Mengambil cookies langsung dari browser: {browser_cookie}")
         else:
             self._emit_log("WARNING", f"Sumber cookies '{browser_cookie}' tidak dikenali, melanjutkan tanpa cookies.")
 
-    def _build_base_opts(self, browser_cookie: str = "Tanpa Login", custom_user_agent: str = "") -> dict:
+    def _build_base_opts(self, browser_cookie: str = "Tanpa Login", custom_user_agent: str = "", use_impersonate: bool = False) -> dict:
         ydl_opts = {
             'quiet': False,
             'no_warnings': False,
             'nocheckcertificate': True,
             'geo_bypass': True,
             'noplaylist': True,
-            'retries': 5,
-            'fragment_retries': 5,
+            'retries': 10,
+            'fragment_retries': 10,
+            'file_access_retries': 5,
             'windowsfilenames': True,
             'logger': YtdlpGuiLogger(self.log_callback),
         }
 
-        # Aktifkan impersonation Chrome otomatis via curl_cffi jika tersedia untuk menembus proteksi Cloudflare/TikTok/dll
-        try:
-            from yt_dlp.networking.impersonate import ImpersonateTarget
-            ydl_opts['impersonate'] = ImpersonateTarget.from_str('chrome')
-        except Exception:
-            pass
+        if use_impersonate:
+            try:
+                from yt_dlp.networking.impersonate import ImpersonateTarget
+                ydl_opts['impersonate'] = ImpersonateTarget.from_str('chrome')
+            except Exception:
+                pass
 
         self._apply_cookie_options(ydl_opts, browser_cookie, custom_user_agent)
         return ydl_opts
@@ -162,18 +165,15 @@ class Downloader:
         self._emit_log("INFO", f"🔧 FFmpeg terdeteksi di: {self.ffmpeg_path}")
 
         attempts = [
-            {"label": "Mode Utama (Cookies + Impersonasi)", "cookie": browser_cookie, "use_impersonate": True},
+            {"label": "Mode Standar Cepat", "cookie": browser_cookie, "use_impersonate": False},
+            {"label": "Mode Impersonasi Browser (Anti-Cloudflare)", "cookie": browser_cookie, "use_impersonate": True},
         ]
-        # Jika memakai cookies dan gagal (misal DB Chrome terkunci atau cookies kadaluarsa), coba fallback tanpa cookies
         if browser_cookie and browser_cookie not in ("Tanpa Login", "none", "auto"):
-            attempts.append({"label": "Mode Fallback (Tanpa Cookies)", "cookie": "Tanpa Login", "use_impersonate": True})
-        attempts.append({"label": "Mode Standar Kompatibilitas", "cookie": "Tanpa Login", "use_impersonate": False})
+            attempts.append({"label": "Mode Fallback (Tanpa Cookies)", "cookie": "Tanpa Login", "use_impersonate": False})
 
         last_error = ""
         for idx, att in enumerate(attempts, 1):
-            ydl_opts = self._build_base_opts(att["cookie"], custom_user_agent)
-            if not att["use_impersonate"]:
-                ydl_opts.pop('impersonate', None)
+            ydl_opts = self._build_base_opts(att["cookie"], custom_user_agent, use_impersonate=att["use_impersonate"])
 
             try:
                 if idx > 1:
@@ -183,7 +183,6 @@ class Downloader:
                     if not info:
                         continue
 
-                    # Jika playlist/multi_video (seperti beberapa video Bilibili atau carousel Instagram/TikTok)
                     if 'entries' in info and info['entries']:
                         entries = [e for e in info['entries'] if e]
                         if entries:
@@ -328,12 +327,12 @@ class Downloader:
         format_str = self._get_format_string(quality)
 
         attempts = [
-            {"label": "Strategi Utama", "cookie": browser_cookie, "fmt": format_str},
+            {"label": "Strategi Utama (Direct Stream)", "cookie": browser_cookie, "fmt": format_str, "use_impersonate": False, "chunk": None},
+            {"label": "Strategi Chunked Stream (Anti-Putus CDN)", "cookie": browser_cookie, "fmt": format_str, "use_impersonate": False, "chunk": 5242880},
         ]
         if browser_cookie and browser_cookie not in ("Tanpa Login", "none", "auto"):
-            attempts.append({"label": "Strategi Fallback (Tanpa Cookies)", "cookie": "Tanpa Login", "fmt": format_str})
-        if format_str != "bv*+ba/b":
-            attempts.append({"label": "Strategi Format Universal (Best)", "cookie": "Tanpa Login", "fmt": "bv*+ba/b"})
+            attempts.append({"label": "Strategi Fallback (Tanpa Cookies)", "cookie": "Tanpa Login", "fmt": format_str, "use_impersonate": False, "chunk": 5242880})
+        attempts.append({"label": "Strategi Impersonasi Browser", "cookie": browser_cookie, "fmt": "bv*+ba/b", "use_impersonate": True, "chunk": None})
 
         last_error = ""
         for idx, att in enumerate(attempts, 1):
@@ -359,13 +358,15 @@ class Downloader:
                     'preferredcodec': 'm4a',
                 })
 
-            ydl_opts = self._build_base_opts(att["cookie"], custom_user_agent)
+            ydl_opts = self._build_base_opts(att["cookie"], custom_user_agent, use_impersonate=att["use_impersonate"])
             ydl_opts.update({
                 'format': att["fmt"],
                 'outtmpl': os.path.join(out_dir, '%(title).180B.%(ext)s'),
                 'progress_hooks': [progress_hook],
                 'concurrent_fragment_downloads': 4,
             })
+            if att["chunk"]:
+                ydl_opts['http_chunk_size'] = att["chunk"]
 
             if include_subtitles and subtitle_language and subtitle_language != "Tidak ada":
                 ydl_opts['writesubtitles'] = True
@@ -391,11 +392,12 @@ class Downloader:
                 ydl_opts['postprocessors'] = postprocessors
 
             try:
+                if idx > 1:
+                    self._emit_log("WARNING", f"🔄 Mencoba ulang dengan {att['label']} (Percobaan {idx}/{len(attempts)})...")
                 self._emit_log("INFO", f"🚀 Memulai unduhan [{att['label']}]: {url} (Kualitas: {quality}, Format Selector: {att['fmt']})")
                 with yt_dlp.YoutubeDL(ydl_opts) as ydl: # type: ignore
                     info = ydl.extract_info(url, download=True)
 
-                    # Jika multi_video / playlist, ambil entri pertama untuk nama file
                     target_info = info
                     if 'entries' in info and info['entries']:
                         entries = [e for e in info['entries'] if e]
@@ -406,7 +408,6 @@ class Downloader:
                     base = os.path.splitext(final_filename)[0]
                     downloaded_file = final_filename
 
-                    # Cek dari requested_downloads jika ada filepath aktual
                     req_dls = target_info.get('requested_downloads') or info.get('requested_downloads') or []
                     for rd in req_dls:
                         fp = rd.get('filepath')
