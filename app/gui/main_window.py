@@ -269,7 +269,8 @@ class DownloadWorker(QThread):
             out_dir=self.p['out_dir'],
             browser_cookie=self.p['cookies_data'],
             target_format=self.p['target_fmt'],
-            custom_user_agent=self.p.get('user_agent', '')
+            custom_user_agent=self.p.get('user_agent', ''),
+            include_metadata=self.p.get('inc_meta', False)
         )
 
     def cancel(self):
@@ -574,6 +575,16 @@ class MainWindow(QMainWindow):
         thm_row.addWidget(self.thm_fmt)
         thm_v.addLayout(thm_row)
         row_settings_2.addWidget(thm_box)
+
+        # --- 👇 TAMBAHKAN KODE INI 👇 ---
+        meta_box = QFrame()
+        meta_box.setStyleSheet("background-color: #1f2335; border-radius: 6px; padding: 5px;")
+        meta_v = QVBoxLayout(meta_box)
+        meta_v.setContentsMargins(6, 4, 6, 4)
+        self.meta_cb = QCheckBox("🏷️ Embed Metadata & Chapter")
+        self.meta_cb.setChecked(True)
+        meta_v.addWidget(self.meta_cb)
+        row_settings_2.addWidget(meta_box)
 
         opt_layout.addLayout(row_settings_2)
         self.main_layout.addWidget(opt_group)
@@ -956,7 +967,8 @@ class MainWindow(QMainWindow):
             'sub_fmt': self.sub_fmt.currentText(),
             'inc_thm': self.thm_cb.isChecked(),
             'thm_fmt': self.thm_fmt.currentText(),
-            'target_fmt': target_fmt
+            'target_fmt': target_fmt,
+            'inc_meta': self.meta_cb.isChecked()
         }
 
         self.download_worker = DownloadWorker(p)

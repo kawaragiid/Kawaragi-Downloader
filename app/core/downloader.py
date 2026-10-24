@@ -266,7 +266,7 @@ class Downloader:
                  subtitle_language: str = "en", subtitle_format: str = "srt",
                  include_thumbnail: bool = False, thumbnail_format: str = "jpg",
                  out_dir: str = "", browser_cookie: str = "Tanpa Login",
-                 target_format: str = "Otomatis", custom_user_agent: str = ""):
+                 target_format: str = "Otomatis", custom_user_agent: str = "", include_metadata: bool = False):
 
         self.is_cancelled = False
         if not out_dir:
@@ -387,6 +387,18 @@ class Downloader:
                         'format': thumbnail_format,
                         'when': 'before_dl'
                     })
+
+            if include_meta:
+                postprocessors.append({
+                    'key': 'FFmpegMetadata',
+                    'add_chapters': True,
+                    'add_metadata': True,
+                })
+                if include_thumbnail:
+                    postprocessors.append({
+                        'key': 'EmbedThumbnail',
+                        'already_have_thumbnail': False,
+                    })       
 
             if postprocessors:
                 ydl_opts['postprocessors'] = postprocessors

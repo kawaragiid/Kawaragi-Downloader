@@ -1,0 +1,3857 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+app/
+  core/
+    __init__.py
+    config.py
+    downloader.py
+    ffmpeg_handler.py
+    subtitle_handler.py
+    thumbnail_handler.py
+  gui/
+    __init__.py
+    main_window.py
+    widgets.py
+  utils/
+    __init__.py
+    file_utils.py
+    format_utils.py
+    log_utils.py
+    validation.py
+  __init__.py
+assets/
+  license.txt
+  logo.ico
+  logo.png
+  musik.wav
+  preview_ss.png
+  readme_after_install.txt
+  sidebar_logo.bmp
+  ui_utama.png
+Kawaragi-Trigger/
+  background.js
+  install_extension.bat
+  logo.png
+  manifest.json
+  popup.html
+  popup.js
+tests/
+  test_downloader.py
+.gitignore
+config.json
+download_history.txt
+installer_script.iss
+kawaragi_downloader.txt
+kawaragi.spec
+KawaragiDownloader.spec
+main.py
+main.spec
+README.md
+requirements.txt
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="app/core/__init__.py">
+
+</file>
+
+<file path="app/gui/__init__.py">
+
+</file>
+
+<file path="app/utils/__init__.py">
+
+</file>
+
+<file path="app/utils/format_utils.py">
+def get_format_options(format_type: str) -> str:
+    """
+    Strategi Anti-Gagal:
+    Selalu ambil kualitas video dan audio terbaik yang tersedia (bestvideo+bestaudio).
+    Jika terpisah, yt-dlp akan menggabungkannya.
+    Jika tidak ada format gabungan, ambil format tunggal terbaik (/best).
+    """
+    return "bestvideo+bestaudio/best"
+</file>
+
+<file path="app/__init__.py">
+
+</file>
+
+<file path="assets/license.txt">
+KAWARAGI DOWNLOADER - END USER LICENSE AGREEMENT (EULA)
+=================================================================
+
+"Kalau hanya satu orang saja yang memilikinya, itu bukan anugerah. Itu milik semua orang." 
+— Monster (2023), Hirokazu Koreeda
+
+Dengan menginstal dan menggunakan perangkat lunak ini, kamu menyetujui prinsip-prinsip berikut:
+
+1. KEJUJURAN PERSPEKTIF
+Seperti halnya kebenaran yang dilihat dari sudut pandang berbeda di dunia ini, aplikasi ini diciptakan untuk membantu tugasmu secara transparan tanpa maksud tersembunyi.
+
+2. KEBEBASAN YANG BERTANGGUNG JAWAB
+Gunakan perangkat lunak ini dengan bijak. Apa yang kamu unduh dan simpan adalah cerminan dari pilihan dan tanggung jawabmu sendiri sebagai manusia yang merdeka.
+
+3. BATASAN KARYA
+Perangkat lunak ini didistribusikan "apa adanya", tanpa jaminan mutlak bahwa dunia ini bebas dari kerumitan, namun dibuat untuk mempermudah harimu.
+
+Dengan melanjutkan instalasi, kamu memilih untuk melihat proses ini hingga selesai.
+</file>
+
+<file path="assets/readme_after_install.txt">
+PROSES INSTALASI SELESAI - KAWARAGI DOWNLOADER V27.0.0
+=================================================================
+
+"Apakah kita terlahir kembali sebagai sesuatu yang baru, atau tetap berjalan di jalan yang sama?"
+— Monster (2023)
+
+Pemasangan komponen inti telah berhasil diselesaikan dengan tenang di sistemmu:
+- Direktori utama, ffmpeg, dan modul pendukung kini telah terhubung pada tempatnya yang semestinya.
+- Jangan memindahkan atau menghapus komponen yang telah terpasang, agar aplikasi ini dapat terus bekerja menyertai aktivitasmu.
+
+Tutup jendela ini, tarik napas dalam-dalam, dan mulailah hari yang baru. 
+Aplikasi siap untuk dijalankan. 🎬✨
+</file>
+
+<file path="Kawaragi-Trigger/install_extension.bat">
+@echo off
+title Asisten Pemasangan Ekstensi Kawaragi Trigger
+set "EXT_DIR=%~dp0"
+if "%EXT_DIR:~-1%"=="\" set "EXT_DIR=%EXT_DIR:~0,-1%"
+
+echo ========================================================
+echo   PEMASANGAN EKSTENSI BROWSER KAWARAGI TRIGGER v2.0
+echo ========================================================
+echo.
+echo [1/3] Menyalin lokasi folder ekstensi ke Clipboard...
+echo|set /p="%EXT_DIR%"|clip
+echo       Lokasi: %EXT_DIR%
+echo.
+echo [2/3] Membuka Windows Explorer pada folder Kawaragi-Trigger...
+explorer /select,"%EXT_DIR%"
+echo.
+echo [3/3] Membuka halaman Ekstensi Browser...
+if exist "%ProgramFiles%\Google\Chrome\Application\chrome.exe" (
+    start "" "%ProgramFiles%\Google\Chrome\Application\chrome.exe" "chrome://extensions"
+) else if exist "%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe" (
+    start "" "%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe" "chrome://extensions"
+) else if exist "%LocalAppData%\Google\Chrome\Application\chrome.exe" (
+    start "" "%LocalAppData%\Google\Chrome\Application\chrome.exe" "chrome://extensions"
+) else if exist "%ProgramFiles(x86)%\Microsoft\Edge\Application\msedge.exe" (
+    start "" "%ProgramFiles(x86)%\Microsoft\Edge\Application\msedge.exe" "edge://extensions"
+)
+echo.
+echo CARA PASANG (10 DETIK):
+echo 1. Aktifkan "Developer mode" (Mode Pengembang) di pojok kanan atas browser.
+echo 2. Seret folder "Kawaragi-Trigger" dari Explorer ke jendela browser,
+echo    ATAU klik "Load unpacked" lalu tekan Ctrl+V dan Enter!
+echo.
+pause
+</file>
+
+<file path="Kawaragi-Trigger/popup.html">
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kawaragi Trigger</title>
+  <style>
+    body {
+      width: 310px;
+      margin: 0;
+      padding: 16px;
+      background-color: #1a1b26;
+      color: #c0caf5;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 13px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #414868;
+      padding-bottom: 10px;
+    }
+    .header img {
+      width: 34px;
+      height: 34px;
+      border-radius: 6px;
+    }
+    .header h2 {
+      margin: 0;
+      font-size: 15px;
+      color: #7aa2f7;
+    }
+    .header p {
+      margin: 2px 0 0 0;
+      font-size: 11px;
+      color: #7982a9;
+    }
+    .status-box {
+      background-color: #24283b;
+      border: 1px solid #414868;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #f7768e;
+      display: inline-block;
+    }
+    .dot.online {
+      background-color: #9ece6a;
+      box-shadow: 0 0 6px #9ece6a;
+    }
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 6px;
+      padding: 10px;
+      font-weight: bold;
+      font-size: 13px;
+      cursor: pointer;
+      margin-bottom: 8px;
+      transition: opacity 0.15s;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .btn-primary {
+      background-color: #9ece6a;
+      color: #1a1b26;
+    }
+    .btn-secondary {
+      background-color: #7aa2f7;
+      color: #1a1b26;
+    }
+    .msg {
+      font-size: 11px;
+      color: #a9b1d6;
+      text-align: center;
+      min-height: 16px;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="logo.png" alt="Logo">
+    <div>
+      <h2>Kawaragi Trigger v2.0</h2>
+      <p>Bridge Anti-Blokir &amp; Cookies</p>
+    </div>
+  </div>
+
+  <div class="status-box">
+    <span id="statusDot" class="dot"></span>
+    <span id="statusText">Memeriksa koneksi...</span>
+  </div>
+
+  <button id="btnSendTab" class="btn-primary">🚀 Kirim Tab Ini ke Kawaragi</button>
+  <button id="btnSyncCookies" class="btn-secondary">🔑 Sinkronkan Cookies Sekarang</button>
+
+  <div id="msgBox" class="msg"></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
+</file>
+
+<file path="Kawaragi-Trigger/popup.js">
+document.addEventListener("DOMContentLoaded", () => {
+    const statusDot = document.getElementById("statusDot");
+    const statusText = document.getElementById("statusText");
+    const btnSendTab = document.getElementById("btnSendTab");
+    const btnSyncCookies = document.getElementById("btnSyncCookies");
+    const msgBox = document.getElementById("msgBox");
+
+    function updateStatusUI(connected) {
+        if (connected) {
+            statusDot.classList.add("online");
+            statusText.textContent = "Terhubung ke Aplikasi Desktop";
+            statusText.style.color = "#9ece6a";
+            btnSendTab.disabled = false;
+            btnSyncCookies.disabled = false;
+        } else {
+            statusDot.classList.remove("online");
+            statusText.textContent = "Aplikasi Desktop Belum Aktif";
+            statusText.style.color = "#f7768e";
+            btnSendTab.disabled = true;
+            btnSyncCookies.disabled = true;
+            msgBox.textContent = "Pastikan Kawaragi Downloader sedang berjalan.";
+        }
+    }
+
+    chrome.runtime.sendMessage({ action: "check_status" }, (res) => {
+        updateStatusUI(res && res.connected);
+    });
+
+    btnSendTab.addEventListener("click", async () => {
+        msgBox.textContent = "Mengirim link & cookies ke aplikasi...";
+        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        if (!tab || !tab.url || !tab.url.startsWith("http")) {
+            msgBox.textContent = "❌ Tab ini bukan halaman web video yang valid.";
+            return;
+        }
+        chrome.runtime.sendMessage({
+            action: "send_tab",
+            url: tab.url,
+            title: tab.title
+        }, (res) => {
+            if (res && res.success) {
+                msgBox.style.color = "#9ece6a";
+                msgBox.textContent = "✅ Berhasil dikirim ke Kawaragi Downloader!";
+            } else {
+                msgBox.style.color = "#f7768e";
+                msgBox.textContent = "❌ Gagal mengirim ke aplikasi.";
+            }
+        });
+    });
+
+    btnSyncCookies.addEventListener("click", async () => {
+        msgBox.textContent = "Menyinkronkan seluruh cookies...";
+        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        const targetUrl = (tab && tab.url && tab.url.startsWith("http")) ? tab.url : "ALL";
+        chrome.runtime.sendMessage({
+            action: "sync_cookies",
+            url: targetUrl
+        }, (res) => {
+            if (res && res.success) {
+                msgBox.style.color = "#9ece6a";
+                msgBox.textContent = "✅ Cookies berhasil disinkronkan!";
+            } else {
+                msgBox.style.color = "#f7768e";
+                msgBox.textContent = "❌ Gagal mengirim cookies ke aplikasi.";
+            }
+        });
+    });
+});
+</file>
+
+<file path=".gitignore">
+# Mengabaikan folder hasil build
+dist/
+build/
+Output/
+__pycache__/
+
+# Mengabaikan file raksasa dan log
+*.exe
+*.log
+temp_cookies.txt
+</file>
+
+<file path="config.json">
+{
+    "last_directory": "F:/"
+}
+</file>
+
+<file path="download_history.txt">
+https://youtu.be/cgSl_BjWgl8?si=cgbhoMM3hE4-LbY0 -> C:/Users/tolpa/Videos/test
+https://tver.jp/episodes/epre4ef9my -> C:/Users/tolpa/Videos/Houkago Karte
+https://tver.jp/episodes/epre4ef9my -> C:/Users/tolpa/Videos/Houkago Karte
+https://tver.jp/episodes/epre4ef9my -> C:/Users/tolpa/Videos/Houkago Karte
+https://tver.jp/episodes/epre4ef9my -> C:/Users/tolpa/Videos/Houkago Karte
+https://tver.jp/episodes/epre4ef9my -> C:/Users/tolpa/Videos/Houkago Karte
+https://tver.jp/episodes/epre4ef9my -> C:/Users/tolpa/Videos/Houkago Karte
+https://tver.jp/episodes/epre4ef9my -> C:/Users/tolpa/Videos/Houkago Karte
+https://tver.jp/episodes/epre4ef9my -> C:/Users/tolpa/Videos/Houkago Karte
+https://tver.jp/episodes/epre4ef9my -> C:/Users/tolpa/Videos/Houkago Karte
+https://tver.jp/episodes/epegibftql -> C:/Users/tolpa/Videos/Tengu no Daidokoro
+https://tver.jp/episodes/epuolyuetq -> C:/Users/tolpa/Videos/Tengu no Daidokoro
+https://tver.jp/episodes/epig3vvo4e -> C:/Users/tolpa/Videos/Houkago Karte
+</file>
+
+<file path="kawaragi_downloader.txt">
+kawaragi_downloader/
+│
+├── app/
+│   ├── __init__.py             # Inisialisasi package Python
+│   ├── core/
+│   │   ├── __init__.py
+│   │   ├── downloader.py       # Abstraksi yt-dlp (unduh video/audio)
+│   │   ├── ffmpeg_utils.py     # Fungsi berbasis FFmpeg (konversi, trimming)
+│   │   ├── config.py           # Konfigurasi global aplikasi
+│   ├── gui/
+│   │   ├── __init__.py
+│   │   ├── main_window.py      # GUI utama dengan PyQt5
+│   │   ├── logic.py            # Logika dan interaksi untuk GUI
+│   ├── utils/
+│   │   ├── __init__.py
+│   │   ├── validation.py       # Validasi input URL dan parameter
+│   │   ├── log_utils.py        # Logging aktivitas aplikasi
+│   │   ├── file_utils.py       # Utility untuk file/direktori
+│   ├── features/
+│   │   ├── __init__.py
+│   │   ├── subtitles.py        # Fitur subtitle (unduh & konversi)
+│   │   ├── thumbnails.py       # Fitur thumbnail (unduh & modifikasi)
+│   │   ├── metadata.py         # Fitur metadata (info video/audio)
+│   └── workflows/
+│       ├── __init__.py
+│       ├── download_workflow.py # Workflow unduhan video/audio
+│       ├── process_workflow.py  # Workflow untuk post-processing (FFmpeg)
+│
+├── assets/                     # Resource statis (ikon, logo, dll.)
+│   ├── logo.png
+│
+├── tests/                      # Tes unit dan integrasi
+│   ├── test_core.py
+│   ├── test_gui.py
+│   ├── test_features.py
+│
+├── docs/                       # Dokumentasi pengembangan
+│   ├── api_docs.md             # Dokumentasi API internal (yt-dlp/FFmpeg)
+│   ├── user_manual.md          # Panduan pengguna aplikasi
+│
+├── requirements.txt            # Dependensi aplikasi
+├── README.md                   # Dokumentasi proyek
+├── main.py                     # Entry point aplikasi
+└── setup.py                    # Setup script untuk distribusi aplikasi
+
+Berikut adalah daftar fitur dan fungsi yang harus dimiliki oleh aplikasi *Kawaragi Downloader* berdasarkan struktur folder yang telah disediakan:
+
+### 1. Fungsi Utama Aplikasi
+Aplikasi *Kawaragi Downloader* adalah aplikasi berbasis GUI yang memungkinkan pengguna untuk mengunduh video atau audio dari berbagai platform, dengan kemampuan untuk melakukan proses lebih lanjut menggunakan FFmpeg. Beberapa fitur utama aplikasi ini mencakup unduhan video, audio, subtitle, modifikasi metadata, dan pengelolaan file. Berikut ini adalah penjelasan lebih sederhana dari setiap komponen dan fitur yang perlu dimiliki:
+
+### 2. Fitur dan Fungsi Berdasarkan Struktur Folder
+
+#### a. Folder `core/`
+- **downloader.py**: Fitur utama untuk mengunduh video dan audio.
+  - Mengunduh video dan audio dari URL.
+  - Mendukung pengaturan kualitas, format, dan subtitle yang diinginkan.
+  - Dapat menangani unduhan batch (banyak file sekaligus).
+
+- **ffmpeg_utils.py**: Fungsi untuk pengolahan video/audio menggunakan FFmpeg.
+  - Mengonversi format video/audio.
+  - Memotong bagian tertentu dari video/audio.
+  - Menggabungkan subtitle dengan video.
+
+- **config.py**: Mengelola konfigurasi global aplikasi.
+  - Menyimpan pengaturan seperti direktori penyimpanan default, kualitas unduhan, dan opsi format.
+
+#### b. Folder `gui/`
+- **main_window.py**: Antarmuka pengguna menggunakan PyQt5.
+  - Antarmuka yang sederhana dan mudah digunakan.
+  - Pengguna bisa memasukkan URL, memilih format, dan kualitas unduhan.
+  - Menampilkan status unduhan dengan progress bar.
+
+- **logic.py**: Menghubungkan logika antara GUI dan *backend* aplikasi.
+  - Mengelola interaksi pengguna, memvalidasi input, dan menampilkan pesan kesalahan jika ada input yang tidak valid.
+  - Menjalankan workflow unduhan sesuai dengan pilihan pengguna.
+
+#### c. Folder `utils/`
+- **validation.py**: Validasi input pengguna.
+  - Memastikan URL yang dimasukkan valid.
+  - Memvalidasi parameter seperti format video/audio yang didukung.
+
+- **log_utils.py**: Logging aktivitas aplikasi.
+  - Mencatat aktivitas unduhan, kesalahan, dan aktivitas lainnya.
+  - Membantu dalam debugging ketika terjadi masalah.
+
+- **file_utils.py**: Mengelola file dan direktori.
+  - Membuat direktori penyimpanan jika belum ada.
+  - Mengelola file seperti menimpa file yang ada atau memberi nama baru.
+
+#### d. Folder `features/`
+- **subtitles.py**: Fitur terkait subtitle video.
+  - Mengunduh subtitle yang tersedia dari video.
+  - Mengonversi subtitle ke format lain (misalnya `.vtt` ke `.srt`).
+  - Pengguna dapat memilih untuk meng-embed subtitle ke dalam video yang diunduh.
+
+- **thumbnails.py**: Fitur untuk mengunduh dan mengelola thumbnail video.
+  - Mengunduh thumbnail video.
+  - Mengubah ukuran atau format thumbnail jika diperlukan.
+  - Pengguna dapat memilih untuk meng-embed thumbnail ke dalam video yang diunduh.
+
+- **metadata.py**: Menampilkan informasi terkait video atau audio.
+  - Membaca metadata seperti judul, deskripsi, dan informasi teknis video/audio.
+  - Pengguna dapat melihat informasi ini sebelum mengunduh.
+
+#### e. Folder `workflows/`
+- **download_workflow.py**: Mengelola proses unduhan video/audio.
+  - Workflow ini mencakup seluruh tahapan unduhan, mulai dari validasi URL hingga unduhan menggunakan `downloader.py`.
+
+- **process_workflow.py**: Workflow untuk proses lanjutan (*post-processing*).
+  - Menjalankan fitur seperti konversi format dan trimming menggunakan `ffmpeg_utils.py`.
+
+#### f. Folder `tests/`
+- **test_core.py, test_gui.py, test_features.py**: Unit dan integrasi tes.
+  - Menguji fungsi unduhan, GUI, dan fitur tambahan.
+  - Pengujian untuk validasi input, pengelolaan file, dan error handling.
+
+#### g. Folder `docs/`
+- **api_docs.md**: Dokumentasi API internal untuk yt-dlp dan FFmpeg.
+  - Menjelaskan fungsi-fungsi API yang digunakan dalam aplikasi.
+
+- **user_manual.md**: Panduan pengguna.
+  - Memberikan petunjuk cara menginstal, menggunakan aplikasi, dan fitur yang tersedia.
+
+#### h. File Tambahan
+- **main.py**: Entry point aplikasi.
+  - Menginisialisasi GUI dan memulai aplikasi.
+
+- **setup.py**: Skrip untuk distribusi aplikasi.
+  - Mengemas aplikasi agar mudah diinstal oleh pengguna lain.
+
+### 3. Fitur Utama yang Harus Dimiliki Aplikasi
+1. **Pengunduhan Video/Audio**: Mengunduh video/audio dari berbagai platform dengan kualitas dan format yang beragam.
+2. **Proses Post-Processing**: Menggunakan FFmpeg untuk konversi format, trimming, dan penggabungan subtitle.
+3. **GUI yang Intuitif**: Antarmuka yang mudah dipahami dan digunakan oleh pengguna pemula.
+4. **Manajemen File dan Konfigurasi**: Mengelola penyimpanan file yang diunduh dan pengaturan aplikasi.
+5. **Subtitle dan Metadata**: Mengunduh subtitle dan menampilkan informasi video.
+6. **Logging dan Validasi Input**: Logging aktivitas aplikasi dan validasi input untuk mencegah kesalahan pengguna.
+7. **Unduhan Thumbnail**: Mengunduh thumbnail dari video dan memberikan opsi untuk meng-embed thumbnail ke dalam file video yang diunduh.
+8. **Embed Subtitle**: Pengguna dapat mengunduh subtitle dan memilih untuk meng-embed subtitle tersebut pada video yang diunduh.
+
+### 4. Opsi Pengunduhan yang Fleksibel
+- **Pilihan Format**: Pengguna dapat memilih untuk mengunduh dalam berbagai format seperti MP4, MP3, AVI, dll.
+- **Kualitas Video/Audio**: Tersedia opsi kualitas (contoh: 1080p, 720p, 480p) sehingga pengguna bisa menyesuaikan dengan kebutuhan mereka.
+- **Unduhan Subtitle**: Pengguna dapat memilih untuk mengunduh subtitle dalam berbagai bahasa jika tersedia.
+- **Pengaturan Output**: Pengguna dapat mengatur lokasi penyimpanan file unduhan sesuai keinginan.
+- **Batch Download**: Mendukung pengunduhan beberapa file sekaligus dengan sekali klik.
+- **Trim dan Konversi Otomatis**: Pengguna dapat mengatur apakah ingin langsung melakukan trimming atau konversi setelah unduhan selesai.
+- **Unduhan Thumbnail dan Embed**: Pengguna dapat mengunduh thumbnail dan memilih apakah ingin menempelkan thumbnail tersebut pada video yang diunduh.
+- **Embed Subtitle**: Pengguna dapat memilih untuk meng-embed subtitle langsung ke dalam video yang diunduh.
+
+### 5. Gambar Tampilan Aplikasi
+Tampilan Aplikasi Kawaragi Downloader
+Main Window (Jendela Utama):
+
+Bagian Input URL: Pada bagian ini terdapat kotak teks tempat pengguna dapat memasukkan URL video atau audio yang ingin diunduh.
+Pilihan Format dan Kualitas: Terdapat dropdown yang memudahkan pengguna untuk memilih format file (MP4, MP3, AVI, dll) serta kualitas video/audio (contoh: 1080p, 720p).
+Tombol Pengaturan Lainnya: Ada beberapa tombol tambahan untuk mengatur opsi seperti unduhan subtitle, download thumbnail, dan embed thumbnail.
+Progress Bar: Pengguna dapat melihat progress unduhan secara real-time.
+Tombol Mulai: Setelah memilih semua opsi, pengguna dapat memulai unduhan dengan menekan tombol "Mulai Unduh".
+Opsi Lanjutan:
+
+Pengaturan Trimming: Menu pengaturan untuk memotong bagian tertentu dari video/audio.
+Output Directory: Bagian untuk menentukan lokasi penyimpanan file yang diunduh.
+Opsi Embed Thumbnail: Pengguna dapat memilih apakah thumbnail yang diunduh akan di-embed ke dalam video.
+User Experience (UX):
+
+Sederhana dan Mudah Digunakan: Semua fitur penting tersedia di halaman utama, memudahkan pengguna pemula untuk memahami fungsionalitas tanpa perlu banyak instruksi.
+Notifikasi Selesai: Setelah proses unduhan selesai, pengguna akan mendapat notifikasi yang memberitahukan bahwa file sudah siap digunakan.
+</file>
+
+<file path="kawaragi.spec">
+# -*- mode: python ; coding: utf-8 -*-
+
+block_cipher = None
+
+a = Analysis(
+    ['app/main.py'],
+    pathex=[],
+    binaries=[],
+    datas=[
+        ('assets/logo.png', 'assets'),
+        ('config.json', '.'),
+    ],
+    hiddenimports=[],
+    hookspath=[],
+    runtime_hooks=[],
+    excludes=[],
+    win_no_prefer_redirects=False,
+    win_private_assemblies=False,
+    cipher=block_cipher,
+    noarchive=False,
+)
+pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
+exe = EXE(
+    pyz,
+    a.scripts,
+    [],
+    exclude_binaries=True,
+    name='Kawaragi-Downloader',
+    debug=False,
+    bootloader_ignore_signals=False,
+    strip=False,
+    upx=True,
+    upx_exclude=[],
+    runtime_tmpdir=None,
+    console=False,
+)
+coll = COLLECT(
+    exe,
+    a.binaries,
+    a.zipfiles,
+    a.datas,
+    strip=False,
+    upx=True,
+    upx_exclude=[],
+    name='Kawaragi-Downloader',
+)
+</file>
+
+<file path="main.spec">
+# -*- mode: python ; coding: utf-8 -*-
+
+
+a = Analysis(
+    ['main.py'],
+    pathex=[],
+    binaries=[],
+    datas=[],
+    hiddenimports=[],
+    hookspath=[],
+    hooksconfig={},
+    runtime_hooks=[],
+    excludes=[],
+    noarchive=False,
+    optimize=0,
+)
+pyz = PYZ(a.pure)
+
+exe = EXE(
+    pyz,
+    a.scripts,
+    a.binaries,
+    a.datas,
+    [],
+    name='main',
+    debug=False,
+    bootloader_ignore_signals=False,
+    strip=False,
+    upx=True,
+    upx_exclude=[],
+    runtime_tmpdir=None,
+    console=False,
+    disable_windowed_traceback=False,
+    argv_emulation=False,
+    target_arch=None,
+    codesign_identity=None,
+    entitlements_file=None,
+)
+</file>
+
+<file path="app/core/ffmpeg_handler.py">
+import subprocess
+import os
+import shutil
+import random
+from app.utils.file_utils import get_ffmpeg_path
+from app.utils.log_utils import setup_logger
+
+logger = setup_logger("ffmpeg_handler", "ffmpeg.log")
+
+class FFmpegHandler:
+    def __init__(self, ffmpeg_path=None):
+        self.ffmpeg_path = ffmpeg_path or get_ffmpeg_path()
+
+    def convert(self, input_file: str, output_ext: str) -> str:
+        """Konversi file ke format tujuan (mp4, webm, mp3, aac)."""
+        if not os.path.exists(input_file):
+            raise FileNotFoundError(f"File tidak ditemukan: {input_file}")
+
+        base_path = os.path.splitext(input_file)[0]
+        output_file = f"{base_path}.{output_ext}"
+        
+        if input_file.lower() == output_file.lower():
+            return input_file
+
+        command = [self.ffmpeg_path, "-y", "-i", input_file]
+        
+        if output_ext.lower() in ["mp3", "aac"]:
+            if output_ext.lower() == "mp3":
+                command += ["-vn", "-acodec", "libmp3lame", "-q:a", "2"]
+            else:
+                command += ["-vn", "-acodec", "aac", "-b:a", "192k"]
+        elif output_ext.lower() == "mp4":
+            command += ["-c:v", "libx264", "-preset", "fast", "-crf", "22", "-c:a", "aac", "-b:a", "192k"]
+        elif output_ext.lower() == "webm":
+            command += ["-c:v", "libvpx-vp9", "-crf", "30", "-b:v", "0", "-c:a", "libopus"]
+        else:
+            command += ["-c", "copy"]
+        
+        command.append(output_file)
+        logger.info(f"Menjalankan konversi FFmpeg: {' '.join(command)}")
+        
+        flags = subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0
+        subprocess.run(command, check=True, creationflags=flags)
+        
+        # Hapus file mentah setelah konversi berhasil
+        if os.path.exists(output_file) and os.path.getsize(output_file) > 0:
+            if os.path.exists(input_file) and input_file != output_file:
+                try:
+                    os.remove(input_file)
+                except Exception as e:
+                    logger.warning(f"Gagal menghapus file mentah: {e}")
+            return output_file
+        return input_file
+
+    def take_random_screenshots(self, input_file: str, count: int, duration: float, output_dir: str) -> list:
+        """Mengambil screenshot secara acak di sepanjang durasi video."""
+        if not os.path.exists(input_file) or duration <= 0 or count <= 0:
+            return []
+
+        shot_dir = os.path.join(output_dir, "kawaragi_temp_screenshots")
+        if os.path.exists(shot_dir):
+            try:
+                shutil.rmtree(shot_dir)
+            except Exception:
+                pass
+        os.makedirs(shot_dir, exist_ok=True)
+
+        generated_files = []
+        safe_duration = max(1.0, duration - 10.0)
+        start_offset = min(5.0, duration * 0.1)
+        
+        timestamps = []
+        for _ in range(count):
+            time_ss = start_offset + (random.random() * safe_duration)
+            timestamps.append(time_ss)
+        
+        timestamps.sort()
+
+        flags = subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0
+        for i, ts in enumerate(timestamps):
+            outfile = os.path.join(shot_dir, f"shot_{i+1:03d}.jpg")
+            command = [
+                self.ffmpeg_path, "-y",
+                "-ss", f"{ts:.2f}",
+                "-i", input_file,
+                "-vf", "scale=1280:-1",
+                "-frames:v", "1",
+                "-q:v", "2",
+                outfile
+            ]
+            try:
+                subprocess.run(command, check=True, creationflags=flags)
+                if os.path.exists(outfile) and os.path.getsize(outfile) > 0:
+                    generated_files.append(outfile)
+            except Exception as e:
+                logger.error(f"Gagal mengambil screenshot pada {ts:.2f}s: {e}")
+                
+        return generated_files
+</file>
+
+<file path="app/core/subtitle_handler.py">
+import os
+import subprocess
+from app.utils.file_utils import get_ffmpeg_path
+from app.utils.log_utils import setup_logger
+
+logger = setup_logger("subtitle_handler", "subtitle_handler.log")
+
+class SubtitleHandler:
+    @staticmethod
+    def convert_subtitle(input_file: str, output_format: str) -> str:
+        """Mengonversi subtitle ke format yang dipilih (srt, vtt, ass)."""
+        if not os.path.exists(input_file):
+            return ""
+            
+        base = os.path.splitext(input_file)[0]
+        output_file = f"{base}.{output_format}"
+        if input_file.lower() == output_file.lower():
+            return input_file
+
+        ffmpeg = get_ffmpeg_path()
+        command = [ffmpeg, "-y", "-i", input_file, output_file]
+        flags = subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0
+        try:
+            logger.info(f"Mengonversi {input_file} ke format {output_format}")
+            subprocess.run(command, check=True, creationflags=flags)
+            if os.path.exists(output_file):
+                logger.info(f"Subtitle berhasil dikonversi ke {output_file}")
+                return output_file
+        except subprocess.CalledProcessError as e:
+            logger.error(f"Error saat konversi subtitle: {e}")
+        return input_file
+</file>
+
+<file path="app/core/thumbnail_handler.py">
+import os
+import subprocess
+from app.utils.file_utils import get_ffmpeg_path
+from app.utils.log_utils import setup_logger
+
+logger = setup_logger("thumbnail_handler", "thumbnail_handler.log")
+
+class ThumbnailHandler:
+    @staticmethod
+    def convert_thumbnail(input_file: str, output_format: str) -> str:
+        """Mengonversi thumbnail ke format yang dipilih (jpg, png, webp)."""
+        if not os.path.exists(input_file):
+            return ""
+            
+        base = os.path.splitext(input_file)[0]
+        output_file = f"{base}.{output_format}"
+        if input_file.lower() == output_file.lower():
+            return input_file
+
+        ffmpeg = get_ffmpeg_path()
+        command = [ffmpeg, "-y", "-i", input_file, output_file]
+        flags = subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0
+        try:
+            logger.info(f"Mengonversi {input_file} ke format {output_format}")
+            subprocess.run(command, check=True, creationflags=flags)
+            if os.path.exists(output_file) and os.path.getsize(output_file) > 0:
+                logger.info(f"Thumbnail berhasil dikonversi ke {output_file}")
+                # Hapus file mentah
+                if input_file != output_file:
+                    try:
+                        os.remove(input_file)
+                    except Exception:
+                        pass
+                return output_file
+        except subprocess.CalledProcessError as e:
+            logger.error(f"Error saat konversi thumbnail: {e}")
+        return input_file
+</file>
+
+<file path="app/utils/validation.py">
+import re
+
+def is_valid_url(url: str) -> bool:
+    """Memvalidasi URL dengan cepat menggunakan regex (tanpa freeze)."""
+    if not url:
+        return False
+    url = url.strip()
+    url_regex = re.compile(
+        r'^(https?://)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(/.*)?$',
+        re.IGNORECASE
+    )
+    return bool(url_regex.match(url))
+</file>
+
+<file path="KawaragiDownloader.spec">
+# -*- mode: python ; coding: utf-8 -*-
+
+
+a = Analysis(
+    ['main.py'],
+    pathex=[],
+    binaries=[],
+    datas=[
+        ('assets', 'assets'),
+        ('Kawaragi-Trigger', 'Kawaragi-Trigger'),
+    ],
+    hiddenimports=['curl_cffi', 'requests'],
+    hookspath=[],
+    hooksconfig={},
+    runtime_hooks=[],
+    excludes=[],
+    noarchive=False,
+    optimize=0,
+)
+pyz = PYZ(a.pure)
+
+exe = EXE(
+    pyz,
+    a.scripts,
+    [],
+    exclude_binaries=True,
+    name='KawaragiDownloader',
+    debug=False,
+    bootloader_ignore_signals=False,
+    strip=False,
+    upx=True,
+    console=False,
+    disable_windowed_traceback=False,
+    argv_emulation=False,
+    target_arch=None,
+    codesign_identity=None,
+    entitlements_file=None,
+    icon=['assets\\logo.ico'],
+)
+coll = COLLECT(
+    exe,
+    a.binaries,
+    a.datas,
+    strip=False,
+    upx=True,
+    upx_exclude=[],
+    name='KawaragiDownloader',
+)
+</file>
+
+<file path="requirements.txt">
+yt-dlp>=2024.0.0
+PyQt5>=5.15.0
+requests>=2.28.0
+</file>
+
+<file path="app/core/config.py">
+import os
+import json
+import time
+
+class Config:
+    @staticmethod
+    def get_app_data_dir() -> str:
+        """Mendapatkan jalur aman untuk direktori data aplikasi di AppData."""
+        local_appdata = os.getenv('LOCALAPPDATA')
+        if not local_appdata:
+            local_appdata = os.path.join(os.path.expanduser('~'), 'AppData', 'Local')
+        app_data_dir = os.path.join(local_appdata, 'KawaragiDownloader')
+        os.makedirs(app_data_dir, exist_ok=True)
+        return app_data_dir
+
+    @staticmethod
+    def get_config_path() -> str:
+        """Mendapatkan jalur file config di AppData."""
+        return os.path.join(Config.get_app_data_dir(), 'config.json')
+
+    @staticmethod
+    def get_history_path() -> str:
+        """Mendapatkan jalur file riwayat unduhan."""
+        return os.path.join(Config.get_app_data_dir(), 'history.json')
+
+    @staticmethod
+    def load_config() -> dict:
+        config_path = Config.get_config_path()
+        if os.path.exists(config_path):
+            try:
+                with open(config_path, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+            except Exception:
+                pass
+        return {}
+
+    @staticmethod
+    def save_config(data: dict):
+        config_path = Config.get_config_path()
+        try:
+            with open(config_path, 'w', encoding='utf-8') as f:
+                json.dump(data, f, indent=2)
+        except Exception as e:
+            print(f"Gagal menyimpan config: {e}")
+
+    @staticmethod
+    def save_last_directory(directory: str):
+        data = Config.load_config()
+        data['last_dir'] = directory
+        Config.save_config(data)
+
+    @staticmethod
+    def load_last_directory() -> str:
+        data = Config.load_config()
+        last_dir = data.get('last_dir', '')
+        if last_dir and os.path.exists(last_dir):
+            return last_dir
+        # Default ke folder Downloads pengguna jika belum diset
+        downloads_dir = os.path.join(os.path.expanduser('~'), 'Downloads')
+        if os.path.exists(downloads_dir):
+            return downloads_dir
+        return os.getcwd()
+
+    @staticmethod
+    def save_history_entry(entry: dict):
+        """Menyimpan satu entri ke riwayat unduhan (maks 100 entri terbaru)."""
+        history_path = Config.get_history_path()
+        history = Config.load_history()
+        
+        entry['timestamp'] = entry.get('timestamp', time.strftime("%Y-%m-%d %H:%M:%S"))
+        # Simpan di paling atas (terbaru)
+        history.insert(0, entry)
+        # Batasi ke 100 entri
+        history = history[:100]
+        
+        try:
+            with open(history_path, 'w', encoding='utf-8') as f:
+                json.dump(history, f, indent=2, ensure_ascii=False)
+        except Exception as e:
+            print(f"Gagal menyimpan history: {e}")
+
+    @staticmethod
+    def load_history() -> list:
+        history_path = Config.get_history_path()
+        if os.path.exists(history_path):
+            try:
+                with open(history_path, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    if isinstance(data, list):
+                        return data
+            except Exception:
+                pass
+        return []
+
+    @staticmethod
+    def clear_history():
+        history_path = Config.get_history_path()
+        if os.path.exists(history_path):
+            try:
+                os.remove(history_path)
+            except Exception:
+                pass
+</file>
+
+<file path="app/gui/widgets.py">
+import os
+import subprocess
+import shutil
+from PyQt5.QtWidgets import (
+    QDialog, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
+    QScrollArea, QWidget, QGridLayout, QFrame, QCheckBox,
+    QTableWidget, QTableWidgetItem, QHeaderView, QMessageBox,
+    QLineEdit, QApplication
+)
+from PyQt5.QtGui import QPixmap, QCursor
+from PyQt5.QtCore import Qt
+from app.core.config import Config
+from app.utils.file_utils import get_extension_dir, find_browser_executable
+
+
+class ScreenshotPreviewDialog(QDialog):
+    def __init__(self, image_paths, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Pilih Cuplikan (Screenshot) untuk Disimpan")
+        self.resize(1000, 700)
+        self.setModal(True)
+        self.apply_theme()
+
+        self.layout = QVBoxLayout(self)
+        self.layout.setContentsMargins(20, 20, 20, 20)
+        self.layout.setSpacing(12)
+
+        label = QLabel("Pilih cuplikan gambar yang ingin Anda simpan ke folder tujuan:")
+        label.setStyleSheet("font-weight: bold; font-size: 15px; color: #7aa2f7;")
+        self.layout.addWidget(label)
+
+        self.scroll = QScrollArea()
+        self.scroll.setWidgetResizable(True)
+        self.scroll_content = QWidget()
+        self.grid = QGridLayout(self.scroll_content)
+        self.grid.setSpacing(15)
+        self.scroll.setWidget(self.scroll_content)
+        self.layout.addWidget(self.scroll)
+
+        self.checkboxes = []
+        cols = 3
+        for i, path in enumerate(image_paths):
+            row = i // cols
+            col = i % cols
+
+            container = QFrame()
+            container.setFrameShape(QFrame.StyledPanel)
+            container.setStyleSheet("background-color: #24283b; border-radius: 8px; border: 1px solid #414868;")
+            vbox = QVBoxLayout(container)
+            vbox.setContentsMargins(8, 8, 8, 8)
+
+            img_label = QLabel()
+            pixmap = QPixmap(path)
+            if not pixmap.isNull():
+                img_label.setPixmap(pixmap.scaled(300, 168, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+            img_label.setAlignment(Qt.AlignCenter)
+            vbox.addWidget(img_label)
+
+            cb = QCheckBox(f"Simpan Gambar #{i+1}")
+            cb.setChecked(True)
+            cb.setCursor(QCursor(Qt.PointingHandCursor))
+            cb.setProperty("file_path", path)
+            vbox.addWidget(cb)
+            self.checkboxes.append(cb)
+            self.grid.addWidget(container, row, col)
+
+        btn_layout = QHBoxLayout()
+        self.btn_select_all = QPushButton("Pilih Semua")
+        self.btn_select_all.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_select_all.clicked.connect(self.select_all)
+
+        self.btn_save = QPushButton("Simpan Gambar Terpilih")
+        self.btn_save.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_save.setStyleSheet("background-color: #9ece6a; color: #1a1b26; font-weight: bold;")
+        self.btn_save.clicked.connect(self.accept)
+
+        self.btn_cancel = QPushButton("Buang Semua Cuplikan")
+        self.btn_cancel.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_cancel.setStyleSheet("background-color: #f7768e; color: white;")
+        self.btn_cancel.clicked.connect(self.reject)
+
+        btn_layout.addWidget(self.btn_select_all)
+        btn_layout.addStretch()
+        btn_layout.addWidget(self.btn_cancel)
+        btn_layout.addWidget(self.btn_save)
+        self.layout.addLayout(btn_layout)
+
+    def select_all(self):
+        all_checked = all(cb.isChecked() for cb in self.checkboxes)
+        for cb in self.checkboxes:
+            cb.setChecked(not all_checked)
+        self.btn_select_all.setText("Batal Pilih Semua" if not all_checked else "Pilih Semua")
+
+    def get_selected_files(self):
+        selected = []
+        for cb in self.checkboxes:
+            if cb.isChecked():
+                selected.append(cb.property("file_path"))
+        return selected
+
+    def apply_theme(self):
+        self.setStyleSheet("""
+            QDialog { background-color: #1a1b26; }
+            QLabel { color: #a9b1d6; font-family: 'Segoe UI'; }
+            QScrollArea { border: 1px solid #414868; background-color: transparent; border-radius: 8px; }
+            QPushButton { border-radius: 6px; padding: 8px 16px; font-weight: bold; font-size: 13px; background-color: #3d59a1; color: white; }
+            QPushButton:hover { opacity: 0.9; }
+            QCheckBox { color: #a9b1d6; padding: 4px; font-size: 13px; }
+            QCheckBox::indicator { width: 18px; height: 18px; }
+        """)
+
+
+class HistoryDialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Riwayat Unduhan - Kawaragi Downloader")
+        self.resize(850, 500)
+        self.setModal(True)
+        self.apply_theme()
+
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(20, 20, 20, 20)
+        layout.setSpacing(12)
+
+        title_label = QLabel("📁 Riwayat Unduhan Terakhir")
+        title_label.setStyleSheet("font-weight: bold; font-size: 16px; color: #7aa2f7;")
+        layout.addWidget(title_label)
+
+        self.table = QTableWidget()
+        self.table.setColumnCount(4)
+        self.table.setHorizontalHeaderLabels(["Judul Video", "Waktu Selesai", "Lokasi File", "Aksi"])
+        self.table.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+        self.table.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        self.table.horizontalHeader().setSectionResizeMode(2, QHeaderView.Stretch)
+        self.table.horizontalHeader().setSectionResizeMode(3, QHeaderView.ResizeToContents)
+        self.table.verticalHeader().setVisible(False)
+        self.table.setSelectionBehavior(QTableWidget.SelectRows)
+        self.table.setEditTriggers(QTableWidget.NoEditTriggers)
+        layout.addWidget(self.table)
+
+        self.load_data()
+
+        bottom_layout = QHBoxLayout()
+        btn_clear = QPushButton("🗑️ Bersihkan Riwayat")
+        btn_clear.setStyleSheet("background-color: #f7768e; color: white;")
+        btn_clear.clicked.connect(self.clear_all)
+
+        btn_close = QPushButton("Tutup")
+        btn_close.clicked.connect(self.accept)
+
+        bottom_layout.addWidget(btn_clear)
+        bottom_layout.addStretch()
+        bottom_layout.addWidget(btn_close)
+        layout.addLayout(bottom_layout)
+
+    def load_data(self):
+        history = Config.load_history()
+        self.table.setRowCount(len(history))
+        for row, item in enumerate(history):
+            title = item.get("title", "Tidak ada judul")
+            ts = item.get("timestamp", "-")
+            path = item.get("file_path", "")
+
+            self.table.setItem(row, 0, QTableWidgetItem(title))
+            self.table.setItem(row, 1, QTableWidgetItem(ts))
+            self.table.setItem(row, 2, QTableWidgetItem(path))
+
+            btn_box = QWidget()
+            h = QHBoxLayout(btn_box)
+            h.setContentsMargins(2, 2, 2, 2)
+            h.setSpacing(4)
+
+            btn_play = QPushButton("▶ Buka")
+            btn_play.setStyleSheet("padding: 4px 8px; font-size: 11px; background-color: #7aa2f7; color: #1a1b26;")
+            btn_play.clicked.connect(lambda _, p=path: self.open_file(p))
+
+            btn_folder = QPushButton("📂 Folder")
+            btn_folder.setStyleSheet("padding: 4px 8px; font-size: 11px; background-color: #bb9af7; color: #1a1b26;")
+            btn_folder.clicked.connect(lambda _, p=path: self.open_folder(p))
+
+            h.addWidget(btn_play)
+            h.addWidget(btn_folder)
+            self.table.setCellWidget(row, 3, btn_box)
+
+    def open_file(self, path):
+        if os.path.exists(path):
+            os.startfile(path)
+        else:
+            QMessageBox.warning(self, "File Hilang", f"File tidak ditemukan di:\n{path}")
+
+    def open_folder(self, path):
+        folder = os.path.dirname(path) if os.path.isfile(path) else path
+        if os.path.exists(folder):
+            if os.path.isfile(path):
+                subprocess.run(f'explorer /select,"{os.path.normpath(path)}"', shell=True)
+            else:
+                os.startfile(folder)
+        else:
+            QMessageBox.warning(self, "Folder Hilang", f"Folder tidak ditemukan di:\n{folder}")
+
+    def clear_all(self):
+        confirm = QMessageBox.question(self, "Konfirmasi", "Yakin ingin menghapus seluruh riwayat unduhan?", QMessageBox.Yes | QMessageBox.No)
+        if confirm == QMessageBox.Yes:
+            Config.clear_history()
+            self.table.setRowCount(0)
+
+    def apply_theme(self):
+        self.setStyleSheet("""
+            QDialog { background-color: #1a1b26; }
+            QLabel { color: #a9b1d6; font-family: 'Segoe UI'; }
+            QTableWidget { background-color: #24283b; color: #c0caf5; border: 1px solid #414868; border-radius: 8px; gridline-color: #414868; }
+            QHeaderView::section { background-color: #1f2335; color: #7aa2f7; padding: 6px; border: 1px solid #414868; font-weight: bold; }
+            QPushButton { border-radius: 6px; padding: 8px 16px; font-weight: bold; font-size: 13px; background-color: #3d59a1; color: white; }
+        """)
+
+
+class ExtensionHelperDialog(QDialog):
+    """Dialog asisten untuk memasang dan mengaktifkan ekstensi Kawaragi-Trigger dengan 1 klik."""
+    def __init__(self, is_connected=False, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Asisten Pemasangan Ekstensi Browser - Kawaragi Trigger")
+        self.resize(680, 480)
+        self.setModal(True)
+        self.ext_dir = get_extension_dir()
+        self.apply_theme()
+
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(22, 20, 22, 20)
+        layout.setSpacing(12)
+
+        title = QLabel("🧩 Pasang & Hubungkan Ekstensi Kawaragi Trigger")
+        title.setStyleSheet("font-weight: bold; font-size: 17px; color: #7aa2f7;")
+        layout.addWidget(title)
+
+        status_text = (
+            "🟢 <b>Status Saat Ini: TERHUBUNG!</b> Ekstensi Chrome/Edge sudah aktif dan siap menyinkronkan cookies."
+            if is_connected else
+            "🟡 <b>Status Saat Ini: BELUM TERHUBUNG.</b> Ikuti salah satu cara cepat di bawah ini untuk mengaktifkan jembatan ekstensi:"
+        )
+        status_lbl = QLabel(status_text)
+        status_lbl.setWordWrap(True)
+        status_lbl.setStyleSheet(
+            f"background-color: #24283b; border: 1px solid {'#9ece6a' if is_connected else '#e0af68'}; "
+            f"border-radius: 8px; padding: 10px; color: {'#9ece6a' if is_connected else '#e0af68'};"
+        )
+        layout.addWidget(status_lbl)
+
+        # Lokasi Folder Ekstensi
+        path_lbl = QLabel("📍 Lokasi Folder Ekstensi (Otomatis Disalin saat klik tombol di bawah):")
+        path_lbl.setStyleSheet("font-weight: bold; color: #c0caf5;")
+        layout.addWidget(path_lbl)
+
+        path_row = QHBoxLayout()
+        self.path_edit = QLineEdit(self.ext_dir)
+        self.path_edit.setReadOnly(True)
+        path_row.addWidget(self.path_edit)
+
+        btn_copy_path = QPushButton("📋 Salin Path")
+        btn_copy_path.setCursor(QCursor(Qt.PointingHandCursor))
+        btn_copy_path.clicked.connect(self.copy_ext_path)
+        path_row.addWidget(btn_copy_path)
+
+        btn_open_folder = QPushButton("📂 Buka Folder")
+        btn_open_folder.setCursor(QCursor(Qt.PointingHandCursor))
+        btn_open_folder.clicked.connect(self.open_ext_folder)
+        path_row.addWidget(btn_open_folder)
+        layout.addLayout(path_row)
+
+        # Panduan Langkah Cepat
+        guide_frame = QFrame()
+        guide_frame.setStyleSheet("background-color: #24283b; border: 1px solid #414868; border-radius: 8px; padding: 10px;")
+        guide_layout = QVBoxLayout(guide_frame)
+        guide_text = QLabel(
+            "<b>Cara Pasang Super Cepat (Hanya 10 Detik):</b><br>"
+            "1. Klik tombol <b>'Pasang ke Google Chrome'</b> atau <b>'Pasang ke Microsoft Edge'</b> di bawah.<br>"
+            "   <i>(Path folder ekstensi sudah otomatis disalin ke Clipboard &amp; jendela folder akan terbuka).</i><br>"
+            "2. Di halaman Ekstensi browser yang terbuka, nyalakan <b>Developer mode (Mode Pengembang)</b> di pojok atas.<br>"
+            "3. <b>Seret &amp; Lepas (Drag &amp; Drop)</b> folder <code>Kawaragi-Trigger</code> langsung ke halaman browser tersebut, "
+            "ATAU klik <b>Load unpacked (Muat yang belum dikemas)</b> lalu tekan <code>Ctrl + V</code> dan Enter!"
+        )
+        guide_text.setWordWrap(True)
+        guide_layout.addWidget(guide_text)
+        layout.addWidget(guide_frame)
+
+        # Tombol Aksi 1-Klik
+        btn_grid = QGridLayout()
+        btn_grid.setSpacing(10)
+
+        btn_chrome = QPushButton("🌐 Pasang ke Google Chrome (Buka chrome://extensions)")
+        btn_chrome.setCursor(QCursor(Qt.PointingHandCursor))
+        btn_chrome.setStyleSheet("background-color: #9ece6a; color: #1a1b26; padding: 11px;")
+        btn_chrome.clicked.connect(lambda: self.install_to_browser("chrome"))
+        btn_grid.addWidget(btn_chrome, 0, 0)
+
+        btn_edge = QPushButton("🧭 Pasang ke Microsoft Edge (Buka edge://extensions)")
+        btn_edge.setCursor(QCursor(Qt.PointingHandCursor))
+        btn_edge.setStyleSheet("background-color: #7aa2f7; color: #1a1b26; padding: 11px;")
+        btn_edge.clicked.connect(lambda: self.install_to_browser("edge"))
+        btn_grid.addWidget(btn_edge, 0, 1)
+
+        btn_auto_launch = QPushButton("⚡ Luncurkan Browser Khusus dengan Ekstensi Langsung Aktif (Otomatis)")
+        btn_auto_launch.setCursor(QCursor(Qt.PointingHandCursor))
+        btn_auto_launch.setStyleSheet("background-color: #bb9af7; color: #1a1b26; padding: 11px;")
+        btn_auto_launch.clicked.connect(self.launch_browser_with_extension)
+        btn_grid.addWidget(btn_auto_launch, 1, 0, 1, 2)
+
+        layout.addLayout(btn_grid)
+        layout.addStretch()
+
+        bottom_row = QHBoxLayout()
+        bottom_row.addStretch()
+        btn_close = QPushButton("Tutup")
+        btn_close.clicked.connect(self.accept)
+        bottom_row.addWidget(btn_close)
+        layout.addLayout(bottom_row)
+
+    def copy_ext_path(self):
+        QApplication.clipboard().setText(self.ext_dir)
+        QMessageBox.information(self, "Tersalin", f"Path folder ekstensi berhasil disalin ke Clipboard:\n\n{self.ext_dir}")
+
+    def open_ext_folder(self):
+        QApplication.clipboard().setText(self.ext_dir)
+        if os.path.exists(self.ext_dir):
+            subprocess.run(f'explorer /select,"{os.path.normpath(self.ext_dir)}"', shell=True)
+        else:
+            QMessageBox.warning(self, "Folder Tidak Ditemukan", f"Folder ekstensi tidak ditemukan di:\n{self.ext_dir}")
+
+    def install_to_browser(self, browser_type: str):
+        QApplication.clipboard().setText(self.ext_dir)
+        # Buka Explorer menyorot folder Kawaragi-Trigger agar mudah di-drag & drop
+        if os.path.exists(self.ext_dir):
+            subprocess.run(f'explorer /select,"{os.path.normpath(self.ext_dir)}"', shell=True)
+
+        exe_path = find_browser_executable(browser_type)
+        ext_url = "edge://extensions" if browser_type == "edge" else "chrome://extensions"
+
+        if exe_path:
+            try:
+                subprocess.Popen([exe_path, ext_url])
+            except Exception:
+                pass
+        else:
+            # Fallback ke browser default
+            for b in ("chrome", "edge", "brave"):
+                p = find_browser_executable(b)
+                if p:
+                    subprocess.Popen([p, "chrome://extensions"])
+                    break
+
+        QMessageBox.information(
+            self,
+            "Siap Dipasang!",
+            f"1. Path ekstensi sudah disalin ke Clipboard:\n   {self.ext_dir}\n\n"
+            f"2. Di jendela browser yang terbuka, aktifkan 'Developer mode' (Mode Pengembang).\n"
+            f"3. Klik 'Load unpacked' (Muat yang belum dikemas) lalu tekan Ctrl+V dan Enter,\n"
+            f"   ATAU seret folder 'Kawaragi-Trigger' dari Explorer langsung ke halaman ekstensi browser!"
+        )
+
+    def launch_browser_with_extension(self):
+        """Meluncurkan Chrome/Edge dengan flag --load-extension agar ekstensi langsung aktif otomatis."""
+        exe_path = find_browser_executable("chrome") or find_browser_executable("edge") or find_browser_executable("brave")
+        if not exe_path:
+            QMessageBox.warning(self, "Browser Tidak Ditemukan", "Google Chrome, Microsoft Edge, atau Brave tidak ditemukan di komputer ini.")
+            return
+
+        profile_dir = os.path.join(Config.get_app_data_dir(), "BrowserProfile")
+        os.makedirs(profile_dir, exist_ok=True)
+        try:
+            subprocess.Popen([
+                exe_path,
+                f"--user-data-dir={profile_dir}",
+                f"--load-extension={self.ext_dir}",
+                "--no-first-run",
+                "https://www.youtube.com"
+            ])
+        except Exception as e:
+            QMessageBox.warning(self, "Gagal Meluncurkan Browser", str(e))
+
+    def apply_theme(self):
+        self.setStyleSheet("""
+            QDialog { background-color: #1a1b26; }
+            QLabel { color: #c0caf5; font-family: 'Segoe UI'; font-size: 13px; }
+            QLineEdit { background-color: #1f2335; color: #7aa2f7; border: 1px solid #414868; border-radius: 6px; padding: 7px; font-family: 'Consolas', monospace; }
+            QPushButton { border-radius: 6px; padding: 8px 14px; font-weight: bold; font-size: 13px; background-color: #3d59a1; color: white; border: none; }
+            QPushButton:hover { opacity: 0.9; }
+        """)
+</file>
+
+<file path="app/utils/file_utils.py">
+import os
+import sys
+import shutil
+
+def get_base_dir() -> str:
+    """Mendapatkan direktori dasar aplikasi baik saat running script maupun binary/frozen."""
+    if getattr(sys, 'frozen', False):
+        return os.path.dirname(sys.executable)
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+
+def get_extension_dir() -> str:
+    """Mendapatkan path absolut ke folder ekstensi Kawaragi-Trigger."""
+    candidates = []
+    if getattr(sys, 'frozen', False):
+        exe_dir = os.path.dirname(sys.executable)
+        candidates.append(os.path.join(exe_dir, "Kawaragi-Trigger"))
+        candidates.append(os.path.join(exe_dir, "_internal", "Kawaragi-Trigger"))
+    meipass = getattr(sys, '_MEIPASS', None)
+    if meipass:
+        candidates.append(os.path.join(meipass, "Kawaragi-Trigger"))
+    candidates.append(os.path.join(get_base_dir(), "Kawaragi-Trigger"))
+    candidates.append(os.path.abspath("Kawaragi-Trigger"))
+
+    for path in candidates:
+        if os.path.isdir(path) and os.path.isfile(os.path.join(path, "manifest.json")):
+            return os.path.abspath(path)
+    return os.path.join(get_base_dir(), "Kawaragi-Trigger")
+
+def get_ffmpeg_path() -> str:
+    """
+    Mendeteksi path ffmpeg secara otomatis dan mendaftarkan direktorinya ke PATH
+    agar yt-dlp dapat menemukan baik ffmpeg maupun ffprobe.
+    """
+    candidates = []
+    
+    # 1. Folder exe
+    if getattr(sys, 'frozen', False):
+        exe_dir = os.path.dirname(sys.executable)
+        candidates.append(os.path.join(exe_dir, "ffmpeg.exe"))
+        candidates.append(os.path.join(exe_dir, "_internal", "ffmpeg.exe"))
+        
+    # 2. _MEIPASS jika onefile
+    meipass = getattr(sys, '_MEIPASS', None)
+    if meipass:
+        candidates.append(os.path.join(meipass, "ffmpeg.exe"))
+        candidates.append(os.path.join(meipass, "assets", "ffmpeg.exe"))
+        
+    # 3. Root folder proyek & C:\ffmpeg\bin
+    root_dir = get_base_dir()
+    candidates.append(os.path.join(root_dir, "ffmpeg.exe"))
+    candidates.append(os.path.join(root_dir, "ffmpeg"))
+    candidates.append(r"C:\ffmpeg\bin\ffmpeg.exe")
+    
+    detected_ffmpeg = None
+    for path in candidates:
+        if os.path.isfile(path) and os.access(path, os.X_OK if os.name != 'nt' else os.R_OK):
+            detected_ffmpeg = os.path.abspath(path)
+            break
+            
+    if not detected_ffmpeg:
+        system_ffmpeg = shutil.which("ffmpeg")
+        if system_ffmpeg:
+            detected_ffmpeg = os.path.abspath(system_ffmpeg)
+
+    # Tambahkan direktori ffmpeg dan C:\ffmpeg\bin ke os.environ["PATH"] agar ffprobe juga ditemukan
+    extra_Dirs = []
+    if detected_ffmpeg and os.path.isfile(detected_ffmpeg):
+        extra_Dirs.append(os.path.dirname(detected_ffmpeg))
+    if os.path.isdir(r"C:\ffmpeg\bin"):
+        extra_Dirs.append(r"C:\ffmpeg\bin")
+
+    current_path = os.environ.get("PATH", "")
+    for d in extra_Dirs:
+        if d.lower() not in current_path.lower():
+            current_path = f"{d}{os.pathsep}{current_path}"
+    os.environ["PATH"] = current_path
+
+    return detected_ffmpeg or "ffmpeg"
+
+def find_browser_executable(browser: str = "chrome") -> str:
+    """Mencari path executable browser (chrome, edge, brave) di Windows."""
+    local_app = os.getenv("LOCALAPPDATA", "")
+    prog_files = os.getenv("PROGRAMFILES", r"C:\Program Files")
+    prog_x86 = os.getenv("PROGRAMFILES(X86)", r"C:\Program Files (x86)")
+
+    paths = {
+        "chrome": [
+            os.path.join(prog_files, "Google", "Chrome", "Application", "chrome.exe"),
+            os.path.join(prog_x86, "Google", "Chrome", "Application", "chrome.exe"),
+            os.path.join(local_app, "Google", "Chrome", "Application", "chrome.exe"),
+            shutil.which("chrome") or ""
+        ],
+        "edge": [
+            os.path.join(prog_x86, "Microsoft", "Edge", "Application", "msedge.exe"),
+            os.path.join(prog_files, "Microsoft", "Edge", "Application", "msedge.exe"),
+            shutil.which("msedge") or ""
+        ],
+        "brave": [
+            os.path.join(prog_files, "BraveSoftware", "Brave-Browser", "Application", "brave.exe"),
+            os.path.join(prog_x86, "BraveSoftware", "Brave-Browser", "Application", "brave.exe"),
+            os.path.join(local_app, "BraveSoftware", "Brave-Browser", "Application", "brave.exe"),
+            shutil.which("brave") or ""
+        ]
+    }
+    for p in paths.get(browser.lower(), []):
+        if p and os.path.isfile(p):
+            return p
+    return ""
+
+def ensure_directory_exists(directory: str):
+    """Memastikan direktori ada, jika belum maka dibuat."""
+    if directory and not os.path.exists(directory):
+        os.makedirs(directory, exist_ok=True)
+
+def format_bytes(bytes_num: float) -> str:
+    """Format bytes ke format yang mudah dibaca (KB, MB, GB)."""
+    if not bytes_num or bytes_num <= 0:
+        return "0 B"
+    units = ["B", "KB", "MB", "GB", "TB"]
+    unit_index = 0
+    size = float(bytes_num)
+    while size >= 1024.0 and unit_index < len(units) - 1:
+        size /= 1024.0
+        unit_index += 1
+    return f"{size:.2f} {units[unit_index]}"
+
+def format_seconds(seconds_num: float) -> str:
+    """Format detik ke format MM:SS atau HH:MM:SS."""
+    if not seconds_num or seconds_num <= 0:
+        return "00:00"
+    seconds = int(seconds_num)
+    hours = seconds // 3600
+    minutes = (seconds % 3600) // 60
+    secs = seconds % 60
+    if hours > 0:
+        return f"{hours:02d}:{minutes:02d}:{secs:02d}"
+    return f"{minutes:02d}:{secs:02d}"
+</file>
+
+<file path="app/utils/log_utils.py">
+import logging
+import os
+
+def setup_logger(name: str, log_file: str, level=logging.INFO):
+    """Membuat logger yang aman dari UAC Windows dengan menyimpannya di AppData."""
+    local_appdata = os.getenv('LOCALAPPDATA')
+    if not local_appdata:
+        local_appdata = os.path.join(os.path.expanduser('~'), 'AppData', 'Local')
+        
+    app_data_dir = os.path.join(local_appdata, 'KawaragiDownloader', 'logs')
+    os.makedirs(app_data_dir, exist_ok=True)
+        
+    full_log_path = os.path.join(app_data_dir, log_file)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    
+    logger = logging.getLogger(name)
+    logger.setLevel(level)
+    
+    # Mencegah log terganda jika dipanggil berkali-kali
+    if not logger.handlers:
+        file_handler = logging.FileHandler(full_log_path, encoding='utf-8')
+        file_handler.setFormatter(formatter)
+        logger.addHandler(file_handler)
+
+    return logger
+</file>
+
+<file path="Kawaragi-Trigger/manifest.json">
+{
+  "manifest_version": 3,
+  "name": "Kawaragi Trigger Worker",
+  "version": "2.0",
+  "description": "Jembatan anti-blokir & sinkronisasi cookies otomatis untuk Kawaragi Downloader",
+  "permissions": [
+    "cookies",
+    "tabs",
+    "alarms",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "http://localhost:65432/*",
+    "http://127.0.0.1:65432/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "logo.png",
+    "default_title": "Kawaragi Trigger - Klik untuk Sinkronisasi"
+  },
+  "icons": {
+    "16": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
+</file>
+
+<file path="tests/test_downloader.py">
+import unittest
+import os
+import sys
+import time
+import requests
+
+if hasattr(sys.stdout, "reconfigure") and sys.stdout is not None:
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+if hasattr(sys.stderr, "reconfigure") and sys.stderr is not None:
+    try:
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
+from PyQt5.QtWidgets import QApplication
+from app.core.downloader import Downloader
+from app.utils.validation import is_valid_url
+from app.utils.file_utils import get_ffmpeg_path, get_extension_dir, format_bytes, format_seconds
+from app.core.config import Config
+from app.gui.main_window import MainWindow, current_task, received_cookies_cache, bridge_state
+
+app = QApplication.instance() or QApplication(sys.argv)
+
+
+class TestKawaragiSystem(unittest.TestCase):
+    def setUp(self):
+        self.logs = []
+        self.downloader = Downloader(log_callback=lambda lvl, msg: self.logs.append((lvl, msg)))
+
+    def test_valid_url(self):
+        valid_urls = [
+            "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+            "http://youtu.be/dQw4w9WgXcQ",
+            "https://www.bilibili.com/video/BV1cdpc6PErN/",
+            "https://www.bilibili.tv/en/video/4797844121458181",
+            "https://tiktok.com/@user/video/123456",
+            "https://instagram.com/p/abcdef"
+        ]
+        invalid_urls = ["invalid_url", "ftp://bad", "", "notaurl"]
+        for url in valid_urls:
+            self.assertTrue(is_valid_url(url), f"Should be valid: {url}")
+        for url in invalid_urls:
+            self.assertFalse(is_valid_url(url), f"Should be invalid: {url}")
+
+    def test_ffmpeg_and_extension_files(self):
+        ffmpeg_path = get_ffmpeg_path()
+        self.assertTrue(os.path.isfile(ffmpeg_path), f"FFmpeg harus ditemukan: {ffmpeg_path}")
+
+        ext_dir = get_extension_dir()
+        self.assertTrue(os.path.isdir(ext_dir), f"Folder ekstensi harus ada: {ext_dir}")
+        for req_file in ["manifest.json", "background.js", "popup.html", "popup.js", "install_extension.bat", "logo.png"]:
+            self.assertTrue(
+                os.path.isfile(os.path.join(ext_dir, req_file)),
+                f"File ekstensi {req_file} harus tersedia di {ext_dir}"
+            )
+
+    def test_format_selectors_vertical_and_horizontal(self):
+        fmt_1080 = self.downloader._get_format_string("1080p")
+        self.assertIn("height<=1080", fmt_1080)
+        self.assertIn("width<=1080", fmt_1080)
+        self.assertTrue(fmt_1080.endswith("/bv*+ba/b"))
+
+        fmt_audio = self.downloader._get_format_string("audio_320")
+        self.assertEqual(fmt_audio, "ba/b")
+
+    def test_gui_and_extension_bridge_communication(self):
+        win = MainWindow()
+        try:
+            # Tunggu sejenak agar BridgeServer siap di 127.0.0.1:65432
+            time.sleep(0.3)
+
+            # 1. Uji /ping dari ekstensi
+            r_ping = requests.get("http://127.0.0.1:65432/ping", timeout=3)
+            self.assertEqual(r_ping.status_code, 200)
+            self.assertEqual(r_ping.json().get("status"), "ready")
+            self.assertGreater(bridge_state["last_seen"], 0)
+
+            # 2. Uji pengambilan task (/get-task) oleh ekstensi
+            current_task["url"] = "https://www.bilibili.com/video/BV1cdpc6PErN/"
+            r_task = requests.get("http://127.0.0.1:65432/get-task", timeout=3)
+            self.assertEqual(r_task.status_code, 200)
+            self.assertEqual(r_task.json().get("url"), "https://www.bilibili.com/video/BV1cdpc6PErN/")
+
+            # 3. Uji pengiriman cookies (/submit-cookies) dari ekstensi ke Desktop
+            sample_cookie = "# Netscape HTTP Cookie File\n.bilibili.com\tTRUE\t/\tTRUE\t1999999999\tSESSDATA\tdummy_sess\n"
+            r_post = requests.post(
+                "http://127.0.0.1:65432/submit-cookies",
+                json={"cookies": sample_cookie, "count": 1, "userAgent": "Mozilla/5.0 TestAgent"},
+                timeout=3
+            )
+            self.assertEqual(r_post.status_code, 200)
+            self.assertEqual(received_cookies_cache["count"], 1)
+            self.assertEqual(received_cookies_cache["userAgent"], "Mozilla/5.0 TestAgent")
+
+            # 4. Uji Live Log Console di GUI
+            win.append_log("INFO", "Pesan info pengujian")
+            win.append_log("ERROR", "Pesan error pengujian lengkap")
+            console_text = win.log_console.toPlainText()
+            self.assertIn("Pesan info pengujian", console_text)
+            self.assertIn("Pesan error pengujian lengkap", console_text)
+        finally:
+            win.close()
+
+    def test_live_multisite_extraction(self):
+        # Uji langsung ekstraksi info pada Bilibili.com (dengan patch 412), Bilibili.tv, dan YouTube
+        test_urls = [
+            ("Bilibili Mainland", "https://www.bilibili.com/video/BV1cdpc6PErN/"),
+            ("Bilibili Intl", "https://www.bilibili.tv/en/video/4797844121458181"),
+            ("YouTube", "https://www.youtube.com/watch?v=lCJvkQdYA_c"),
+        ]
+        for name, url in test_urls:
+            info = self.downloader.get_video_info(url)
+            self.assertTrue(bool(info.get("title")), f"Info judul dari {name} ({url}) harus berhasil diambil")
+            self.assertGreater(info.get("formats_count", 0), 0, f"Jumlah format {name} harus > 0")
+            print(f"[PASS] {name}: {info.get('title')} ({info.get('formats_count')} formats)")
+
+
+if __name__ == '__main__':
+    unittest.main()
+</file>
+
+<file path="app/core/downloader.py">
+import os
+import re
+import glob
+import traceback
+
+# Aktifkan kompatibilitas curl_cffi 0.15+ sebelum yt_dlp di-import agar TLS Impersonation siap digunakan saat diperlukan
+try:
+    import curl_cffi
+    if hasattr(curl_cffi, "__version__") and not curl_cffi.__version__.startswith(("0.5.10", "0.10", "0.11", "0.12", "0.13", "0.14")):
+        curl_cffi.__version__ = "0.14.0"
+except Exception:
+    pass
+
+import yt_dlp
+from app.utils.file_utils import get_ffmpeg_path, format_bytes, format_seconds
+from app.utils.log_utils import setup_logger
+
+logger = setup_logger("downloader", "downloader.log")
+
+# Patch Bilibili extractor:
+# 1. Hapus parameter 'try_look=1' jika tidak login agar Bilibili TIDAK memberikan stream preview 30 detik
+#    yang terputus di tengah jalan (Got error: ... bytes read, ... more expected).
+# 2. Otomatis fallback ke endpoint '/x/player/playurl' jika endpoint WBI terkena HTTP Error 412.
+try:
+    from yt_dlp.extractor.bilibili import BilibiliBaseIE
+    if not getattr(BilibiliBaseIE, "_kawaragi_patched", False):
+        _orig_bilibili_playinfo = BilibiliBaseIE._download_playinfo
+
+        def _patched_bilibili_playinfo(self, bvid, cid, headers=None, query=None):
+            clean_query = dict(query or {})
+            # PENTING: Jangan gunakan try_look=1 karena stream 1080p try_look akan diputus paksa oleh CDN Bilibili setelah ~1.5 MB!
+            clean_query.pop('try_look', None)
+            try:
+                return _orig_bilibili_playinfo(self, bvid, cid, headers=headers, query=clean_query)
+            except Exception as e:
+                logger.warning(f"Bilibili WBI playurl gagal ({e}), beralih ke fallback endpoint playurl...")
+                params = {'bvid': bvid, 'cid': cid, 'fnval': 4048, 'fourk': 1, **clean_query}
+                params.pop('try_look', None)
+                req_headers = dict(self._HEADERS)
+                if headers:
+                    req_headers.update(headers)
+                return self._download_json(
+                    'https://api.bilibili.com/x/player/playurl', bvid,
+                    query=params, headers=req_headers,
+                    note=f'Downloading video formats (full stream) for cid {cid}'
+                )['data']
+
+        BilibiliBaseIE._download_playinfo = _patched_bilibili_playinfo
+        BilibiliBaseIE._kawaragi_patched = True
+except Exception as e:
+    logger.warning(f"Gagal memasang patch Bilibili: {e}")
+
+
+VALID_BROWSERS = {"chrome", "edge", "firefox", "brave", "opera", "vivaldi", "chromium", "safari"}
+
+
+def clean_error_message(text: str) -> str:
+    """Membersihkan kode warna terminal (ANSI) dari pesan error."""
+    ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
+    return ansi_escape.sub('', str(text))
+
+
+class DownloadCancelledException(Exception):
+    """Exception khusus saat unduhan dibatalkan oleh user."""
+    pass
+
+
+class YtdlpGuiLogger:
+    """Logger kustom untuk menangkap semua output internal yt-dlp ke GUI dan file log."""
+    def __init__(self, log_callback=None):
+        self.log_callback = log_callback
+
+    def debug(self, msg):
+        clean = clean_error_message(msg)
+        if clean.startswith("[download]") and ("ETA" in clean or "%" in clean):
+            return
+        logger.info(clean)
+        if self.log_callback:
+            self.log_callback("INFO", clean)
+
+    def info(self, msg):
+        clean = clean_error_message(msg)
+        logger.info(clean)
+        if self.log_callback:
+            self.log_callback("INFO", clean)
+
+    def warning(self, msg):
+        clean = clean_error_message(msg)
+        logger.warning(clean)
+        if self.log_callback:
+            self.log_callback("WARNING", f"⚠️ {clean}")
+
+    def error(self, msg):
+        clean = clean_error_message(msg)
+        logger.error(clean)
+        if self.log_callback:
+            self.log_callback("ERROR", f"❌ {clean}")
+
+
+class Downloader:
+    def __init__(self, progress_callback=None, completion_callback=None, error_callback=None, log_callback=None):
+        self.progress_callback = progress_callback
+        self.completion_callback = completion_callback
+        self.error_callback = error_callback
+        self.log_callback = log_callback
+        self.is_cancelled = False
+        self.ffmpeg_path = get_ffmpeg_path()
+
+    def _emit_log(self, level: str, message: str):
+        logger.info(f"[{level}] {message}")
+        if self.log_callback:
+            self.log_callback(level, message)
+
+    def cancel(self):
+        """Meminta pembatalan proses download."""
+        self.is_cancelled = True
+        self._emit_log("WARNING", "Permintaan pembatalan diterima. Menghentikan proses...")
+
+    def _apply_cookie_options(self, ydl_opts: dict, browser_cookie: str, custom_user_agent: str = ""):
+        """Mengatur opsi autentikasi cookies secara aman tanpa memicu error unsupported browser."""
+        if custom_user_agent:
+            ydl_opts.setdefault('http_headers', {})['User-Agent'] = custom_user_agent
+
+        if not browser_cookie or browser_cookie in ("Tanpa Login", "none", "auto"):
+            return
+
+        if browser_cookie.lower().endswith('.txt'):
+            if os.path.isfile(browser_cookie) and os.path.getsize(browser_cookie) > 0:
+                ydl_opts['cookiefile'] = browser_cookie
+                self._emit_log("INFO", f"🔑 Menggunakan file cookies aktif: {browser_cookie}")
+            else:
+                self._emit_log("WARNING", f"File cookies belum tersedia ({browser_cookie}), melanjutkan tanpa cookies.")
+        elif browser_cookie.lower() in VALID_BROWSERS:
+            ydl_opts['cookiesfrombrowser'] = (browser_cookie.lower(),)
+            self._emit_log("INFO", f"🔑 Mengambil cookies langsung dari browser: {browser_cookie}")
+        else:
+            self._emit_log("WARNING", f"Sumber cookies '{browser_cookie}' tidak dikenali, melanjutkan tanpa cookies.")
+
+    def _build_base_opts(self, browser_cookie: str = "Tanpa Login", custom_user_agent: str = "", use_impersonate: bool = False) -> dict:
+        ydl_opts = {
+            'quiet': False,
+            'no_warnings': False,
+            'nocheckcertificate': True,
+            'geo_bypass': True,
+            'noplaylist': True,
+            'retries': 10,
+            'fragment_retries': 10,
+            'file_access_retries': 5,
+            'windowsfilenames': True,
+            'logger': YtdlpGuiLogger(self.log_callback),
+        }
+
+        if use_impersonate:
+            try:
+                from yt_dlp.networking.impersonate import ImpersonateTarget
+                ydl_opts['impersonate'] = ImpersonateTarget.from_str('chrome')
+            except Exception:
+                pass
+
+        self._apply_cookie_options(ydl_opts, browser_cookie, custom_user_agent)
+        return ydl_opts
+
+    def get_video_info(self, url: str, browser_cookie: str = "Tanpa Login", custom_user_agent: str = "") -> dict:
+        self._emit_log("INFO", f"🔍 Memulai analisis tautan: {url}")
+        self._emit_log("INFO", f"🔧 FFmpeg terdeteksi di: {self.ffmpeg_path}")
+
+        attempts = [
+            {"label": "Mode Standar Cepat", "cookie": browser_cookie, "use_impersonate": False},
+            {"label": "Mode Impersonasi Browser (Anti-Cloudflare)", "cookie": browser_cookie, "use_impersonate": True},
+        ]
+        if browser_cookie and browser_cookie not in ("Tanpa Login", "none", "auto"):
+            attempts.append({"label": "Mode Fallback (Tanpa Cookies)", "cookie": "Tanpa Login", "use_impersonate": False})
+
+        last_error = ""
+        for idx, att in enumerate(attempts, 1):
+            ydl_opts = self._build_base_opts(att["cookie"], custom_user_agent, use_impersonate=att["use_impersonate"])
+
+            try:
+                if idx > 1:
+                    self._emit_log("WARNING", f"🔄 Mencoba {att['label']} (Percobaan {idx}/{len(attempts)})...")
+                with yt_dlp.YoutubeDL(ydl_opts) as ydl: # type: ignore
+                    info = ydl.extract_info(url, download=False)
+                    if not info:
+                        continue
+
+                    if 'entries' in info and info['entries']:
+                        entries = [e for e in info['entries'] if e]
+                        if entries:
+                            first_entry = entries[0]
+                            title = info.get("title") or first_entry.get("title", "Tidak ada judul")
+                            duration = info.get("duration") or first_entry.get("duration") or 0
+                            uploader = info.get("uploader") or first_entry.get("uploader", "Tidak diketahui")
+                            thumbnail = info.get("thumbnail") or first_entry.get("thumbnail", "")
+                        else:
+                            title = info.get("title", "Tidak ada judul")
+                            duration = info.get("duration", 0) or 0
+                            uploader = info.get("uploader", "Tidak diketahui")
+                            thumbnail = info.get("thumbnail", "")
+                    else:
+                        title = info.get("title", "Tidak ada judul")
+                        duration = info.get("duration", 0) or 0
+                        uploader = info.get("uploader", "Tidak diketahui")
+                        thumbnail = info.get("thumbnail", "")
+
+                    available_subs = set()
+                    if 'subtitles' in info and info['subtitles']:
+                        available_subs.update(info['subtitles'].keys())
+                    if 'automatic_captions' in info and info['automatic_captions']:
+                        available_subs.update(info['automatic_captions'].keys())
+
+                    sorted_subs = sorted(list(available_subs))
+                    priority_subs = []
+                    for lang in ['id', 'en', 'en-US', 'ja', 'ko', 'zh']:
+                        if lang in sorted_subs:
+                            priority_subs.append(lang)
+                            sorted_subs.remove(lang)
+                    final_subs = priority_subs + sorted_subs
+
+                    extractor_name = info.get("extractor_key") or info.get("extractor") or "Universal"
+                    formats_count = len(info.get("formats", []))
+                    self._emit_log("SUCCESS", f"✅ Berhasil memuat info [{extractor_name}]: '{title}' ({formats_count} format tersedia)")
+
+                    return {
+                        "title": title,
+                        "duration": duration,
+                        "uploader": uploader,
+                        "thumbnail": thumbnail,
+                        "subtitles": final_subs,
+                        "extractor": extractor_name,
+                        "formats_count": formats_count,
+                        "webpage_url": info.get("webpage_url", url)
+                    }
+            except Exception as e:
+                clean_msg = clean_error_message(str(e))
+                tb_str = traceback.format_exc()
+                last_error = clean_msg
+                logger.error(f"Error info video ({att['label']}): {clean_msg}\n{tb_str}")
+                self._emit_log("ERROR", f"Gagal pada {att['label']}: {clean_msg}")
+
+        if self.error_callback:
+            self.error_callback(last_error or "Gagal mengambil informasi video.")
+        return {}
+
+    def _get_format_string(self, quality: str) -> str:
+        """
+        Menghasilkan format selector yt-dlp yang mendukung baik video horizontal (1920x1080)
+        maupun video vertikal/portrait seperti TikTok/Shorts/Reels (1080x1920),
+        serta memiliki fallback ke best agar tidak pernah gagal dengan 'Requested format is not available'.
+        """
+        if quality == "1080p":
+            return "bv*[height<=1080]+ba/bv*[width<=1080]+ba/b[height<=1080]/b[width<=1080]/bv*+ba/b"
+        elif quality == "720p":
+            return "bv*[height<=720]+ba/bv*[width<=720]+ba/b[height<=720]/b[width<=720]/bv*+ba/b"
+        elif quality == "480p":
+            return "bv*[height<=480]+ba/bv*[width<=480]+ba/b[height<=480]/b[width<=480]/bv*+ba/b"
+        elif quality == "360p":
+            return "bv*[height<=360]+ba/bv*[width<=360]+ba/b[height<=360]/b[width<=360]/bv*+ba/b"
+        elif quality in ("audio_320", "audio_192"):
+            return "ba/b"
+        elif quality == "audio_m4a":
+            return "ba[ext=m4a]/ba/b"
+        else:
+            return "bv*+ba/b"
+
+    def download(self, url: str, quality: str = "best", include_subtitles: bool = False,
+                 subtitle_language: str = "en", subtitle_format: str = "srt",
+                 include_thumbnail: bool = False, thumbnail_format: str = "jpg",
+                 out_dir: str = "", browser_cookie: str = "Tanpa Login",
+                 target_format: str = "Otomatis", custom_user_agent: str = ""):
+
+        self.is_cancelled = False
+        if not out_dir:
+            out_dir = os.getcwd()
+        os.makedirs(out_dir, exist_ok=True)
+
+        def progress_hook(d):
+            if self.is_cancelled:
+                raise DownloadCancelledException("Unduhan dibatalkan oleh pengguna.")
+
+            if d['status'] == 'downloading':
+                downloaded = d.get('downloaded_bytes', 0)
+                total = d.get('total_bytes') or d.get('total_bytes_estimate', 0)
+                speed = d.get('speed', 0)
+                eta = d.get('eta', 0)
+
+                if total and total > 0:
+                    percent_val = int(min(100, (downloaded / total) * 100))
+                else:
+                    p_str = d.get('_percent_str', '0%').replace('%', '').strip()
+                    clean_p_str = ''.join(c for c in p_str if c.isdigit() or c == '.')
+                    try:
+                        percent_val = int(float(clean_p_str))
+                    except Exception:
+                        percent_val = 0
+
+                speed_str = f"{format_bytes(speed)}/s" if speed else "-- KB/s"
+                eta_str = format_seconds(eta) if eta else "--:--"
+                downloaded_str = format_bytes(downloaded)
+                total_str = format_bytes(total) if total else "--"
+
+                progress_data = {
+                    "percent": percent_val,
+                    "speed": speed_str,
+                    "eta": eta_str,
+                    "downloaded": downloaded_str,
+                    "total": total_str,
+                    "status": f"Mengunduh... {downloaded_str} / {total_str} ({speed_str})"
+                }
+
+                if self.progress_callback:
+                    self.progress_callback(progress_data)
+
+            elif d['status'] == 'finished':
+                filename = os.path.basename(d.get('filename', ''))
+                self._emit_log("INFO", f"📦 Stream selesai diunduh: {filename}. Menjalankan post-processing FFmpeg...")
+                if self.progress_callback:
+                    self.progress_callback({
+                        "percent": 99,
+                        "speed": "--",
+                        "eta": "00:00",
+                        "downloaded": "Selesai",
+                        "total": "Selesai",
+                        "status": "Memproses / menggabungkan file dengan FFmpeg..."
+                    })
+
+        is_audio_only = quality.startswith("audio")
+        format_str = self._get_format_string(quality)
+
+        attempts = [
+            {"label": "Strategi Utama (Direct Stream)", "cookie": browser_cookie, "fmt": format_str, "use_impersonate": False, "chunk": None},
+            {"label": "Strategi Chunked Stream (Anti-Putus CDN)", "cookie": browser_cookie, "fmt": format_str, "use_impersonate": False, "chunk": 5242880},
+        ]
+        if browser_cookie and browser_cookie not in ("Tanpa Login", "none", "auto"):
+            attempts.append({"label": "Strategi Fallback (Tanpa Cookies)", "cookie": "Tanpa Login", "fmt": format_str, "use_impersonate": False, "chunk": 5242880})
+        attempts.append({"label": "Strategi Impersonasi Browser", "cookie": browser_cookie, "fmt": "bv*+ba/b", "use_impersonate": True, "chunk": None})
+
+        last_error = ""
+        for idx, att in enumerate(attempts, 1):
+            if self.is_cancelled:
+                break
+
+            postprocessors = []
+            if quality == "audio_320":
+                postprocessors.append({
+                    'key': 'FFmpegExtractAudio',
+                    'preferredcodec': 'mp3',
+                    'preferredquality': '320',
+                })
+            elif quality == "audio_192":
+                postprocessors.append({
+                    'key': 'FFmpegExtractAudio',
+                    'preferredcodec': 'mp3',
+                    'preferredquality': '192',
+                })
+            elif quality == "audio_m4a":
+                postprocessors.append({
+                    'key': 'FFmpegExtractAudio',
+                    'preferredcodec': 'm4a',
+                })
+
+            ydl_opts = self._build_base_opts(att["cookie"], custom_user_agent, use_impersonate=att["use_impersonate"])
+            ydl_opts.update({
+                'format': att["fmt"],
+                'outtmpl': os.path.join(out_dir, '%(title).180B.%(ext)s'),
+                'progress_hooks': [progress_hook],
+                'concurrent_fragment_downloads': 4,
+            })
+            if att["chunk"]:
+                ydl_opts['http_chunk_size'] = att["chunk"]
+
+            if include_subtitles and subtitle_language and subtitle_language != "Tidak ada":
+                ydl_opts['writesubtitles'] = True
+                ydl_opts['writeautomaticsub'] = True
+                ydl_opts['subtitleslangs'] = [subtitle_language]
+                if subtitle_format:
+                    ydl_opts['subtitlesformat'] = subtitle_format
+                    postprocessors.append({
+                        'key': 'FFmpegSubtitlesConvertor',
+                        'format': subtitle_format,
+                    })
+
+            if include_thumbnail:
+                ydl_opts['writethumbnail'] = True
+                if thumbnail_format:
+                    postprocessors.append({
+                        'key': 'FFmpegThumbnailsConvertor',
+                        'format': thumbnail_format,
+                        'when': 'before_dl'
+                    })
+
+            if postprocessors:
+                ydl_opts['postprocessors'] = postprocessors
+
+            try:
+                if idx > 1:
+                    self._emit_log("WARNING", f"🔄 Mencoba ulang dengan {att['label']} (Percobaan {idx}/{len(attempts)})...")
+                self._emit_log("INFO", f"🚀 Memulai unduhan [{att['label']}]: {url} (Kualitas: {quality}, Format Selector: {att['fmt']})")
+                with yt_dlp.YoutubeDL(ydl_opts) as ydl: # type: ignore
+                    info = ydl.extract_info(url, download=True)
+
+                    target_info = info
+                    if 'entries' in info and info['entries']:
+                        entries = [e for e in info['entries'] if e]
+                        if entries:
+                            target_info = entries[0]
+
+                    final_filename = ydl.prepare_filename(target_info)
+                    base = os.path.splitext(final_filename)[0]
+                    downloaded_file = final_filename
+
+                    req_dls = target_info.get('requested_downloads') or info.get('requested_downloads') or []
+                    for rd in req_dls:
+                        fp = rd.get('filepath')
+                        if fp and os.path.exists(fp):
+                            downloaded_file = fp
+                            break
+
+                    if not os.path.exists(downloaded_file):
+                        expected_exts = ['.mp3', '.m4a', '.aac', '.opus', '.webm'] if is_audio_only else ['.mp4', '.mkv', '.webm', '.ts', '.mov', '.flv']
+                        for ext in expected_exts:
+                            if os.path.exists(base + ext):
+                                downloaded_file = base + ext
+                                break
+
+                    if not os.path.exists(downloaded_file):
+                        matched = glob.glob(f"{glob.escape(base)}*")
+                        if matched:
+                            media_files = [m for m in matched if not m.endswith(('.vtt', '.srt', '.ass', '.jpg', '.png', '.webp', '.part', '.ytdl'))]
+                            downloaded_file = media_files[0] if media_files else matched[0]
+
+                    self._emit_log("SUCCESS", f"🎉 File berhasil diunduh ke: {downloaded_file}")
+                    if self.completion_callback:
+                        self.completion_callback(downloaded_file)
+                    return
+
+            except DownloadCancelledException:
+                logger.info("Download dibatalkan oleh pengguna.")
+                self._emit_log("WARNING", "⏹ Unduhan telah dibatalkan oleh pengguna.")
+                if self.error_callback:
+                    self.error_callback("Unduhan dibatalkan.")
+                return
+            except Exception as e:
+                clean_msg = clean_error_message(str(e))
+                tb_str = traceback.format_exc()
+                last_error = clean_msg
+                logger.error(f"Error download ({att['label']}): {clean_msg}\n{tb_str}")
+                self._emit_log("ERROR", f"Gagal pada {att['label']}: {clean_msg}")
+                self._emit_log("ERROR", f"Detail Traceback:\n{tb_str}")
+
+        if self.error_callback:
+            self.error_callback(last_error or "Gagal mengunduh video.")
+</file>
+
+<file path="Kawaragi-Trigger/background.js">
+const SERVER_URL = "http://127.0.0.1:65432";
+let isPolling = false;
+let isConnected = false;
+
+// Daftar domain utama platform video agar short-link (youtu.be, vt.tiktok.com, b23.tv, fb.watch) tetap mendapat cookies lengkap
+const CORE_VIDEO_DOMAINS = [
+    "youtube.com",
+    "google.com",
+    "bilibili.com",
+    "bilibili.tv",
+    "tiktok.com",
+    "instagram.com",
+    "facebook.com",
+    "x.com",
+    "twitter.com",
+    "twitch.tv",
+    "vimeo.com",
+    "dailymotion.com",
+    "soundcloud.com",
+    "pinterest.com",
+    "reddit.com"
+];
+
+function extractBaseDomain(urlStr) {
+    try {
+        const urlObj = new URL(urlStr);
+        let host = urlObj.hostname.replace(/^www\./, "");
+        const parts = host.split(".");
+        if (parts.length > 2) {
+            // Contoh: m.youtube.com -> youtube.com
+            const lastTwo = parts.slice(-2).join(".");
+            if (!["co.id", "co.uk", "com.br", "co.jp", "com.au"].includes(lastTwo)) {
+                host = lastTwo;
+            }
+        }
+        return host;
+    } catch (e) {
+        return "";
+    }
+}
+
+async function buildNetscapeCookies(targetUrl) {
+    let netscapeCookies = "# Netscape HTTP Cookie File\n# Generated by Kawaragi Trigger v2.0\n\n";
+    const seen = new Set();
+    const domainsToFetch = new Set(CORE_VIDEO_DOMAINS);
+
+    if (targetUrl && targetUrl !== "ALL") {
+        const baseDom = extractBaseDomain(targetUrl);
+        if (baseDom) {
+            domainsToFetch.add(baseDom);
+        }
+    }
+
+    try {
+        const allCookies = await chrome.cookies.getAll({});
+        for (const c of allCookies) {
+            const cleanCookieDomain = c.domain.replace(/^\./, "");
+            let shouldInclude = (targetUrl === "ALL");
+
+            if (!shouldInclude) {
+                for (const d of domainsToFetch) {
+                    if (cleanCookieDomain === d || cleanCookieDomain.endsWith("." + d)) {
+                        shouldInclude = true;
+                        break;
+                    }
+                }
+            }
+
+            if (shouldInclude) {
+                const key = `${c.domain}|${c.path}|${c.name}`;
+                if (seen.has(key)) continue;
+                seen.add(key);
+
+                const domainStr = c.domain.startsWith(".") ? c.domain : "." + c.domain;
+                const flag = "TRUE";
+                const path = c.path || "/";
+                const secure = c.secure ? "TRUE" : "FALSE";
+                const expiration = c.expirationDate ? Math.round(c.expirationDate) : Math.floor(Date.now() / 1000) + 86400 * 30;
+                const name = (c.name || "").replace(/[\r\n\t]/g, "");
+                const value = (c.value || "").replace(/[\r\n\t]/g, "");
+                if (name) {
+                    netscapeCookies += `${domainStr}\t${flag}\t${path}\t${secure}\t${expiration}\t${name}\t${value}\n`;
+                }
+            }
+        }
+    } catch (e) {
+        console.error("Gagal mengekstrak cookies:", e);
+    }
+
+    return {
+        cookies: netscapeCookies,
+        count: seen.size,
+        userAgent: navigator.userAgent
+    };
+}
+
+async function processTask(targetUrl) {
+    const result = await buildNetscapeCookies(targetUrl);
+    try {
+        const res = await fetch(`${SERVER_URL}/submit-cookies`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                cookies: result.cookies,
+                count: result.count,
+                userAgent: result.userAgent,
+                url: targetUrl
+            })
+        });
+        return res.ok;
+    } catch (e) {
+        console.error("Gagal mengirim cookies ke Desktop:", e);
+        return false;
+    }
+}
+
+async function sendTabToDesktop(tabUrl, tabTitle) {
+    const result = await buildNetscapeCookies(tabUrl);
+    try {
+        const res = await fetch(`${SERVER_URL}/send-tab`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                url: tabUrl,
+                title: tabTitle || "",
+                cookies: result.cookies,
+                count: result.count,
+                userAgent: result.userAgent
+            })
+        });
+        return res.ok;
+    } catch (e) {
+        console.error("Gagal mengirim tab ke Desktop:", e);
+        return false;
+    }
+}
+
+async function startPolling() {
+    if (isPolling) return;
+    isPolling = true;
+
+    while (isPolling) {
+        try {
+            // Panggil API Chrome untuk mereset timer 30 detik Service Worker Manifest V3
+            await chrome.runtime.getPlatformInfo();
+
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 8000);
+
+            const response = await fetch(`${SERVER_URL}/get-task`, {
+                signal: controller.signal,
+                cache: "no-store"
+            });
+            clearTimeout(timeoutId);
+
+            if (response.ok) {
+                isConnected = true;
+                chrome.action.setBadgeText({ text: "ON" });
+                chrome.action.setBadgeBackgroundColor({ color: "#9ece6a" });
+
+                const task = await response.json();
+                if (task && task.url) {
+                    console.log("Tugas masuk dari Desktop:", task.url);
+                    await processTask(task.url);
+                }
+            } else {
+                isConnected = false;
+                chrome.action.setBadgeText({ text: "" });
+            }
+        } catch (e) {
+            isConnected = false;
+            chrome.action.setBadgeText({ text: "" });
+            await new Promise(resolve => setTimeout(resolve, 1500));
+        }
+    }
+}
+
+// Listener pesan dari Popup UI
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+    if (msg.action === "check_status") {
+        fetch(`${SERVER_URL}/ping`, { cache: "no-store" })
+            .then(r => r.json())
+            .then(data => {
+                isConnected = true;
+                startPolling();
+                sendResponse({ connected: true, status: data.status || "ready" });
+            })
+            .catch(() => {
+                isConnected = false;
+                sendResponse({ connected: false });
+            });
+        return true;
+    }
+
+    if (msg.action === "sync_cookies") {
+        processTask(msg.url || "ALL").then(ok => {
+            sendResponse({ success: ok });
+        });
+        return true;
+    }
+
+    if (msg.action === "send_tab") {
+        sendTabToDesktop(msg.url, msg.title).then(ok => {
+            sendResponse({ success: ok });
+        });
+        return true;
+    }
+});
+
+// Pastikan Service Worker selalu hidup dan terhubung kembali
+chrome.alarms.create("keepAlive", { periodInMinutes: 0.5 });
+chrome.alarms.onAlarm.addListener(() => {
+    chrome.runtime.getPlatformInfo();
+    startPolling();
+});
+
+chrome.runtime.onStartup.addListener(() => startPolling());
+chrome.runtime.onInstalled.addListener(() => startPolling());
+chrome.tabs.onActivated.addListener(() => startPolling());
+chrome.tabs.onUpdated.addListener(() => startPolling());
+
+startPolling();
+</file>
+
+<file path="installer_script.iss">
+[Setup]
+; AppId sangat penting agar Windows tahu ini aplikasi yang sama (bisa di-repair/uninstall)
+AppId={{KAWARAGI-DOWNLOADER-V1-000000}
+AppName=Kawaragi Downloader
+AppVersion=27.0
+DefaultDirName={autopf}\Kawaragi Downloader
+DefaultGroupName=Kawaragi Downloader
+OutputDir=Output
+OutputBaseFilename=Kawaragi_Setup_v27.0
+SetupIconFile=assets\logo.ico
+Compression=lzma
+SolidCompression=yes
+
+; Memaksa aplikasi tertutup jika user mencoba install ulang saat app sedang jalan
+CloseApplications=yes
+RestartApplications=no
+
+; Menampilkan logo di menu Uninstall Windows
+UninstallDisplayIcon={app}\KawaragiDownloader.exe
+
+[InstallDelete]
+; AUTO-CLEAN: Menghapus file lama sebelum menimpa dengan yang baru
+Type: filesandordirs; Name: "{app}\_internal"
+Type: filesandordirs; Name: "{app}\Kawaragi-Trigger"
+Type: files; Name: "{app}\ffmpeg.exe"
+
+[Files]
+Source: "dist\KawaragiDownloader\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
+Source: "ffmpeg.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "Kawaragi-Trigger\*"; DestDir: "{app}\Kawaragi-Trigger"; Flags: ignoreversion recursesubdirs
+
+[Tasks]
+Name: "desktopicon"; Description: "Buat shortcut di Desktop"; GroupDescription: "Ikon Tambahan:"
+Name: "installext"; Description: "Pasang & aktifkan Ekstensi Browser Kawaragi Trigger (Chrome / Edge)"; GroupDescription: "Integrasi Ekstensi Browser:"
+
+[Icons]
+Name: "{group}\Kawaragi Downloader"; Filename: "{app}\KawaragiDownloader.exe"
+Name: "{group}\Pasang Ekstensi Browser Kawaragi"; Filename: "{app}\KawaragiDownloader.exe"; Parameters: "--install-extension"
+Name: "{autodesktop}\Kawaragi Downloader"; Filename: "{app}\KawaragiDownloader.exe"; Tasks: desktopicon
+
+[Run]
+; Jika user mencentang pasang ekstensi, otomatis buka aplikasi langsung ke Asisten Pemasangan Ekstensi
+Filename: "{app}\KawaragiDownloader.exe"; Parameters: "--install-extension"; Description: "Jalankan Kawaragi Downloader & Pasang Ekstensi Browser"; Flags: nowait postinstall skipifsilent; Tasks: installext
+Filename: "{app}\KawaragiDownloader.exe"; Description: "Jalankan Kawaragi Downloader sekarang"; Flags: nowait postinstall skipifsilent; Tasks: not installext
+</file>
+
+<file path="main.py">
+import sys
+import os
+import traceback
+
+# Pastikan encoding stdout/stderr menggunakan UTF-8 agar judul non-Latin (Jepang/Mandarin/Emoji) tidak memicu UnicodeEncodeError di Windows
+if hasattr(sys.stdout, "reconfigure") and sys.stdout is not None:
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+if hasattr(sys.stderr, "reconfigure") and sys.stderr is not None:
+    try:
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
+# --- SISTEM PENGINTAI CRASH FATAL ---
+# Menyimpan log crash di AppData agar terhindar dari Permission Error
+local_appdata = os.getenv('LOCALAPPDATA') or os.path.join(os.path.expanduser('~'), 'AppData', 'Local')
+log_dir = os.path.join(local_appdata, 'KawaragiDownloader', 'logs')
+os.makedirs(log_dir, exist_ok=True)
+crash_log_path = os.path.join(log_dir, 'crash_report.txt')
+
+def global_exception_handler(exc_type, exc_value, exc_traceback):
+    """Menangkap SEMUA error yang menyebabkan Force Close"""
+    with open(crash_log_path, 'w', encoding='utf-8') as f:
+        f.write("=== FATAL CRASH REPORT (TERTANGKAP!) ===\n")
+        traceback.print_exception(exc_type, exc_value, exc_traceback, file=f)
+    sys.__excepthook__(exc_type, exc_value, exc_traceback)
+
+# Pasang pengintai ke sistem Windows
+sys.excepthook = global_exception_handler
+
+try:
+    # Pastikan direktori root aplikasi ada di sys.path
+    project_root = os.path.abspath(os.path.dirname(__file__))
+    if project_root not in sys.path:
+        sys.path.insert(0, project_root)
+
+    from app.gui.main_window import MainWindow
+    from PyQt5.QtWidgets import QApplication
+
+    if __name__ == "__main__":
+        app = QApplication(sys.argv)
+        main_window = MainWindow()
+        main_window.show()
+        sys.exit(app.exec_())
+
+except Exception as e:
+    # Tangkap error jika terjadi saat mengimpor modul (sebelum GUI muncul)
+    with open(crash_log_path, 'w', encoding='utf-8') as f:
+        f.write("=== STARTUP CRASH (GAGAL LOADING) ===\n")
+        traceback.print_exc(file=f)
+    print(f"Error starting application: {e}")
+</file>
+
+<file path="README.md">
+<div align="center">
+  <img src="assets/logo.png" alt="Kawaragi Logo" width="120" />
+
+  # Kawaragi Downloader 🚀
+  
+  **Aplikasi pengunduh video hybrid super tangguh dengan sistem anti-blokir dan post-processing cerdas.**
+
+  ![Python](https://img.shields.io/badge/Python-3.8+-blue?style=for-the-badge&logo=python&logoColor=white)
+  ![PyQt5](https://img.shields.io/badge/GUI-PyQt5-green?style=for-the-badge&logo=qt)
+  ![yt-dlp](https://img.shields.io/badge/Engine-yt--dlp-red?style=for-the-badge&logo=youtube)
+  ![FFmpeg](https://img.shields.io/badge/Renderer-FFmpeg-black?style=for-the-badge&logo=ffmpeg)
+
+  [⬇️ Download Installer Terbaru](#-cara-instalasi) • [🐛 Lapor Bug](../../issues)
+</div>
+
+---
+
+## 🌟 Kenapa Kawaragi Downloader?
+Kawaragi Downloader bukan sekadar GUI biasa untuk `yt-dlp`. Aplikasi ini dirancang untuk melewati pemblokiran ketat (seperti proteksi bot YouTube) menggunakan **Bridge Extension**, serta dilengkapi dengan mesin **FFmpeg** internal untuk merender video mentah ke format apa pun yang Anda inginkan secara otomatis.
+
+## ✨ Fitur Utama
+* 🛡️ **Sistem Anti-Blokir (Bridge Extension):** Dilengkapi ekstensi Chrome pendamping untuk menyinkronkan *cookies* secara otomatis agar unduhan tidak diblokir oleh server.
+* 🎞️ **Post-Processing Universal:** Unduh kualitas tertinggi apa pun dari server, lalu biarkan FFmpeg merendernya dengan rapi ke **MP4, WebM, MP3, atau AAC**.
+* 📸 **Smart Screenshot Preview:** Ambil cuplikan gambar (JPG) secara acak di sepanjang durasi video, dan pilih mana yang ingin disimpan melalui UI Preview interaktif.
+* 📝 **Ekstraksi Lengkap:** Dukungan penuh untuk mengunduh **Subtitle** (SRT, VTT, ASS) dan **Thumbnail** beresolusi tinggi (JPG, PNG, WebP).
+* 🎨 **Modern & Seamless UI:** Antarmuka responsif yang elegan dengan skema warna *Tokyo Night*.
+
+---
+
+## 📸 Tangkapan Layar (Screenshots)
+*(Ganti URL gambar di bawah ini dengan screenshot aplikasi Anda)*
+
+| Tampilan Utama | Fitur Smart Screenshot |
+|:---:|:---:|
+| ![UI Utama](assets/ui_utama.png) | ![Preview SS](assets/preview_ss.png) |
+---
+
+## 🚀 Cara Instalasi
+
+### Opsi 1: Menggunakan Installer (Direkomendasikan untuk Pengguna Windows)
+1. Pergi ke halaman **[Releases](../../releases)**.
+2. Unduh file `Kawaragi_Setup_v1.0.exe`.
+3. Jalankan installer dan ikuti petunjuk di layar (Tinggal *Next -> Next -> Finish*).
+4. Aplikasi sudah siap digunakan lengkap dengan Shortcut di Desktop!
+
+## 🧩 Instalasi Ekstensi (Wajib)
+Karena kebijakan keamanan Google Chrome, ekstensi pendamping tidak dapat terpasang secara otomatis. Ikuti langkah mudah ini:
+
+1. Buka Chrome dan pergi ke alamat `chrome://extensions/`.
+2. Di pojok kanan atas, aktifkan **Developer mode** (Mode pengembang).
+3. Klik tombol **Load unpacked** (Muat yang belum dikemas) di pojok kiri atas.
+4. Cari dan pilih folder `Kawaragi-Trigger` yang berada di dalam folder instalasi aplikasi Anda (biasanya di `C:\Program Files (x86)\Kawaragi Downloader\Kawaragi-Trigger`).
+5. Selesai! Ekstensi sekarang akan muncul sebagai jembatan antara Chrome dan aplikasi Desktop.
+
+### Opsi 2: Menjalankan dari Source Code (Untuk Developer)
+Pastikan Anda sudah menginstal **Python 3.8+** dan memiliki **FFmpeg** di variabel sistem (atau letakkan `ffmpeg.exe` di dalam folder root aplikasi).
+
+1. Clone repositori ini:
+   ```bash
+   git clone [https://github.com/UsernameAnda/Kawaragi-Downloader.git](https://github.com/UsernameAnda/Kawaragi-Downloader.git)
+   cd Kawaragi-Downloader
+</file>
+
+<file path="app/gui/main_window.py">
+import json
+import os
+import shutil
+import sys
+import time
+import html
+import subprocess
+import traceback
+import requests
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+from PyQt5.QtWidgets import (
+    QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QGridLayout,
+    QLabel, QLineEdit, QPushButton, QComboBox, QCheckBox, QSpinBox,
+    QProgressBar, QMessageBox, QFileDialog, QFrame, QApplication,
+    QTextEdit
+)
+from PyQt5.QtGui import QPixmap, QCursor, QIcon, QTextCursor
+from PyQt5.QtCore import QThread, pyqtSignal, Qt, QTimer
+
+from app.core.downloader import Downloader
+from app.core.ffmpeg_handler import FFmpegHandler
+from app.core.config import Config
+from app.utils.validation import is_valid_url
+from app.utils.file_utils import get_ffmpeg_path, get_extension_dir, format_bytes, format_seconds
+from app.utils.log_utils import setup_logger
+from app.gui.widgets import ScreenshotPreviewDialog, HistoryDialog, ExtensionHelperDialog
+
+logger = setup_logger("main_window", "app.log")
+
+current_task = {"url": None}
+received_cookies_cache = {
+    "current": "",
+    "count": 0,
+    "userAgent": "",
+    "tab_url": "",
+    "tab_title": ""
+}
+bridge_state = {"last_seen": 0.0}
+
+
+def get_asset_path(filename):
+    """Mendapatkan path asset dengan aman baik saat running script atau pyinstaller."""
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, "assets", filename)
+
+
+# --- SERVER LOKAL UNTUK JEMBATAN EKSTENSI ---
+class BridgeHandler(BaseHTTPRequestHandler):
+    def log_message(self, format, *args):
+        pass
+
+    def handle(self):
+        """Tangkap pemutusan koneksi sepihak oleh klien browser agar tidak membuang traceback ke terminal."""
+        try:
+            super().handle()
+        except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
+            pass
+
+    def _send_json(self, payload: dict, status_code: int = 200):
+        self.send_response(status_code)
+        self.send_header('Content-type', 'application/json')
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.end_headers()
+        self.wfile.write(json.dumps(payload).encode('utf-8'))
+
+    def do_GET(self):
+        try:
+            bridge_state["last_seen"] = time.time()
+            if hasattr(self.server, 'ext_connected_signal'):
+                self.server.ext_connected_signal.emit(True)
+
+            if self.path == '/ping':
+                self._send_json({"status": "ready", "app": "Kawaragi Downloader"})
+            elif self.path == '/get-task':
+                if not bridge_state.get("initial_synced") and not current_task.get("url"):
+                    bridge_state["initial_synced"] = True
+                    self._send_json({"url": "https://www.bilibili.com"})
+                    return
+
+                # Tunggu maks 4 detik agar ekstensi tetap responsif dan tidak terkena suspend Chrome
+                for _ in range(8):
+                    if current_task.get("url"):
+                        break
+                    time.sleep(0.5)
+
+                bridge_state["last_seen"] = time.time()
+                task_payload = {"url": current_task.get("url")}
+                current_task["url"] = None
+                self._send_json(task_payload)
+            else:
+                self._send_json({"error": "Not found"}, 404)
+        except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
+            pass
+
+    def do_POST(self):
+        try:
+            bridge_state["last_seen"] = time.time()
+            if hasattr(self.server, 'ext_connected_signal'):
+                self.server.ext_connected_signal.emit(True)
+
+            content_len = int(self.headers.get('Content-Length', 0))
+            post_data = self.rfile.read(content_len) if content_len > 0 else b"{}"
+            try:
+                data = json.loads(post_data.decode('utf-8'))
+            except Exception as e:
+                logger.error(f"Error parsing JSON POST: {e}")
+                data = {}
+
+            if self.path == '/submit-cookies':
+                received_cookies_cache["current"] = data.get('cookies', "")
+                received_cookies_cache["count"] = data.get('count', 0)
+                received_cookies_cache["userAgent"] = data.get('userAgent', "")
+                self._send_json({"status": "ok"})
+                if hasattr(self.server, 'cookies_ready_signal'):
+                    self.server.cookies_ready_signal.emit()
+
+            elif self.path == '/send-tab':
+                received_cookies_cache["current"] = data.get('cookies', "")
+                received_cookies_cache["count"] = data.get('count', 0)
+                received_cookies_cache["userAgent"] = data.get('userAgent', "")
+                received_cookies_cache["tab_url"] = data.get('url', "")
+                received_cookies_cache["tab_title"] = data.get('title', "")
+                self._send_json({"status": "ok"})
+                if hasattr(self.server, 'tab_received_signal'):
+                    self.server.tab_received_signal.emit()
+            else:
+                self._send_json({"error": "Not found"}, 404)
+        except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
+            pass
+
+    def do_OPTIONS(self):
+        try:
+            self.send_response(200)
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+            self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+            self.end_headers()
+        except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
+            pass
+
+
+class BridgeServer(QThread):
+    cookies_ready_signal = pyqtSignal()
+    tab_received_signal = pyqtSignal()
+    ext_connected_signal = pyqtSignal(bool)
+    server_log_signal = pyqtSignal(str, str)
+
+    def __init__(self):
+        super().__init__()
+        self.httpd = None
+
+    def _cleanup_stale_port_holder(self):
+        """Membersihkan proses zombie KawaragiDownloader lama yang masih mengunci port 65432."""
+        if os.name != 'nt':
+            return
+        try:
+            flags = subprocess.CREATE_NO_WINDOW
+            out = subprocess.check_output(["netstat", "-ano"], creationflags=flags, text=True, errors="ignore")
+            my_pid = str(os.getpid())
+            for line in out.splitlines():
+                if "127.0.0.1:65432" in line and "LISTENING" in line:
+                    parts = line.split()
+                    if parts:
+                        pid = parts[-1]
+                        if pid.isdigit() and pid != my_pid and pid != "0":
+                            subprocess.run(["taskkill", "/F", "/PID", pid], creationflags=flags, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        except Exception:
+            pass
+
+    def run(self):
+        self._cleanup_stale_port_holder()
+        server_address = ('127.0.0.1', 65432)
+        try:
+            class ReusableServer(ThreadingHTTPServer):
+                allow_reuse_address = True
+
+                def handle_error(self, request, client_address):
+                    exc_type, _, _ = sys.exc_info()
+                    if exc_type in (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
+                        return
+                    super().handle_error(request, client_address)
+
+            self.httpd = ReusableServer(server_address, BridgeHandler)
+            self.httpd.cookies_ready_signal = self.cookies_ready_signal
+            self.httpd.tab_received_signal = self.tab_received_signal
+            self.httpd.ext_connected_signal = self.ext_connected_signal
+            logger.info("BridgeServer aktif di port 65432")
+            self.server_log_signal.emit("INFO", "🌐 Bridge Server lokal aktif di 127.0.0.1:65432 (Menunggu koneksi ekstensi browser)")
+            self.httpd.serve_forever()
+        except OSError as e:
+            msg = f"Port 65432 sedang digunakan ({e}). Pastikan tidak ada jendela Kawaragi lain yang terbuka."
+            logger.warning(msg)
+            self.server_log_signal.emit("WARNING", msg)
+        except Exception as e:
+            logger.error(f"Gagal menjalankan BridgeServer: {e}")
+            self.server_log_signal.emit("ERROR", f"Gagal menjalankan BridgeServer: {e}")
+
+    def stop(self):
+        if self.httpd:
+            try:
+                self.httpd.shutdown()
+                self.httpd.server_close()
+            except Exception:
+                pass
+
+
+# --- THREAD WORKERS ---
+class InfoWorker(QThread):
+    finished = pyqtSignal(dict)
+    error = pyqtSignal(str)
+    log_msg = pyqtSignal(str, str)
+
+    def __init__(self, url, cookies, user_agent=""):
+        super().__init__()
+        self.url = url
+        self.cookies = cookies
+        self.user_agent = user_agent
+
+    def run(self):
+        d = Downloader(
+            error_callback=lambda e: self.error.emit(e),
+            log_callback=lambda lvl, msg: self.log_msg.emit(lvl, msg)
+        )
+        info = d.get_video_info(self.url, self.cookies, self.user_agent)
+        if info:
+            thumb_url = info.get("thumbnail")
+            if thumb_url:
+                try:
+                    resp = requests.get(thumb_url, timeout=5, headers={"Referer": self.url, "User-Agent": "Mozilla/5.0"})
+                    if resp.status_code == 200:
+                        info["thumbnail_bytes"] = resp.content
+                except Exception:
+                    pass
+            self.finished.emit(info)
+
+
+class DownloadWorker(QThread):
+    progress = pyqtSignal(dict)
+    done = pyqtSignal(str)
+    error = pyqtSignal(str)
+    log_msg = pyqtSignal(str, str)
+
+    def __init__(self, params):
+        super().__init__()
+        self.p = params
+        self.downloader = None
+
+    def run(self):
+        self.downloader = Downloader(
+            progress_callback=self.progress.emit,
+            completion_callback=self.done.emit,
+            error_callback=self.error.emit,
+            log_callback=lambda lvl, msg: self.log_msg.emit(lvl, msg)
+        )
+        self.downloader.download(
+            url=self.p['url'],
+            quality=self.p['quality'],
+            include_subtitles=self.p['inc_sub'],
+            subtitle_language=self.p['sub_lang'],
+            subtitle_format=self.p['sub_fmt'],
+            include_thumbnail=self.p['inc_thm'],
+            thumbnail_format=self.p['thm_fmt'],
+            out_dir=self.p['out_dir'],
+            browser_cookie=self.p['cookies_data'],
+            target_format=self.p['target_fmt'],
+            custom_user_agent=self.p.get('user_agent', '')
+        )
+
+    def cancel(self):
+        if self.downloader:
+            self.downloader.cancel()
+
+
+class ProcessingWorker(QThread):
+    finished = pyqtSignal(object)
+    error = pyqtSignal(str)
+    log_msg = pyqtSignal(str, str)
+
+    def __init__(self, mode, input_file, **kwargs):
+        super().__init__()
+        self.mode = mode
+        self.input_file = input_file
+        self.kwargs = kwargs
+
+    def run(self):
+        try:
+            handler = FFmpegHandler()
+            if self.mode == "convert":
+                self.log_msg.emit("INFO", f"🎬 Memulai konversi FFmpeg: {os.path.basename(self.input_file)} -> .{self.kwargs['ext']}")
+                res = handler.convert(self.input_file, self.kwargs['ext'])
+                self.log_msg.emit("SUCCESS", f"✅ Konversi selesai: {res}")
+                self.finished.emit(res)
+            elif self.mode == "screenshot":
+                self.log_msg.emit("INFO", f"📸 Mengambil {self.kwargs['count']} screenshot acak via FFmpeg...")
+                res = handler.take_random_screenshots(
+                    self.input_file,
+                    self.kwargs['count'],
+                    self.kwargs['duration'],
+                    self.kwargs['dir']
+                )
+                self.log_msg.emit("SUCCESS", f"✅ Berhasil mengekstrak {len(res)} gambar screenshot.")
+                self.finished.emit(res)
+        except Exception as e:
+            tb = traceback.format_exc()
+            self.log_msg.emit("ERROR", f"❌ Error pemrosesan FFmpeg: {e}\n{tb}")
+            self.error.emit(str(e))
+
+
+# --- JENDELA UTAMA (MAIN WINDOW) ---
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Kawaragi Downloader 🚀")
+        self.resize(960, 940)
+        self.setMinimumSize(850, 820)
+
+        logo_ico = get_asset_path("logo.ico")
+        logo_png = get_asset_path("logo.png")
+        self.final_logo = logo_ico if os.path.exists(logo_ico) else logo_png
+        self.setWindowIcon(QIcon(self.final_logo))
+
+        self.cookie_file = "Tanpa Login"
+        self.custom_user_agent = ""
+        self.manual_cookie_path = ""
+        self.current_video_info = {}
+        self.current_video_duration = 0
+        self.temp_video_file = None
+        self.is_downloading = False
+        self.is_checking_info = False
+        self.extension_connected = False
+        self.pending_action_after_cookies = "info"  # "info" atau "download"
+
+        # Timer animasi trigger ekstensi
+        self.loading_step = 0
+        self.loading_frames = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"]
+        self.loading_timer = QTimer(self)
+        self.loading_timer.timeout.connect(self.animate_loading)
+        self.trigger_timeout_counter = 0
+
+        # Timer pemantau status ekstensi
+        self.ext_watchdog_timer = QTimer(self)
+        self.ext_watchdog_timer.timeout.connect(self.check_extension_heartbeat)
+        self.ext_watchdog_timer.start(3000)
+
+        self.apply_modern_theme()
+        self.setup_ui()
+
+        # Jalankan server jembatan ekstensi
+        self.bridge_server = BridgeServer()
+        self.bridge_server.cookies_ready_signal.connect(self.on_cookies_received)
+        self.bridge_server.tab_received_signal.connect(self.on_tab_received_from_extension)
+        self.bridge_server.ext_connected_signal.connect(self.update_extension_badge)
+        self.bridge_server.server_log_signal.connect(self.append_log)
+        self.bridge_server.start()
+
+        self.append_log("INFO", f"Aplikasi Kawaragi Downloader siap. FFmpeg: {get_ffmpeg_path()}")
+        self.append_log("INFO", f"Lokasi folder ekstensi browser: {get_extension_dir()}")
+
+        # Jika dijalankan oleh installer dengan argumen --install-extension, buka panduan otomatis
+        if "--install-extension" in sys.argv:
+            QTimer.singleShot(600, self.open_extension_helper)
+
+    def setup_ui(self):
+        self.central_widget = QWidget()
+        self.central_widget.setObjectName("central_widget")
+        self.setCentralWidget(self.central_widget)
+
+        self.main_layout = QVBoxLayout(self.central_widget)
+        self.main_layout.setContentsMargins(22, 16, 22, 16)
+        self.main_layout.setSpacing(10)
+
+        # 1. Header (Logo, Judul, Indikator Ekstensi, Tombol Pasang Ekstensi & Riwayat)
+        header = QHBoxLayout()
+        logo_label = QLabel()
+        pix = QPixmap(self.final_logo)
+        if not pix.isNull():
+            logo_label.setPixmap(pix)
+            logo_label.setFixedSize(44, 44)
+            logo_label.setScaledContents(True)
+        header.addWidget(logo_label)
+
+        title_vbox = QVBoxLayout()
+        title_vbox.setSpacing(2)
+        title = QLabel("Kawaragi Downloader")
+        title.setObjectName("app_title")
+        subtitle = QLabel("Universal Multi-Site Video Downloader & FFmpeg Studio")
+        subtitle.setStyleSheet("color: #7982a9; font-size: 11px;")
+        title_vbox.addWidget(title)
+        title_vbox.addWidget(subtitle)
+        header.addLayout(title_vbox)
+
+        header.addStretch()
+
+        self.ext_status_badge = QLabel("🔴 Ekstensi: Belum Terhubung")
+        self.ext_status_badge.setStyleSheet(
+            "background-color: #24283b; color: #f7768e; border: 1px solid #f7768e; "
+            "border-radius: 6px; padding: 6px 10px; font-weight: bold; font-size: 12px;"
+        )
+        header.addWidget(self.ext_status_badge)
+
+        btn_ext_helper = QPushButton("🧩 Pasang Ekstensi")
+        btn_ext_helper.setCursor(QCursor(Qt.PointingHandCursor))
+        btn_ext_helper.setStyleSheet("background-color: #bb9af7; color: #1a1b26; padding: 7px 13px; font-weight: bold;")
+        btn_ext_helper.clicked.connect(self.open_extension_helper)
+        header.addWidget(btn_ext_helper)
+
+        btn_history = QPushButton("📁 Riwayat")
+        btn_history.setCursor(QCursor(Qt.PointingHandCursor))
+        btn_history.setStyleSheet("background-color: #24283b; color: #7aa2f7; border: 1px solid #414868; padding: 7px 13px;")
+        btn_history.clicked.connect(self.open_history)
+        header.addWidget(btn_history)
+
+        self.main_layout.addLayout(header)
+
+        # 2. Input Link Video & Tempel
+        input_label = QLabel("🔗 Tempel Tautan Video (YouTube, Bilibili, TikTok, Instagram, Twitter/X, Facebook, dll):")
+        input_label.setStyleSheet("font-weight: bold; color: #c0caf5;")
+        self.main_layout.addWidget(input_label)
+
+        url_row = QHBoxLayout()
+        self.url_input = QLineEdit()
+        self.url_input.setPlaceholderText("https://www.youtube.com/watch?v=... atau https://www.bilibili.com/video/...")
+        self.url_input.setClearButtonEnabled(True)
+        url_row.addWidget(self.url_input)
+
+        self.btn_paste = QPushButton("📋 Tempel & Cek")
+        self.btn_paste.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_paste.setToolTip("Tempel URL dari clipboard dan langsung periksa info video")
+        self.btn_paste.clicked.connect(self.paste_from_clipboard)
+        url_row.addWidget(self.btn_paste)
+
+        self.main_layout.addLayout(url_row)
+
+        # Action Buttons & Sumber Cookies Row
+        action_btn_row = QHBoxLayout()
+
+        self.auth_drop = QComboBox()
+        self.auth_drop.setToolTip("Pilih metode autentikasi / cookies untuk situs yang membutuhkan login")
+        self.auth_drop.addItem("🌐 Autentikasi: Otomatis (Tanpa Login + Fallback)", "Tanpa Login")
+        self.auth_drop.addItem("🧩 Autentikasi: Ekstensi Kawaragi Trigger (Browser)", "extension")
+        self.auth_drop.addItem("🧭 Autentikasi: Ambil Cookies dari Microsoft Edge", "edge")
+        self.auth_drop.addItem("🦊 Autentikasi: Ambil Cookies dari Mozilla Firefox", "firefox")
+        self.auth_drop.addItem("🦁 Autentikasi: Ambil Cookies dari Brave Browser", "brave")
+        self.auth_drop.addItem("🌐 Autentikasi: Ambil Cookies dari Google Chrome", "chrome")
+        self.auth_drop.addItem("📄 Autentikasi: Pilih File cookies.txt Manual...", "file")
+        self.auth_drop.currentIndexChanged.connect(self.on_auth_mode_changed)
+        action_btn_row.addWidget(self.auth_drop, 2)
+
+        self.info_btn = QPushButton("🔍 Cek Info Link")
+        self.info_btn.setCursor(QCursor(Qt.PointingHandCursor))
+        self.info_btn.setStyleSheet("background-color: #3d59a1; color: white; font-weight: bold;")
+        self.info_btn.clicked.connect(lambda: self.start_info_check(force_extension=False))
+        action_btn_row.addWidget(self.info_btn, 1)
+
+        self.trigger_btn = QPushButton("🛡️ Sinkron Cookie Ekstensi")
+        self.trigger_btn.setCursor(QCursor(Qt.PointingHandCursor))
+        self.trigger_btn.setToolTip("Tarik cookies aktif dari ekstensi browser Kawaragi Trigger")
+        self.trigger_btn.setStyleSheet("background-color: #bb9af7; color: #1a1b26; font-weight: bold;")
+        self.trigger_btn.clicked.connect(lambda: self.start_info_check(force_extension=True))
+        action_btn_row.addWidget(self.trigger_btn, 1)
+
+        self.btn_cancel_action = QPushButton("⏹ Batal")
+        self.btn_cancel_action.setCursor(QCursor(Qt.PointingHandCursor))
+        self.btn_cancel_action.setStyleSheet("background-color: #f7768e; color: white;")
+        self.btn_cancel_action.setEnabled(False)
+        self.btn_cancel_action.clicked.connect(self.cancel_current_operation)
+        action_btn_row.addWidget(self.btn_cancel_action)
+
+        self.main_layout.addLayout(action_btn_row)
+
+        # 3. Card Preview Video Info
+        self.preview_frame = QFrame()
+        self.preview_frame.setObjectName("preview_frame")
+        preview_layout = QHBoxLayout(self.preview_frame)
+        preview_layout.setContentsMargins(12, 8, 12, 8)
+        preview_layout.setSpacing(14)
+
+        self.thumb_preview = QLabel()
+        self.thumb_preview.setFixedSize(135, 76)
+        self.thumb_preview.setStyleSheet("background-color: #1a1b26; border-radius: 6px; border: 1px dashed #414868;")
+        self.thumb_preview.setAlignment(Qt.AlignCenter)
+        self.thumb_preview.setText("🖼️ Thumbnail")
+        preview_layout.addWidget(self.thumb_preview)
+
+        self.info_box = QLabel("Menunggu input link... Masukkan URL video di atas lalu klik 'Cek Info Link' atau langsung 'Mulai Unduh'.")
+        self.info_box.setObjectName("info_box")
+        self.info_box.setWordWrap(True)
+        preview_layout.addWidget(self.info_box, 1)
+
+        self.main_layout.addWidget(self.preview_frame)
+
+        # 4. Pengaturan Kualitas & Format Unduhan
+        opt_group = QFrame()
+        opt_group.setObjectName("opt_group")
+        opt_layout = QVBoxLayout(opt_group)
+        opt_layout.setContentsMargins(12, 10, 12, 10)
+        opt_layout.setSpacing(8)
+
+        row_settings_1 = QHBoxLayout()
+        v_qual = QVBoxLayout()
+        v_qual.addWidget(QLabel("🎯 Kualitas / Mode Unduh:"))
+        self.qual_drop = QComboBox()
+        self.qual_drop.addItem("🌟 Kualitas Terbaik (Best / Resolusi Tertinggi)", "best")
+        self.qual_drop.addItem("🎬 1080p (Full HD)", "1080p")
+        self.qual_drop.addItem("📺 720p (HD)", "720p")
+        self.qual_drop.addItem("📱 480p (SD)", "480p")
+        self.qual_drop.addItem("⚡ 360p (Hemat Kuota)", "360p")
+        self.qual_drop.addItem("🎵 Audio Saja (MP3 320kbps - Kualitas Tinggi)", "audio_320")
+        self.qual_drop.addItem("🎵 Audio Saja (MP3 192kbps - Standar)", "audio_192")
+        self.qual_drop.addItem("🎵 Audio Saja (M4A / AAC Bawaan)", "audio_m4a")
+        v_qual.addWidget(self.qual_drop)
+        row_settings_1.addLayout(v_qual)
+
+        v_fmt = QVBoxLayout()
+        v_fmt.addWidget(QLabel("📦 Format Tujuan Akhir:"))
+        self.fmt_drop = QComboBox()
+        self.fmt_drop.addItems(["Otomatis (Sesuai Sumber)", "mp4", "mkv", "webm", "mp3", "aac"])
+        v_fmt.addWidget(self.fmt_drop)
+        row_settings_1.addLayout(v_fmt)
+
+        opt_layout.addLayout(row_settings_1)
+
+        # Baris Opsi Ekstraksi (Screenshot, Subtitle, Thumbnail)
+        row_settings_2 = QHBoxLayout()
+
+        s_box = QFrame()
+        s_box.setStyleSheet("background-color: #1f2335; border-radius: 6px; padding: 5px;")
+        s_v = QVBoxLayout(s_box)
+        s_v.setContentsMargins(6, 4, 6, 4)
+        self.ss_cb = QCheckBox("📸 Ambil Screenshot Acak")
+        s_v.addWidget(self.ss_cb)
+        hbox_ss = QHBoxLayout()
+        hbox_ss.addWidget(QLabel("Jumlah:"))
+        self.ss_count = QSpinBox()
+        self.ss_count.setRange(1, 30)
+        self.ss_count.setValue(6)
+        hbox_ss.addWidget(self.ss_count)
+        hbox_ss.addStretch()
+        s_v.addLayout(hbox_ss)
+        row_settings_2.addWidget(s_box)
+
+        sub_box = QFrame()
+        sub_box.setStyleSheet("background-color: #1f2335; border-radius: 6px; padding: 5px;")
+        sub_v = QVBoxLayout(sub_box)
+        sub_v.setContentsMargins(6, 4, 6, 4)
+        self.sub_cb = QCheckBox("📝 Unduh Subtitle")
+        sub_v.addWidget(self.sub_cb)
+        sub_row = QHBoxLayout()
+        self.sub_lang = QComboBox()
+        self.sub_lang.addItems(["id", "en"])
+        sub_row.addWidget(self.sub_lang)
+        self.sub_fmt = QComboBox()
+        self.sub_fmt.addItems(["srt", "vtt", "ass"])
+        sub_row.addWidget(self.sub_fmt)
+        sub_v.addLayout(sub_row)
+        row_settings_2.addWidget(sub_box)
+
+        thm_box = QFrame()
+        thm_box.setStyleSheet("background-color: #1f2335; border-radius: 6px; padding: 5px;")
+        thm_v = QVBoxLayout(thm_box)
+        thm_v.setContentsMargins(6, 4, 6, 4)
+        self.thm_cb = QCheckBox("🖼️ Simpan Thumbnail")
+        thm_v.addWidget(self.thm_cb)
+        thm_row = QHBoxLayout()
+        thm_row.addWidget(QLabel("Format:"))
+        self.thm_fmt = QComboBox()
+        self.thm_fmt.addItems(["jpg", "png", "webp"])
+        thm_row.addWidget(self.thm_fmt)
+        thm_v.addLayout(thm_row)
+        row_settings_2.addWidget(thm_box)
+
+        opt_layout.addLayout(row_settings_2)
+        self.main_layout.addWidget(opt_group)
+
+        # 5. Folder Tujuan Simpan
+        dir_h = QHBoxLayout()
+        dir_lbl = QLabel("📂 Simpan ke:")
+        dir_lbl.setStyleSheet("color: #c0caf5; font-weight: bold;")
+        dir_h.addWidget(dir_lbl)
+
+        self.dir_in = QLineEdit()
+        self.dir_in.setText(Config.load_last_directory())
+        dir_h.addWidget(self.dir_in, 1)
+
+        btn_browse = QPushButton("Ganti Folder")
+        btn_browse.setCursor(QCursor(Qt.PointingHandCursor))
+        btn_browse.clicked.connect(self.browse_folder)
+        dir_h.addWidget(btn_browse)
+
+        btn_open_dir = QPushButton("Buka Folder")
+        btn_open_dir.setCursor(QCursor(Qt.PointingHandCursor))
+        btn_open_dir.setStyleSheet("background-color: #24283b; border: 1px solid #414868; color: #7aa2f7;")
+        btn_open_dir.clicked.connect(self.open_current_directory)
+        dir_h.addWidget(btn_open_dir)
+
+        self.main_layout.addLayout(dir_h)
+
+        # 6. Panel Live Log Console (Lengkap dengan Tombol Salin, Buka File Log, Bersihkan)
+        log_header_row = QHBoxLayout()
+        log_title = QLabel("🖥️ Log Aktivitas & Detail Error Lengkap (Live Console):")
+        log_title.setStyleSheet("font-weight: bold; color: #7aa2f7;")
+        log_header_row.addWidget(log_title)
+        log_header_row.addStretch()
+
+        btn_copy_log = QPushButton("📋 Salin Log")
+        btn_copy_log.setCursor(QCursor(Qt.PointingHandCursor))
+        btn_copy_log.setStyleSheet("background-color: #24283b; border: 1px solid #414868; color: #c0caf5; padding: 4px 10px; font-size: 11px;")
+        btn_copy_log.clicked.connect(self.copy_logs)
+        log_header_row.addWidget(btn_copy_log)
+
+        btn_open_log_dir = QPushButton("📄 Buka Folder File Log")
+        btn_open_log_dir.setCursor(QCursor(Qt.PointingHandCursor))
+        btn_open_log_dir.setStyleSheet("background-color: #24283b; border: 1px solid #414868; color: #c0caf5; padding: 4px 10px; font-size: 11px;")
+        btn_open_log_dir.clicked.connect(self.open_log_folder)
+        log_header_row.addWidget(btn_open_log_dir)
+
+        btn_clear_log = QPushButton("🗑️ Bersihkan Log")
+        btn_clear_log.setCursor(QCursor(Qt.PointingHandCursor))
+        btn_clear_log.setStyleSheet("background-color: #24283b; border: 1px solid #414868; color: #f7768e; padding: 4px 10px; font-size: 11px;")
+        btn_clear_log.clicked.connect(lambda: self.log_console.clear())
+        log_header_row.addWidget(btn_clear_log)
+
+        self.main_layout.addLayout(log_header_row)
+
+        self.log_console = QTextEdit()
+        self.log_console.setReadOnly(True)
+        self.log_console.setObjectName("log_console")
+        self.log_console.setMinimumHeight(145)
+        self.main_layout.addWidget(self.log_console, 1)
+
+        # 7. Status & Progress Bar
+        status_row = QHBoxLayout()
+        self.status = QLabel("Status: Siap")
+        self.status.setStyleSheet("font-weight: bold; color: #7aa2f7; font-size: 13px;")
+        status_row.addWidget(self.status)
+        status_row.addStretch()
+        self.detail_stats = QLabel("Kecepatan: -- | Sisa Waktu: -- | Ukuran: --")
+        self.detail_stats.setStyleSheet("color: #7982a9; font-size: 12px;")
+        status_row.addWidget(self.detail_stats)
+        self.main_layout.addLayout(status_row)
+
+        self.p_bar = QProgressBar()
+        self.p_bar.setValue(0)
+        self.main_layout.addWidget(self.p_bar)
+
+        # 8. Tombol Eksekusi Utama
+        self.dl_btn = QPushButton("🚀 MULAI UNDUH SEKARANG")
+        self.dl_btn.setObjectName("download_btn")
+        self.dl_btn.setCursor(QCursor(Qt.PointingHandCursor))
+        self.dl_btn.clicked.connect(self.run_dl)
+        self.main_layout.addWidget(self.dl_btn)
+
+    # --- FUNGSI LOGGING REAL-TIME ---
+    def append_log(self, level: str, message: str):
+        ts = time.strftime("%H:%M:%S")
+        color_map = {
+            "INFO": "#7dcfff",
+            "SUCCESS": "#9ece6a",
+            "WARNING": "#e0af68",
+            "ERROR": "#f7768e",
+        }
+        color = color_map.get(level.upper(), "#c0caf5")
+        escaped_msg = html.escape(str(message)).replace("\n", "<br>")
+        formatted = f"<span style='color:#565f89;'>[{ts}]</span> <b style='color:{color};'>[{level.upper()}]</b> <span style='color:{color};'>{escaped_msg}</span>"
+        self.log_console.append(formatted)
+        self.log_console.moveCursor(QTextCursor.End)
+
+    def copy_logs(self):
+        QApplication.clipboard().setText(self.log_console.toPlainText())
+        self.append_log("INFO", "Seluruh isi log berhasil disalin ke Clipboard.")
+
+    def open_log_folder(self):
+        log_dir = os.path.join(Config.get_app_data_dir(), "logs")
+        os.makedirs(log_dir, exist_ok=True)
+        os.startfile(log_dir)
+
+    # --- FUNGSI EKSTENSI & AUTENTIKASI ---
+    def check_extension_heartbeat(self):
+        last_seen = bridge_state.get("last_seen", 0.0)
+        is_alive = (time.time() - last_seen) < 12.0
+        if is_alive != self.extension_connected:
+            self.update_extension_badge(is_alive)
+
+    def update_extension_badge(self, connected: bool):
+        was_connected = self.extension_connected
+        self.extension_connected = connected
+        if connected:
+            self.ext_status_badge.setText("🟢 Ekstensi: Terhubung (Aktif)")
+            self.ext_status_badge.setStyleSheet(
+                "background-color: #24283b; color: #9ece6a; border: 1px solid #9ece6a; "
+                "border-radius: 6px; padding: 6px 10px; font-weight: bold; font-size: 12px;"
+            )
+            if not was_connected:
+                self.append_log("SUCCESS", "🧩 Ekstensi browser Kawaragi Trigger terdeteksi & terhubung!")
+        else:
+            self.ext_status_badge.setText("🔴 Ekstensi: Belum Terhubung")
+            self.ext_status_badge.setStyleSheet(
+                "background-color: #24283b; color: #f7768e; border: 1px solid #f7768e; "
+                "border-radius: 6px; padding: 6px 10px; font-weight: bold; font-size: 12px;"
+            )
+
+    def open_extension_helper(self):
+        dialog = ExtensionHelperDialog(is_connected=self.extension_connected, parent=self)
+        dialog.exec_()
+
+    def on_auth_mode_changed(self, idx):
+        mode = self.auth_drop.currentData()
+        if mode == "file":
+            f_path, _ = QFileDialog.getOpenFileName(self, "Pilih File cookies.txt (Format Netscape)", "", "Text Files (*.txt);;All Files (*)")
+            if f_path and os.path.isfile(f_path):
+                self.manual_cookie_path = f_path
+                self.cookie_file = f_path
+                self.append_log("INFO", f"📄 File cookies manual dipilih: {f_path}")
+            else:
+                self.auth_drop.setCurrentIndex(0)
+
+    def resolve_active_cookie_source(self) -> str:
+        mode = self.auth_drop.currentData()
+        if mode == "file" and self.manual_cookie_path and os.path.isfile(self.manual_cookie_path):
+            return self.manual_cookie_path
+        elif mode in ("edge", "firefox", "brave", "chrome"):
+            return mode
+        elif mode == "extension":
+            if self.cookie_file and self.cookie_file.endswith(".txt") and os.path.isfile(self.cookie_file):
+                return self.cookie_file
+            return "Tanpa Login"
+        else:
+            # Jika baru saja sinkronisasi dari ekstensi, gunakan file cookie dari ekstensi
+            if self.cookie_file and self.cookie_file.endswith(".txt") and os.path.isfile(self.cookie_file):
+                return self.cookie_file
+            return "Tanpa Login"
+
+    def on_tab_received_from_extension(self):
+        """Dipanggil saat pengguna menekan tombol 'Kirim Tab Ini ke Kawaragi' di popup ekstensi Chrome."""
+        tab_url = received_cookies_cache.get("tab_url", "").strip()
+        tab_title = received_cookies_cache.get("tab_title", "")
+        cookies_text = received_cookies_cache.get("current", "")
+        count = received_cookies_cache.get("count", 0)
+        self.custom_user_agent = received_cookies_cache.get("userAgent", "")
+
+        if cookies_text:
+            app_data_dir = Config.get_app_data_dir()
+            self.cookie_file = os.path.join(app_data_dir, "temp_cookies.txt")
+            try:
+                with open(self.cookie_file, "w", encoding="utf-8") as f:
+                    f.write(cookies_text)
+            except Exception as e:
+                logger.error(f"Gagal menyimpan temp_cookies.txt: {e}")
+
+        self.append_log("SUCCESS", f"🚀 Menerima tautan dari tab browser: {tab_title or tab_url} ({count} cookies tersinkronisasi)")
+        if tab_url:
+            self.url_input.setText(tab_url)
+            self.activateWindow()
+            self.raise_()
+            self.launch_info_worker(tab_url, self.cookie_file)
+
+    # --- FUNGSI UTAMA UI ---
+    def paste_from_clipboard(self):
+        clipboard = QApplication.clipboard()
+        text = clipboard.text().strip()
+        if text:
+            self.url_input.setText(text)
+            self.append_log("INFO", f"📋 Tautan ditempel dari clipboard: {text}")
+            if is_valid_url(text):
+                self.start_info_check(force_extension=False)
+        else:
+            QMessageBox.information(self, "Clipboard Kosong", "Tidak ada teks tautan di clipboard.")
+
+    def browse_folder(self):
+        d = QFileDialog.getExistingDirectory(self, "Pilih Folder Penyimpanan")
+        if d:
+            self.dir_in.setText(d)
+            Config.save_last_directory(d)
+            self.append_log("INFO", f"📂 Folder tujuan diubah ke: {d}")
+
+    def open_current_directory(self):
+        d = self.dir_in.text()
+        if os.path.exists(d):
+            os.startfile(d)
+        else:
+            QMessageBox.warning(self, "Folder Tidak Ditemukan", f"Folder tidak ada:\n{d}")
+
+    def open_history(self):
+        dialog = HistoryDialog(self)
+        dialog.exec_()
+
+    def start_info_check(self, force_extension=False):
+        url = self.url_input.text().strip()
+        if not is_valid_url(url):
+            QMessageBox.warning(self, "URL Tidak Valid", "Silakan masukkan tautan video yang benar (contoh: https://...)")
+            return
+
+        self.is_checking_info = True
+        self.pending_action_after_cookies = "info"
+        self.info_btn.setEnabled(False)
+        self.trigger_btn.setEnabled(False)
+        self.btn_cancel_action.setEnabled(True)
+
+        use_ext = force_extension or (self.auth_drop.currentData() == "extension")
+        if use_ext:
+            self.trigger_timeout_counter = 0
+            received_cookies_cache["current"] = ""
+            current_task["url"] = url
+            self.status.setText("Status: Meminta cookies dari ekstensi browser...")
+            self.append_log("INFO", f"🛡️ Memicu ekstensi browser untuk mengambil cookies tautan: {url}")
+            self.loading_timer.start(100)
+        else:
+            cookie_src = self.resolve_active_cookie_source()
+            self.status.setText("Status: Mengambil informasi video...")
+            self.launch_info_worker(url, cookie_src)
+
+    def launch_info_worker(self, url, cookie_file):
+        self.info_worker = InfoWorker(url, cookie_file, self.custom_user_agent)
+        self.info_worker.log_msg.connect(self.append_log)
+        self.info_worker.finished.connect(self.on_info_ok)
+        self.info_worker.error.connect(self.on_error)
+        self.info_worker.start()
+
+    def on_cookies_received(self):
+        self.loading_timer.stop()
+        cookies_text = received_cookies_cache.get("current", "")
+        count = received_cookies_cache.get("count", 0)
+        self.custom_user_agent = received_cookies_cache.get("userAgent", "")
+
+        app_data_dir = Config.get_app_data_dir()
+        if cookies_text and count > 0:
+            self.cookie_file = os.path.join(app_data_dir, "temp_cookies.txt")
+            try:
+                with open(self.cookie_file, "w", encoding="utf-8") as f:
+                    f.write(cookies_text)
+                self.append_log("SUCCESS", f"🔑 Berhasil menyinkronkan {count} cookies dari ekstensi browser!")
+            except Exception as e:
+                logger.error(f"Gagal menulis cookie_file: {e}")
+                self.append_log("ERROR", f"Gagal menyimpan file cookies sementara: {e}")
+        else:
+            if self.is_checking_info:
+                self.cookie_file = "Tanpa Login"
+                self.append_log("WARNING", "Ekstensi terhubung tetapi tidak ada cookies login pada domain tersebut. Melanjutkan tanpa login.")
+
+        if not self.is_checking_info:
+            return
+
+        self.status.setText("Status: Cookies diterima! Memuat informasi video...")
+        url = self.url_input.text().strip()
+        if is_valid_url(url):
+            self.launch_info_worker(url, self.cookie_file)
+        else:
+            self.is_checking_info = False
+            self.info_btn.setEnabled(True)
+            self.trigger_btn.setEnabled(True)
+            self.btn_cancel_action.setEnabled(False)
+
+    def animate_loading(self):
+        frame = self.loading_frames[self.loading_step % len(self.loading_frames)]
+        self.loading_step += 1
+        self.trigger_timeout_counter += 1
+
+        seconds_elapsed = self.trigger_timeout_counter // 10
+        self.info_box.setText(
+            f"<p align='center'><span style='font-size:22px; color:#bb9af7;'>{frame}</span><br>"
+            f"<b>Menghubungi Ekstensi Browser Kawaragi Trigger... ({seconds_elapsed}s)</b><br>"
+            f"<span style='font-size:11px; color:#7982a9;'>Jika ekstensi belum dipasang, klik tombol '🧩 Pasang Ekstensi' di kanan atas.</span></p>"
+        )
+
+        # Timeout 5 detik: otomatis fallback ke ekstraksi langsung
+        if self.trigger_timeout_counter >= 50:
+            self.loading_timer.stop()
+            self.append_log("WARNING", "⏱️ Ekstensi browser belum merespons dalam 5 detik. Otomatis melanjutkan tanpa ekstensi (klik '🧩 Pasang Ekstensi' jika ingin mengaktifkan).")
+            self.status.setText("Status: Ekstensi belum aktif, melanjutkan secara langsung...")
+            self.cookie_file = "Tanpa Login"
+            self.launch_info_worker(self.url_input.text().strip(), self.cookie_file)
+
+    def on_info_ok(self, info):
+        self.loading_timer.stop()
+        self.is_checking_info = False
+        self.info_btn.setEnabled(True)
+        self.trigger_btn.setEnabled(True)
+        self.btn_cancel_action.setEnabled(False)
+
+        self.current_video_info = info
+        self.current_video_duration = info.get('duration', 0)
+        dur_str = format_seconds(self.current_video_duration)
+        uploader = info.get('uploader', 'Tidak diketahui')
+        title = info.get('title', 'Tidak ada judul')
+        extractor = info.get('extractor', 'Video')
+        fmt_count = info.get('formats_count', 0)
+
+        if "thumbnail_bytes" in info and info["thumbnail_bytes"]:
+            pixmap = QPixmap()
+            pixmap.loadFromData(info["thumbnail_bytes"])
+            if not pixmap.isNull():
+                self.thumb_preview.setPixmap(
+                    pixmap.scaled(self.thumb_preview.size(), Qt.KeepAspectRatioByExpanding, Qt.SmoothTransformation)
+                )
+        else:
+            self.thumb_preview.setText(f"🎬 {extractor}")
+
+        self.info_box.setText(
+            f"<b>{html.escape(title)}</b><br>"
+            f"<span style='color:#7aa2f7;'>Platform:</span> {html.escape(extractor)} &nbsp;|&nbsp; "
+            f"<span style='color:#7aa2f7;'>Channel:</span> {html.escape(uploader)} &nbsp;|&nbsp; "
+            f"<span style='color:#7aa2f7;'>Durasi:</span> {dur_str} &nbsp;|&nbsp; "
+            f"<span style='color:#9ece6a;'>{fmt_count} Stream Tersedia</span>"
+        )
+
+        subs = info.get('subtitles', [])
+        if subs:
+            self.sub_lang.clear()
+            self.sub_lang.addItems(subs)
+            self.sub_cb.setEnabled(True)
+        else:
+            self.sub_lang.clear()
+            self.sub_lang.addItem("Tidak ada")
+
+        self.status.setText("Status: Informasi video berhasil dimuat! Siap diunduh.")
+
+    def run_dl(self):
+        url = self.url_input.text().strip()
+        if not is_valid_url(url):
+            QMessageBox.warning(self, "URL Kosong", "Masukkan tautan video yang valid terlebih dahulu!")
+            return
+
+        out_dir = self.dir_in.text().strip()
+        if not out_dir:
+            out_dir = Config.load_last_directory()
+            self.dir_in.setText(out_dir)
+
+        self.is_downloading = True
+        self.dl_btn.setEnabled(False)
+        self.info_btn.setEnabled(False)
+        self.trigger_btn.setEnabled(False)
+        self.btn_cancel_action.setEnabled(True)
+
+        self.status.setText("Status: Mempersiapkan unduhan...")
+        self.detail_stats.setText("Memulai koneksi...")
+        self.p_bar.setValue(0)
+
+        quality_val = self.qual_drop.currentData() or "best"
+        target_fmt = self.fmt_drop.currentText()
+        cookie_src = self.resolve_active_cookie_source()
+
+        p = {
+            'url': url,
+            'out_dir': out_dir,
+            'quality': quality_val,
+            'cookies_data': cookie_src,
+            'user_agent': self.custom_user_agent,
+            'inc_sub': self.sub_cb.isChecked(),
+            'sub_lang': self.sub_lang.currentText(),
+            'sub_fmt': self.sub_fmt.currentText(),
+            'inc_thm': self.thm_cb.isChecked(),
+            'thm_fmt': self.thm_fmt.currentText(),
+            'target_fmt': target_fmt
+        }
+
+        self.download_worker = DownloadWorker(p)
+        self.download_worker.log_msg.connect(self.append_log)
+        self.download_worker.progress.connect(self.on_download_progress)
+        self.download_worker.done.connect(self.on_dl_done)
+        self.download_worker.error.connect(self.on_error)
+        self.download_worker.start()
+
+    def on_download_progress(self, data):
+        if isinstance(data, dict):
+            percent = data.get("percent", 0)
+            self.p_bar.setValue(percent)
+            speed = data.get("speed", "--")
+            eta = data.get("eta", "--")
+            downloaded = data.get("downloaded", "--")
+            total = data.get("total", "--")
+            status_text = data.get("status", "Mengunduh...")
+
+            self.status.setText(f"Status: {status_text}")
+            self.detail_stats.setText(f"Kecepatan: {speed}  |  Sisa Waktu: {eta}  |  Ukuran: {downloaded} / {total}")
+        elif isinstance(data, int):
+            self.p_bar.setValue(data)
+
+    def on_dl_done(self, file_path):
+        self.temp_video_file = file_path
+
+        title = self.current_video_info.get("title") or os.path.basename(file_path)
+        Config.save_history_entry({
+            "title": title,
+            "url": self.url_input.text().strip(),
+            "file_path": file_path,
+            "duration": self.current_video_duration,
+            "format": self.fmt_drop.currentText()
+        })
+
+        if self.ss_cb.isChecked() and self.current_video_duration > 0:
+            self.status.setText("Status: Mengambil cuplikan screenshot acak...")
+            self.proc = ProcessingWorker(
+                "screenshot",
+                file_path,
+                count=self.ss_count.value(),
+                duration=self.current_video_duration,
+                dir=self.dir_in.text()
+            )
+            self.proc.log_msg.connect(self.append_log)
+            self.proc.finished.connect(self.show_ss_preview)
+            self.proc.error.connect(self.on_error)
+            self.proc.start()
+        else:
+            self.handle_conversion(file_path)
+
+    def show_ss_preview(self, shot_paths):
+        if not shot_paths:
+            self.handle_conversion(self.temp_video_file)
+            return
+
+        dialog = ScreenshotPreviewDialog(shot_paths, self)
+        result = dialog.exec_()
+
+        main_dir = self.dir_in.text()
+        if result == ScreenshotPreviewDialog.Accepted:
+            selected_files = dialog.get_selected_files()
+            saved_count = 0
+            for path in shot_paths:
+                if path in selected_files:
+                    filename = os.path.basename(path)
+                    new_path = os.path.join(main_dir, f"kawaragi_{filename}")
+                    try:
+                        shutil.move(path, new_path)
+                        saved_count += 1
+                    except Exception:
+                        pass
+                else:
+                    try:
+                        os.remove(path)
+                    except Exception:
+                        pass
+            self.status.setText(f"Status: {saved_count} gambar screenshot disimpan.")
+            self.append_log("SUCCESS", f"📸 {saved_count} screenshot disimpan ke {main_dir}")
+        else:
+            for path in shot_paths:
+                try:
+                    os.remove(path)
+                except Exception:
+                    pass
+            self.status.setText("Status: Seluruh screenshot dibatalkan.")
+
+        temp_dir = os.path.dirname(shot_paths[0])
+        if os.path.exists(temp_dir):
+            try:
+                shutil.rmtree(temp_dir)
+            except Exception:
+                pass
+
+        self.handle_conversion(self.temp_video_file)
+
+    def handle_conversion(self, file_path):
+        target = self.fmt_drop.currentText()
+        if target != "Otomatis (Sesuai Sumber)":
+            actual_ext = os.path.splitext(file_path)[1].replace(".", "").lower()
+            if actual_ext != target.lower():
+                self.status.setText(f"Status: Merender otomatis ke {target} via FFmpeg...")
+                self.proc = ProcessingWorker("convert", file_path, ext=target)
+                self.proc.log_msg.connect(self.append_log)
+                self.proc.finished.connect(self.final_step)
+                self.proc.error.connect(self.on_error)
+                self.proc.start()
+                return
+
+        self.final_step(file_path)
+
+    def final_step(self, final_file_path):
+        self.is_downloading = False
+        self.dl_btn.setEnabled(True)
+        self.info_btn.setEnabled(True)
+        self.trigger_btn.setEnabled(True)
+        self.btn_cancel_action.setEnabled(False)
+
+        self.status.setText("Status: Selesai! Berkas siap digunakan.")
+        self.detail_stats.setText("Unduhan berhasil diselesaikan.")
+        self.p_bar.setValue(100)
+        self.append_log("SUCCESS", f"✅ Seluruh proses selesai! Lokasi file: {final_file_path}")
+
+        msg_box = QMessageBox(self)
+        msg_box.setWindowTitle("Unduhan Berhasil 🎉")
+        msg_box.setText(f"<b>Proses Selesai!</b><br><br>Berkas disimpan di:<br><code>{final_file_path}</code>")
+        msg_box.setIcon(QMessageBox.Information)
+
+        btn_play = msg_box.addButton("▶ Putar Berkas", QMessageBox.ActionRole)
+        btn_folder = msg_box.addButton("📁 Buka Folder", QMessageBox.ActionRole)
+        msg_box.addButton("Tutup", QMessageBox.RejectRole)
+
+        msg_box.exec_()
+
+        clicked = msg_box.clickedButton()
+        if clicked == btn_play:
+            if os.path.exists(final_file_path):
+                os.startfile(final_file_path)
+        elif clicked == btn_folder:
+            folder = os.path.dirname(final_file_path)
+            if os.path.exists(folder):
+                subprocess.run(f'explorer /select,"{os.path.normpath(final_file_path)}"', shell=True)
+
+    def cancel_current_operation(self):
+        if self.is_checking_info:
+            self.loading_timer.stop()
+            self.is_checking_info = False
+            self.info_btn.setEnabled(True)
+            self.trigger_btn.setEnabled(True)
+            self.btn_cancel_action.setEnabled(False)
+            self.status.setText("Status: Pemeriksaan info dibatalkan.")
+            self.info_box.setText("Pemeriksaan tautan dibatalkan.")
+            self.append_log("WARNING", "⏹ Pemeriksaan tautan dibatalkan oleh pengguna.")
+
+        if self.is_downloading and hasattr(self, 'download_worker'):
+            self.status.setText("Status: Membatalkan unduhan...")
+            self.download_worker.cancel()
+
+    def on_error(self, msg):
+        self.loading_timer.stop()
+        self.is_checking_info = False
+        self.is_downloading = False
+        self.info_btn.setEnabled(True)
+        self.trigger_btn.setEnabled(True)
+        self.dl_btn.setEnabled(True)
+        self.btn_cancel_action.setEnabled(False)
+
+        self.status.setText("Status: Gagal (Lihat Log Aktivitas di atas untuk detail).")
+        self.detail_stats.setText("Terjadi kesalahan pada proses.")
+        self.info_box.setText(
+            f"<span style='color:#f7768e;'><b>❌ Terjadi Kesalahan:</b><br>{html.escape(str(msg))}</span><br>"
+            f"<span style='color:#7982a9; font-size:11px;'>💡 Tip: Jika situs membutuhkan login/verifikasi bot, pilih metode Autentikasi Cookies atau gunakan tombol '🧩 Pasang Ekstensi'.</span>"
+        )
+        self.append_log("ERROR", f"Proses berhenti karena error: {msg}")
+
+    def apply_modern_theme(self):
+        self.setStyleSheet("""
+            QMainWindow, QWidget#central_widget { 
+                background-color: #1a1b26; 
+            }
+            QLabel { 
+                color: #a9b1d6; 
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+                font-size: 13px; 
+            }
+            QLabel#app_title { 
+                color: #7aa2f7; 
+                font-size: 21px; 
+                font-weight: bold; 
+            }
+            QFrame#preview_frame, QFrame#opt_group {
+                background-color: #24283b;
+                border: 1px solid #414868;
+                border-radius: 8px;
+            }
+            QLabel#info_box { 
+                color: #c0caf5; 
+                font-size: 13px;
+            }
+            QTextEdit#log_console {
+                background-color: #16161e;
+                color: #c0caf5;
+                border: 1px solid #414868;
+                border-radius: 8px;
+                padding: 8px;
+                font-family: 'Consolas', 'Courier New', monospace;
+                font-size: 12px;
+            }
+            QLineEdit, QComboBox, QSpinBox { 
+                background-color: #1f2335; 
+                color: #c0caf5; 
+                border: 1px solid #414868; 
+                border-radius: 6px; 
+                padding: 6px 10px; 
+                font-size: 13px;
+            }
+            QLineEdit:focus, QComboBox:focus, QSpinBox:focus {
+                border: 1px solid #7aa2f7;
+            }
+            QComboBox::drop-down {
+                border: none;
+                width: 20px;
+            }
+            QPushButton { 
+                background-color: #3d59a1; 
+                color: white; 
+                border-radius: 6px; 
+                padding: 8px 14px; 
+                font-weight: bold; 
+                font-size: 13px;
+                border: none;
+            }
+            QPushButton:hover {
+                background-color: #4869bd;
+            }
+            QPushButton:disabled {
+                background-color: #2e3440;
+                color: #565f89;
+            }
+            QPushButton#download_btn { 
+                background-color: #9ece6a; 
+                color: #1a1b26; 
+                font-size: 15px; 
+                padding: 11px; 
+                font-weight: bold;
+            }
+            QPushButton#download_btn:hover { 
+                background-color: #a9db76; 
+            }
+            QProgressBar { 
+                border: 1px solid #414868; 
+                border-radius: 8px; 
+                background-color: #1f2335; 
+                text-align: center; 
+                color: white; 
+                font-weight: bold;
+                height: 18px;
+            }
+            QProgressBar::chunk { 
+                background-color: #7aa2f7; 
+                border-radius: 7px; 
+            }
+            QCheckBox { 
+                color: #c0caf5; 
+                font-size: 13px; 
+                spacing: 8px;
+            }
+            QCheckBox::indicator { 
+                width: 17px; 
+                height: 17px; 
+                border-radius: 4px;
+                border: 1px solid #414868;
+                background-color: #1f2335;
+            }
+            QCheckBox::indicator:checked {
+                background-color: #7aa2f7;
+                border-color: #7aa2f7;
+            }
+            QToolTip {
+                background-color: #24283b;
+                color: #c0caf5;
+                border: 1px solid #414868;
+                padding: 4px;
+            }
+        """)
+
+    def closeEvent(self, event):
+        if hasattr(self, 'bridge_server') and self.bridge_server:
+            self.bridge_server.stop()
+
+        cookie_path = os.path.join(Config.get_app_data_dir(), 'temp_cookies.txt')
+        if os.path.exists(cookie_path):
+            try:
+                os.remove(cookie_path)
+            except Exception:
+                pass
+
+        event.accept()
+</file>
+
+</files>
